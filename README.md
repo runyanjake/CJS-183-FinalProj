@@ -10,6 +10,7 @@
 ##### How do I use this project?
 
 > This project uses Massimo Di Pierro's Web2py framework [(SEE IT HERE)](http://www.web2py.com "Click me!").``` </br>
+> It is intended to be added as an application to the Web2Py framework. </br>
 > To use, please download the [source distribution](http://www.web2py.com/examples/static/web2py_src.zip "Click to download.") of Web2py and clone this repository in `web2py/applications`:
 ```
 cd web2py/applications 

@@ -41,6 +41,6 @@ git push origin [branchname/master]
 ### Contact the Authors
 |Name        |Email            |Status                  |
 |------------|------------------|----------------------:|
-|Cassia Artanegara|*cartaneg@ucsc.edu*  |3rd Year CS     | 
+|Cassia Artanegara|*cartaneg@ucsc.edu*  |3rd Year CS/Art | 
 |Jacob Runyan     |*jmrunyan@ucsc.edu*  |3rd Year CS     |
 |Shane Kennerly   |*skennerl@ucsc.edu*  |3rd Year CS/Math|

@@ -6,6 +6,15 @@
 ##### What is this project about?
 
 > This project does x y and z without being like a but more like b.
+> Initialize game by starting some setence in English. Check if it's English? --> dictionary check words. Game progresses by: one person presented w the original sentence, do their transformation of the sentence: must rewrite the sentence without using the original words (excepting articles and other words like that). Or maybe not every word can be exactly the same. Almost like a game of telephone. 
+> Could have global circles on the homepage to join/participate, which queues up that person for their turn
+> check in the dictionary that at least one word is different, all words are English words
+> cyclical text based game but less boring than this
+> Things the website can do:
+> upon entering normally, can see the global games going on w/ option to join a public game. Can create an account, save being in a game?? --> or must create an account to join a game, have a limited time to respond to a game before they skip you. Order by player number. If someone leaves the game, close the loop where they left.
+> another game mode basically taboo; turn-based points, time limits, each player has a little window w/ COD-esque feed on the side w the person giving a hint so they get it, don't get it. on the hinter's screens would be the black listed words, have user names
+> 4-5 simple text-based games
+> custom colors, make your own theme: choose your font/color/etc
 
 ##### How do I use this project?
 
@@ -56,3 +65,4 @@ git status (status)
 |Cassia Artanegara|*cassia@ucsc.edu*  |3rd Year CS/Art | 
 |Jacob Runyan     |*jmrunyan@ucsc.edu*  |3rd Year CS     |
 |Shane Kennerly   |*skennerl@ucsc.edu*  |3rd Year CS/Math|
+

@@ -9,7 +9,7 @@
 
 ##### How do I use this project?
 
-> This project uses Massimo Di Pierro's Web2py framework [(SEE IT HERE)](http://www.web2py.com "Click me!").``` </br>
+> This project uses Massimo Di Pierro's Web2py framework [(SEE IT HERE)](http://www.web2py.com "Click me!"). </br>
 > It is intended to be added as an application to the Web2Py framework. </br>
 > To use, please download the [source distribution](http://www.web2py.com/examples/static/web2py_src.zip "Click to download.") of Web2py and clone this repository in `web2py/applications`:
 ```
@@ -24,11 +24,23 @@ python web2py.py
 > Follow the Web2py steps to serve the webpage and visit it in a browser. </br>
 
 ##### Contributor Etiquette
-> For this project, we used a simple git etiquette. Pull requests were not used for simplicity and because the team worked physically together. For this project, we used a `commit` -> `pull` -> `push` workflow to track our changes, described simply below:
+> For this project, we used a simple git etiquette. Pull requests were not used for simplicity and because the team worked physically together. For this project, we used a `commit` -> `pull` -> `push` workflow to track our changes, described simply below: </br>
+Before local editing: 
+```
+git pull
+``` 
+Editing Workflow:
 ```
 git commit -am "foo bar baz"
 git pull
-git push origin [branchname/master]
+git push origin <branchname/master>
+```
+Auxiliary Commands:
+```
+git branch <branchname> (creation)
+git branch -d <branchname> (deletion)
+git merge <tothisbranch> <fromthatbranch> (combining branches)
+git status (status)
 ```
 
 ##### Contributions and Responsibilities

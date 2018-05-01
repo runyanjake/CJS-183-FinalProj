@@ -5,16 +5,20 @@
 
 ##### What is this project about?
 
-> This project does x y and z without being like a but more like b.
-> Initialize game by starting some setence in English. Check if it's English? --> dictionary check words. Game progresses by: one person presented w the original sentence, do their transformation of the sentence: must rewrite the sentence without using the original words (excepting articles and other words like that). Or maybe not every word can be exactly the same. Almost like a game of telephone. 
-> Could have global circles on the homepage to join/participate, which queues up that person for their turn
-> check in the dictionary that at least one word is different, all words are English words
-> cyclical text based game but less boring than this
-> Things the website can do:
-> upon entering normally, can see the global games going on w/ option to join a public game. Can create an account, save being in a game?? --> or must create an account to join a game, have a limited time to respond to a game before they skip you. Order by player number. If someone leaves the game, close the loop where they left.
-> another game mode basically taboo; turn-based points, time limits, each player has a little window w/ COD-esque feed on the side w the person giving a hint so they get it, don't get it. on the hinter's screens would be the black listed words, have user names
-> 4-5 simple text-based games
-> custom colors, make your own theme: choose your font/color/etc
+> `This project generates a website that hosts small group sessions of turn-based textual games.`
+> * Upon entering normally, users see a list of global games in play that are not currently filled with players, and have the option to join the game and wait in a queue for their turn. </br>
+> * Players that idle on their turns are timed out from the game or skipped. Players that leave are removed from the play queue. Games with no users time out after a given period and are removed. </br>
+> * Creating an account allows users to save game states and create and personalize a profile. Aesthetic changes such as website look and feel preferences are saved to a user's account. </br>
+> * User customization options will be available. This is limited to defining primary, secondary, and auxiliary color themes that style the website accordingly. </br>
+> * Analytics for the site will be collected and tabulated for viewing on the (public and?) admin console(s?).
+> * An option for users to watch an ad to support the developers and server costs will be available when the user is waiting for their turn.
+> * There are a number of games that users can choose to play: </br>
+>   * Telephone Game </br>
+>     * A user begins the game by entering a sentence in English. The sentence is verified against a dictionary to verify that words are valid English, and the sentence is passed on to the next player. The next player is presented with the sentence and is challenged to rewrite the sentence without losing meaning where all current words (save for a small whitelist of common words such as "the", "a", etc.) cannot be used. This sentence will be passed for a number of times set by whoever initialized the game. Finally, the most recent version of the sentence is presented to all users, alongside the original version. </br>
+>   * Guess The Word Game </br>
+>     * One user adopts the "guesser" role, while other users act as "helpers". Helpers are given a target word that they are tasked with hinting the guesser to say, but also a blacklist of words that they cannot use to do so. Helpers take turns offering an English sentence that should help the user guess the target word. This game can be played in a timed or freeplay mode. Points are awarded to the helper that gave the most recent hint.
+>   * Typeracer Game </br>
+>     * All players are given a sentence that they have to type out. Sentences are pulled from the pool of sentences submitted in other game modes. Maybe store top 10,000 rated entries. Voting can be applied to each sentence after it is finished to punish bad english sentences from making it into this game mode.
 
 ##### How do I use this project?
 

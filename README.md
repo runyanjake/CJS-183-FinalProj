@@ -29,13 +29,13 @@ Before local editing:
 ```
 git pull
 ``` 
-Editing Workflow:
+> Editing Workflow:
 ```
 git commit -am "foo bar baz"
 git pull
 git push origin <branchname/master>
 ```
-Auxiliary Commands:
+> Auxiliary Commands:
 ```
 git branch <branchname> (creation)
 git branch -d <branchname> (deletion)

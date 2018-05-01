@@ -73,3 +73,14 @@ CREATE TABLE "checklist"(
     "updated_on" TIMESTAMP
 );
 success!
+timestamp: 2018-04-24T16:36:22.629249
+CREATE TABLE "web2py_session_finalproject"(
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+    "locked" CHAR(1),
+    "client_ip" CHAR(64),
+    "created_datetime" TIMESTAMP,
+    "modified_datetime" TIMESTAMP,
+    "unique_key" CHAR(64),
+    "session_data" BLOB
+);
+success!

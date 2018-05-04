@@ -15,8 +15,14 @@
 > * There are a number of games that users can choose to play: </br>
 >   * Telephone Game </br>
 >     * A user begins the game by entering a sentence in English. The sentence is verified against a dictionary to verify that words are valid English, and the sentence is passed on to the next player. The next player is presented with the sentence and is challenged to rewrite the sentence without losing meaning where all current words (save for a small whitelist of common words such as "the", "a", etc.) cannot be used. This sentence will be passed for a number of times set by whoever initialized the game. Finally, the most recent version of the sentence is presented to all users, alongside the original version. </br>
+>   * Story Game </br>
+>     * A user is given an initial sentence to begin the story. Then, the next user is given the previous user's sentence
+        and is supposed to add another sentence to continue the story, based on the previous sentence. This will go around
+        in a cycle, with each user only able to see the sentence the previous user contributed. When it gets back to the 
+        original user, they have the option to either end the game and have everyone view the generated story, or to go around
+        in another cycle, continuing to add to the story. </br>
 >   * Guess The Word Game </br>
->     * One user adopts the "guesser" role, while other users act as "helpers". Helpers are given a target word that they are tasked with hinting the guesser to say, but also a blacklist of words that they cannot use to do so. Helpers take turns offering an English sentence that should help the user guess the target word. This game can be played in a timed or freeplay mode. Points are awarded to the helper that gave the most recent hint.
+>     * One user adopts the "guesser" role, while other users act as "helpers". Helpers are given a target word that they are tasked with hinting the guesser to say, but also a blacklist of words that they cannot use to do so. Helpers take turns offering an English sentence that should help the user guess the target word. This game can be played in a timed or freeplay mode. Points are awarded to the helper that gave the most recent hint. </br>
 >   * Typeracer Game </br>
 >     * All players are given a sentence that they have to type out. Sentences are pulled from the pool of sentences submitted in other game modes. Maybe store top 10,000 rated entries. Voting can be applied to each sentence after it is finished to punish bad english sentences from making it into this game mode.
 

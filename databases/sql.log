@@ -1,5 +1,5 @@
-timestamp: 2018-04-18T15:39:02.088081
-CREATE TABLE "web2py_session_homework2"(
+timestamp: 2018-05-15T15:23:55.765372
+CREATE TABLE "web2py_session_finalproject"(
     "id" INTEGER PRIMARY KEY AUTOINCREMENT,
     "locked" CHAR(1),
     "client_ip" CHAR(64),
@@ -9,7 +9,7 @@ CREATE TABLE "web2py_session_homework2"(
     "session_data" BLOB
 );
 success!
-timestamp: 2018-04-18T15:39:02.091339
+timestamp: 2018-05-15T15:23:55.776113
 CREATE TABLE "auth_user"(
     "id" INTEGER PRIMARY KEY AUTOINCREMENT,
     "first_name" CHAR(128),
@@ -21,21 +21,21 @@ CREATE TABLE "auth_user"(
     "registration_id" CHAR(512)
 );
 success!
-timestamp: 2018-04-18T15:39:02.093717
+timestamp: 2018-05-15T15:23:55.781000
 CREATE TABLE "auth_group"(
     "id" INTEGER PRIMARY KEY AUTOINCREMENT,
     "role" CHAR(512),
     "description" TEXT
 );
 success!
-timestamp: 2018-04-18T15:39:02.095580
+timestamp: 2018-05-15T15:23:55.784376
 CREATE TABLE "auth_membership"(
     "id" INTEGER PRIMARY KEY AUTOINCREMENT,
     "user_id" INTEGER REFERENCES "auth_user" ("id") ON DELETE CASCADE  ,
     "group_id" INTEGER REFERENCES "auth_group" ("id") ON DELETE CASCADE  
 );
 success!
-timestamp: 2018-04-18T15:39:02.097245
+timestamp: 2018-05-15T15:23:55.787619
 CREATE TABLE "auth_permission"(
     "id" INTEGER PRIMARY KEY AUTOINCREMENT,
     "group_id" INTEGER REFERENCES "auth_group" ("id") ON DELETE CASCADE  ,
@@ -44,7 +44,7 @@ CREATE TABLE "auth_permission"(
     "record_id" INTEGER
 );
 success!
-timestamp: 2018-04-18T15:39:02.099227
+timestamp: 2018-05-15T15:23:55.794382
 CREATE TABLE "auth_event"(
     "id" INTEGER PRIMARY KEY AUTOINCREMENT,
     "time_stamp" TIMESTAMP,
@@ -54,7 +54,7 @@ CREATE TABLE "auth_event"(
     "description" TEXT
 );
 success!
-timestamp: 2018-04-18T15:39:02.101709
+timestamp: 2018-05-15T15:23:55.799045
 CREATE TABLE "auth_cas"(
     "id" INTEGER PRIMARY KEY AUTOINCREMENT,
     "user_id" INTEGER REFERENCES "auth_user" ("id") ON DELETE CASCADE  ,
@@ -62,25 +62,5 @@ CREATE TABLE "auth_cas"(
     "service" CHAR(512),
     "ticket" CHAR(512),
     "renew" CHAR(1)
-);
-success!
-timestamp: 2018-04-18T15:39:02.105461
-CREATE TABLE "checklist"(
-    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
-    "user_email" CHAR(512),
-    "title" CHAR(512),
-    "memo" TEXT,
-    "updated_on" TIMESTAMP
-);
-success!
-timestamp: 2018-04-24T16:36:22.629249
-CREATE TABLE "web2py_session_finalproject"(
-    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
-    "locked" CHAR(1),
-    "client_ip" CHAR(64),
-    "created_datetime" TIMESTAMP,
-    "modified_datetime" TIMESTAMP,
-    "unique_key" CHAR(64),
-    "session_data" BLOB
 );
 success!

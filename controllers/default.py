@@ -22,6 +22,12 @@ def index():
 
 def game1():
     return dict()
+
+def game2():
+    return dict()
+
+def game3():
+    return dict()
     
 def user():
     """

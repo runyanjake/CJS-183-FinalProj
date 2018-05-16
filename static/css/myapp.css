@@ -2,3 +2,46 @@
 .colorful {
   color: #bb8833;
 }
+
+#home_button {
+  font-size: 30px;
+}
+
+#settings_button {
+  background-color: black;
+  font-size: 30px;
+}
+
+/* styling for side nav menu */
+.sidenav {
+  height: 100%;
+  width: 0;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  background-color: black;
+  overflow-x: hidden;
+  padding-top: 60px;
+  transition: 0.5s;
+}
+
+/* styling for sidenav links */
+.sidenav a {
+  padding: 8px 8px 8px 32px;
+  transition: 0.3s;
+  display: block;
+}
+
+.sidenav .closebtn {
+  position: absolute;
+  top: 0;
+  right: 25px;
+  font-size: 36px;
+  margin-left: 50px;
+}
+
+/* styling for main page -- pushes content to the right when nav bar opens */
+#main {
+  transition: margin-left .5s;
+}

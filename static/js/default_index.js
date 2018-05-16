@@ -13,19 +13,36 @@ var app = function() {
         }
     };
 
+    //
+    /*
+    self.open_nav = function () {
+        var s = $("#settings");
+        if (s) {
+            if (!self.vue.settings_open) {
+                $("#settings").style.width = "250px";
+                
+            } else {
+                $("#settings").style.width = "0px";
+            }
+        }
+        self.vue.settings_open = !self.vue.settings_open;
+    }*/
+
     // Complete as needed.
     self.vue = new Vue({
         el: "#vue-div",
         delimiters: ['${', '}'],
         unsafeDelimiters: ['!{', '}'],
         data: {
+            //settings_open: false
         },
         methods: {
+            //open_nav : self.open_nav
         }
 
     });
 
-
+    $("#vue-div").show();
     return self;
 };
 

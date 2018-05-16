@@ -10,20 +10,67 @@
 	    <link href="{{=URL('static','css/web2py.css')}}" rel="stylesheet" type="text/css"/>
 	    <link href="{{=URL('static','css/myapp.css')}}" rel="stylesheet" type="text/css"/>
 	    <link rel="stylesheet" href="{{=URL('static', 'font-awesome-4.6.3/css/font-awesome.min.css')}}">
-	    {{include "web2py_ajax.html"}}
+		{{include "web2py_ajax.html"}}
+		
+		
 	</head>
  	<header>
 
-  	</header>
+		<!--Home button-->
+		<a href="{{=URL('default', 'index.html')}}" class="button" id="home_button">
+			<i class="fa fa-home"></i>
+		</a>
+
+		<!--Settings button calls javascript at end of file to open settings div-->
+		<button onclick = "open_nav()" id="settings_button">
+			<i class="fa fa-gear"></i>
+		</button>
+
+		<!--Sidebar that is opened when the settings button is clicked-->
+		<div id="settings" class="sidenav">
+			<a href="javascript:void(0)" class="closebtn" onclick="close_nav()">&times;</a>
+			<a href="#">About</a>
+			<a href="#">Services</a>
+			<a href="#">Clients</a>
+			<a href="#">Contact</a>
+		</div>
+		
+	
+
+	</header>
+	  
   	<body class="black">
-    	<main class="white">
-      		{{include}}
-    	</main>
-  	</body>
+
+		<!--envelopped OG main into a div w/ id main so that we could implement transition-->
+		<div id="main">
+    		<main class="white">
+      			{{include}}
+			</main>
+		</div>
+		
+	</body>
+
+	
+	  
  	<script src="{{=URL('static','js/marked.min.js')}}"></script>
   	<script src="{{=URL('static','js/vue.min.js')}}"></script>
-  	{{block bottomjs}}{{end}}
+	  {{block bottomjs}}{{end}}
+	  
   	<script>
     	jQuery('.social a').each(function(){var t=jQuery(this); t.attr('href',t.attr('href').replace('{url}',encodeURIComponent(window.location.href)));});
-  	</script>
+	</script>
+	  
+	<script>
+			/* Set the width of the side navigation to 250px and the left margin of the page content to 250px */
+		function open_nav() {
+			document.getElementById("settings").style.width = "250px";
+			document.getElementById("main").style.marginLeft = "250px";
+		}
+	
+			/* Set the width of the side navigation to 0 and the left margin of the page content to 0 */
+		function close_nav() {
+			document.getElementById("settings").style.width = "0";
+			document.getElementById("main").style.marginLeft = "0";
+		}
+	</script>
 </html>

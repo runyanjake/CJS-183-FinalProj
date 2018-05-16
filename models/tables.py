@@ -18,18 +18,19 @@ db.define_table('users',
                 Field('user_email', default=get_user_email()),
                 Field('username', 'text', required=True),
                 Field('password', 'text', required=True),
-                Field('account_creation_date', 'date', update=datetime.date.today()),
+                Field('account_creation_date', 'date', update=datetime.date.today())
                 )
 
-db.define_table('game2_prompts',
-                Field('prompt', 'text', required=True),
+db.define_table('typeracer_prompts',
+                Field('prompt', 'text', required=True)
                 )
 
-db.define_table('game3_words',
+db.define_table('taboo_words',
                 Field('word', 'string', required=True),
+                Field('banned_words', 'list:string', default=[])
                 )
 
-db.define_table('game1_instances', #Tall Tales
+db.define_table('talltales_instances', #Tall Tales
                 #default game attributes
                 Field('room_code', 'text', default = ''),
                 Field('player_list', 'list:integer', 'references users'), #ref user id's
@@ -37,10 +38,10 @@ db.define_table('game1_instances', #Tall Tales
                 Field('max_players', 'integer', default=10),
                 Field('turn_time_limit', 'integer', default=30),
                 #game specific attributes
-                Field('story_text', 'list:string', default=[]),
+                Field('story_text', 'list:string', default=[])
                 )
 
-db.define_table('game2_instances', #Type Racer
+db.define_table('typeracer_instances', #Type Racer
                 #default game attributes
                 Field('room_code', 'text', default = ''),
                 Field('player_list', 'list:integer', 'references users'), #ref user id's
@@ -48,8 +49,8 @@ db.define_table('game2_instances', #Type Racer
                 Field('max_players', 'integer', default=10),
                 Field('turn_time_limit', 'integer', default=30),
                 #game specific attributes
-                Field('prompt', 'references game2_prompts'),
-                Field('player_seedings', 'list:integer', default=[]),
+                Field('prompt', 'references typeracer_prompts'),
+                Field('player_seedings', 'list:integer', default=[])
                 )
 
 db.define_table('game3_instances', #Taboo
@@ -60,9 +61,8 @@ db.define_table('game3_instances', #Taboo
                 Field('max_players', 'integer', default=10),
                 Field('turn_time_limit', 'integer', default=30),
                 #game specific attributes
-                Field('banned_words', 'list:string', default=[]),
-                Field('secret_word', 'string', 'references game3_words'),
-                Field('player_scores', 'list:integer', default=[]),
+                Field('secret_word', 'string', 'references taboo_words'),
+                Field('player_scores', 'list:integer', default=[])
                 )
 
 

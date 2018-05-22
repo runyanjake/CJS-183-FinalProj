@@ -16,28 +16,35 @@
 	</head>
  	<header>
 
-		<!--Home button-->
-		<a href="{{=URL('default', 'index.html')}}" class="button" id="home_button">
-			<i class="fa fa-home"></i>
-		</a>
+		<div id="button_container">
+			<div id="left">
+				<!--Home button-->
+				<a href="{{=URL('default', 'index.html')}}" class="button" id="home_button">
+					<i class="fa fa-home"></i>
+				</a>
+			</div>
 
-		<!--Login button-->
-		<a href="{{=URL('default', 'login.html')}}" class="button" id="login_button">
-			<i class="fa fa-sign-in"></i>
-		</a>
+			<div id="right">
 
-		<!--Settings button calls javascript at end of file to open settings div-->		
-		<button onclick = "open_nav()" class="button" id="settings_button">
-			<i class="fa fa-gear"></i>
-		</button>
+				<!--Login button-->
+				<a href="{{=URL('default', 'login.html')}}" class="button" id="login_button">
+					<i class="fa fa-sign-in"></i>
+				</a>
+
+				<!--Settings button-->
+				<a href="javascript:void(0)" class="button" onclick="open_nav()" id="settings_button">
+					<i class="fa fa-gear"></i>
+				</a>
+
+			</div>
+		</div>
 
 		<!--Sidebar that is opened when the settings button is clicked-->
 		<div id="settings" class="sidenav">
 			<a href="javascript:void(0)" class="closebtn" onclick="close_nav()">&times;</a>
-			<a href="#">About</a>
-			<a href="#">Services</a>
-			<a href="#">Clients</a>
-			<a href="#">Contact</a>
+			<a href="#">Profile</a>
+			<a href="#">Themes</a>
+			
 		</div>
 		
 	

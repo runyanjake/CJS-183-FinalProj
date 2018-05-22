@@ -3,13 +3,19 @@
   color: #bb8833;
 }
 
-#home_button {
+/* top nav links */
+.button {
   font-size: 30px;
 }
 
-#settings_button {
-  background-color: black;
-  font-size: 30px;
+#left {
+  width: 40px;
+  float: left;
+}
+
+#right {
+  float: right;
+  width: 80px;
 }
 
 /* styling for side nav menu */
@@ -24,6 +30,7 @@
   overflow-x: hidden;
   padding-top: 60px;
   transition: 0.5s;
+  right: 0;
 }
 
 /* styling for sidenav links */

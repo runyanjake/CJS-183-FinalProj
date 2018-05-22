@@ -32,7 +32,9 @@ var app = function() {
     self.api_tester = function(){
         $.post(talltales_init,
             {
-
+                max_players: 15,
+                turn_time_limit: 30,
+                initial_sentence: "This here is a story"
             },
             function(data) {
                 console.log("JS: Returned from API call.");

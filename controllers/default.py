@@ -20,13 +20,16 @@ def index():
     response.flash = T("Hello World")
     return dict(message=T('Welcome to web2py!'))
 
-def game1():
+def login():
     return dict()
 
-def game2():
+def talltales():
     return dict()
 
-def game3():
+def taboo():
+    return dict()
+
+def typeracer():
     return dict()
     
 def user():

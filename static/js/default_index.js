@@ -28,6 +28,17 @@ var app = function() {
         self.vue.settings_open = !self.vue.settings_open;
     }*/
 
+    //Used by Jake for API testing.
+    self.api_tester = function(){
+        $.post(talltales_init,
+            {
+
+            },
+            function(data) {
+                console.log("JS: Returned from API call.");
+            })
+    }
+
     // Complete as needed.
     self.vue = new Vue({
         el: "#vue-div",
@@ -38,6 +49,7 @@ var app = function() {
         },
         methods: {
             //open_nav : self.open_nav
+            api_tester: self.api_tester
         }
 
     });

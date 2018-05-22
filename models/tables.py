@@ -53,15 +53,15 @@ db.define_table('typeracer_instances', #Type Racer
                 Field('player_seedings', 'list:integer', default=[])
                 )
 
-db.define_table('game3_instances', #Taboo
+db.define_table('taboo_instances', #Taboo
                 #default game attributes
                 Field('room_code', 'string', default = ''),
-                Field('player_list', 'list:integer', 'references users'), #ref user id's
+                Field('player_list', 'list:integer'),  #, 'references users'
                 Field('hoster', 'references users', required=True),
                 Field('max_players', 'integer', default=10),
                 Field('turn_time_limit', 'integer', default=30),
                 #game specific attributes
-                Field('secret_word', 'string', 'references taboo_words'),
+                Field('secret_word', 'string'),  #, 'references taboo_words'
                 Field('player_scores', 'list:integer', default=[])
                 )
 

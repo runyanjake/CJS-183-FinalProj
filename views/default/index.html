@@ -4,6 +4,9 @@
 <script src="{{=URL('static', 'js/vue.js')}}"></script>
 <script>
     var my_url = "{{=URL('api', 'my_method')}}";
+    var talltales_init = "{{=URL('api', 'init_talltales')}}";
+    var talltales_addplayer = "{{=URL('api', 'add_player_talltales')}}";
+    var talltales_getgames = "{{=URL('api', 'get_games_talltales')}}";
 </script>
 {{end}}
 
@@ -16,6 +19,7 @@
         <a href="{{=URL('default', 'game1')}}" class="btn rounded">play game1 now!</a>
         <a href="{{=URL('default', 'game2')}}" class="btn rounded">play game2 now!</a>
         <a href="{{=URL('default', 'game3')}}" class="btn rounded">play game3 now!</a>
+        <a class="btn rounded" v-on:click="api_tester()">Test API Button</a>
 
         
     </div>

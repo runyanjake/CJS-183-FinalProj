@@ -21,8 +21,18 @@
 			<i class="fa fa-home"></i>
 		</a>
 
-		<!--Settings button calls javascript at end of file to open settings div-->
-		<button onclick = "open_nav()" id="settings_button">
+		<!--Login button-->
+		<a href="{{=URL('default', 'login.html')}}" class="button" id="login_button">
+			<i class="fa fa-sign-in"></i>
+		</a>
+
+		<!--Hacky sign up button-->
+		<a href="{{=URL('default', 'user')}}" class="button" id="login_button">
+			<i class="fa fa-ban"></i>
+		</a>
+
+		<!--Settings button calls javascript at end of file to open settings div-->		
+		<button onclick = "open_nav()" class="button" id="settings_button">
 			<i class="fa fa-gear"></i>
 		</button>
 

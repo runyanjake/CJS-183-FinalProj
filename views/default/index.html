@@ -4,6 +4,9 @@
 <script src="{{=URL('static', 'js/vue.js')}}"></script>
 <script>
     var my_url = "{{=URL('api', 'my_method')}}";
+    var talltales_init = "{{=URL('api', 'init_talltales')}}";
+    var talltales_addplayer = "{{=URL('api', 'add_player_talltales')}}";
+    var talltales_getgames = "{{=URL('api', 'get_games_talltales')}}";
 </script>
 {{end}}
 
@@ -11,13 +14,11 @@
 
     <div id="vue-div" class="display:none">
         <!-- Your code goes here.  Remember to call $("#vue-div").show() once you get the data for the first time. -->
-
         <h1>welcome to our game site</h1>
+        <a class="btn rounded" v-on:click="api_tester()">Test API Button</a>
         <a href="{{=URL('default', 'talltales')}}" class="btn rounded">tall tales</a>
         <a href="{{=URL('default', 'taboo')}}" class="btn rounded">taboo</a>
         <a href="{{=URL('default', 'typeracer')}}" class="btn rounded">typeracer</a>
-
-        
     </div>
 
 </div>

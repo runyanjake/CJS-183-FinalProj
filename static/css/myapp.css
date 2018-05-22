@@ -25,12 +25,11 @@
   position: fixed;
   z-index: 1;
   top: 0;
-  left: 0;
+  right: 0;
   background-color: black;
   overflow-x: hidden;
   padding-top: 60px;
   transition: 0.5s;
-  right: 0;
 }
 
 /* styling for sidenav links */

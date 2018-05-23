@@ -37,8 +37,21 @@ var app = function() {
                 initial_sentence: "This here is a story"
             },
             function(data) {
-                console.log("JS: Returned from API call.");
+                if(data.successful == true)
+                    console.log("JS: Returned successfully from API call.");
+                else
+                    console.log("JS: Returned unsuccessfully from API call.");
             })
+//        $.post(talltales_addplayer,
+//            {
+//                room_code: 436669
+//            },
+//            function(data) {
+//                if(data.successful)
+//                    console.log("JS: Returned successfully from API call.");
+//                else
+//                    console.log("JS: Returned unsuccessfully from API call.");
+//            })
     }
 
     // Complete as needed.

@@ -30,28 +30,28 @@ var app = function() {
 
     //Used by Jake for API testing.
     self.api_tester = function(){
-        $.post(talltales_init,
-            {
-                max_players: 15,
-                turn_time_limit: 30,
-                initial_sentence: "This here is a story"
-            },
-            function(data) {
-                if(data.successful == true)
-                    console.log("JS: Returned successfully from API call.");
-                else
-                    console.log("JS: Returned unsuccessfully from API call.");
-            })
-//        $.post(talltales_addplayer,
+//        $.post(talltales_init,
 //            {
-//                room_code: 436669
+//                max_players: 15,
+//                turn_time_limit: 30,
+//                initial_sentence: "This here is a story"
 //            },
 //            function(data) {
-//                if(data.successful)
+//                if(data.successful == true)
 //                    console.log("JS: Returned successfully from API call.");
 //                else
 //                    console.log("JS: Returned unsuccessfully from API call.");
 //            })
+        $.post(talltales_addplayer,
+            {
+                room_code: 436669
+            },
+            function(data) {
+                if(data.successful)
+                    console.log("JS: Returned successfully from API call.");
+                else
+                    console.log("JS: Returned unsuccessfully from API call.");
+            })
     }
 
     // Complete as needed.

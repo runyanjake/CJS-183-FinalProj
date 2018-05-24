@@ -60,6 +60,15 @@ def add_player_talltales():
     print("Room Code: " + str(room_code))
     print("Found Room: " + str(room))
 
+# #Maybe we want this method? Otherwise idk how we keep game updated. This will require additions to the database.
+# #This should accommodate skipping a turn due to timeout and taking a turn normally
+# @auth.requires_login()
+# def update_gamestate():
+# #Maybe we want this method? Otherwise idk how we keep game updated. This will require additions to the database.
+# @auth.requires_login()
+# def retrieve_gamestate():
+
+
 #Update the vue listing for currently alive games.
 def get_games_talltales():
     print("API: Retrieving all instances of TallTales games.")

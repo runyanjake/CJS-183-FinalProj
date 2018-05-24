@@ -58,16 +58,12 @@ def add_player_talltales():
     room_code = request.vars.room_code
     room = db(room_code == db.talltales_instances.room_code).select(db.talltales_instances.ALL).first()
     player_list = db(room_code == db.talltales_instances.room_code).select(db.talltales_instances.player_list).first().player_list
-    print("Room Code: " + str(room_code))
-    print("Found Room: " + str(room))
     if auth.user.id in player_list:
-        print("You are in this game!")
+        print("API: User is already in the game.")
     else:
-        print("You are NOT in this game!")
-
-    #check if this user is in the game already.
-
-
+        player_list.append(auth.user.id)
+        db(room_code == db.talltales_instances.room_code).update(player_list=player_list)
+        print("API: Added user to game.")
 
 # #Maybe we want this method? Otherwise idk how we keep game updated. This will require additions to the database.
 # #This should accommodate skipping a turn due to timeout and taking a turn normally

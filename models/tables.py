@@ -27,7 +27,7 @@ db.define_table('talltales_instances', #Tall Tales
                 #default game attributes
                 Field('room_code', 'text', default = ''),
                 Field('player_list', 'list:integer', 'references auth_user', default=None), #ref user id's
-                Field('hoster', 'integer', 'references auth_user', default=auth.user.id),
+                Field('hoster', 'integer', 'references auth_user', default=auth.user.id if auth.user is not None else None),
                 Field('max_players', 'integer', default=10),
                 Field('turn_time_limit', 'integer', default=30),
                 #game specific attributes

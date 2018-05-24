@@ -3,6 +3,7 @@
 # import uuid
 import random
 
+## The max number of unique rooms that can exist in the database.
 MAX_ROOM_COUNT = 999999
 
 #### TALL TALES API METHODS ####
@@ -22,7 +23,7 @@ def init_talltales():
     print("room code : " + str(room_code))
     matches = db(room_code == db.talltales_instances.room_code).select(db.talltales_instances.ALL).first()
     if matches is not None:
-        id=random.random()*MAX_ROOM_COUNT
+        id=random.random()*MAX_ROOM_COUNT ###### this is a theoretical infinite loop if we get unlucky with random, maybe do a loop if not found?
         room_code = int(id)
         matches = db(room_code == db.talltales_instances.room_code).select(db.talltales_instances.ALL).first()
     print("API: Created instance with room_code " + str(room_code))

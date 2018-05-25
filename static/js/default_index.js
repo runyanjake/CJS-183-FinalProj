@@ -30,7 +30,7 @@ var app = function() {
 
     //Used by Jake for API testing.
     self.api_tester = function(){
-        var choice = 2;
+        var choice = 4;
         if(choice == 1){
             $.post(talltales_init,
                 {
@@ -70,8 +70,7 @@ var app = function() {
             $.post(talltales_updategamestate,
                 {
                     room_code: 462385,
-                    turn_time_limit: 30,
-                    max_players: 10
+                    story_text: "Third thing in story"
                 },
                 function(data) {
                     if(data.successful)

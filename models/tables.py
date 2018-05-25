@@ -40,7 +40,6 @@ db.define_table('talltales_instances', #Tall Tales
                 Field('turn_time_limit', 'integer', default=30),
                 #game specific attributes
                 Field('story_text', 'list:string', default=[]),
-                #proposed gamestate additions
                 Field('current_turn', 'integer', 'references auth_user', default=auth.user.id if auth.user is not None else None)
                 )
 

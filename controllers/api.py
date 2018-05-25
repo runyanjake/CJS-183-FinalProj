@@ -77,9 +77,9 @@ def add_player_talltales():
 #Updates the gamestate.
 #### incoming packet should hold: ####
 #   request.vars.room_code = room code to add to.
-#   request.vars.max_players = max number of players.
-#   request.vars.turn_time_limit = turn length.
-# TODO: figure out if we can use this and just pass dummy values so that we can set a single arbitrary thing.
+#   request.vars.story_text = next line to append.
+#   request.vars.current_turn = id of auth_user who's turn it is.
+#### Leave a value blank if you don't want it to update.
 @auth.requires_login()
 def update_gamestate_talltales():
     print("API: Updating Talltales gamestate.")
@@ -89,8 +89,12 @@ def update_gamestate_talltales():
             successful=False
         ))
     else:
-        db(request.vars.room_code == db.talltales_instances.room_code).update(max_players=request.vars.max_players,
-                                                                              turn_time_limit=request.vars.turn_time_limit)
+        if request.vars.story_text is not None:
+            story = match.story_text
+            story.append(request.vars.story_text)
+            db(request.vars.room_code == db.talltales_instances.room_code).update(story_text=story)
+        if request.vars.current_turn is not None:
+            db(request.vars.room_code == db.talltales_instances.room_code).update(current_turn=request.vars.current_turn)
         return response.json(dict(
             successful=True
         ))

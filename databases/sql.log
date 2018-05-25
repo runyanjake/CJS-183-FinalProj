@@ -183,3 +183,6 @@ CREATE TABLE "user_accounts"(
 success!
 success!
 success!
+timestamp: 2018-05-24T21:04:54.465957
+ALTER TABLE "talltales_instances" ADD "current_turn" INTEGER;
+success!

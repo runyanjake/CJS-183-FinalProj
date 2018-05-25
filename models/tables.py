@@ -39,9 +39,9 @@ db.define_table('talltales_instances', #Tall Tales
                 Field('max_players', 'integer', default=10),
                 Field('turn_time_limit', 'integer', default=30),
                 #game specific attributes
-                Field('story_text', 'list:string', default=[])
+                Field('story_text', 'list:string', default=[]),
                 #proposed gamestate additions
-                # Field('current_turn', 'integer', 'references auth_user, default=auth.user.id if auth.user is not None else None),
+                Field('current_turn', 'integer', 'references auth_user', default=auth.user.id if auth.user is not None else None)
                 )
 
 db.define_table('typeracer_instances', #Type Racer

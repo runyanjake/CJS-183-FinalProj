@@ -13,21 +13,6 @@ var app = function() {
         }
     };
 
-    //
-    /*
-    self.open_nav = function () {
-        var s = $("#settings");
-        if (s) {
-            if (!self.vue.settings_open) {
-                $("#settings").style.width = "250px";
-                
-            } else {
-                $("#settings").style.width = "0px";
-            }
-        }
-        self.vue.settings_open = !self.vue.settings_open;
-    }*/
-
     //Used by Jake for API testing.
     self.api_tester = function(){
         $.post(talltales_init,
@@ -39,17 +24,29 @@ var app = function() {
             })
     }
 
+    //Testing getting the get games method to retrieve the necessary info
+    self.get_games_tester = function () {
+        $.post(talltales_getgames, 
+            {
+
+            },
+            function (data) {
+                self.vue.talltales_games = data.talltales_games;
+                console.log("cassia returned from API");
+            })
+    }
+
     // Complete as needed.
     self.vue = new Vue({
         el: "#vue-div",
         delimiters: ['${', '}'],
         unsafeDelimiters: ['!{', '}'],
         data: {
-            //settings_open: false
+            talltales_games: []
         },
         methods: {
-            //open_nav : self.open_nav
-            api_tester: self.api_tester
+            api_tester: self.api_tester,
+            get_games_tester: self.get_games_tester
         }
 
     });

@@ -31,6 +31,12 @@ def taboo():
 
 def typeracer():
     return dict()
+
+def profile():
+    return dict()
+
+def themes():
+    return dict()
     
 def user():
     """

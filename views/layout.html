@@ -44,8 +44,8 @@
 		<!--Sidebar that is opened when the settings button is clicked-->
 		<div id="settings" class="sidenav">
 			<a href="javascript:void(0)" class="closebtn" onclick="close_nav()">&times;</a>
-			<a href="#">Profile</a>
-			<a href="#">Themes</a>
+			<a href="{{=URL('default', 'profile')}}">Profile</a>
+			<a href="{{=URL('default', 'themes')}}">Themes</a>
 			
 		</div>
 		
@@ -78,13 +78,13 @@
 			/* Set the width of the side navigation to 250px and the left margin of the page content to 250px */
 		function open_nav() {
 			document.getElementById("settings").style.width = "250px";
-			document.getElementById("main").style.marginLeft = "250px";
+			document.getElementById("main").style.marginRight = "250px";
 		}
 	
 			/* Set the width of the side navigation to 0 and the left margin of the page content to 0 */
 		function close_nav() {
 			document.getElementById("settings").style.width = "0";
-			document.getElementById("main").style.marginLeft = "0";
+			document.getElementById("main").style.marginRight = "0";
 		}
 	</script>
 </html>

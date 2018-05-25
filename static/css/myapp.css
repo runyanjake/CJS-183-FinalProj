@@ -28,7 +28,6 @@
   right: 0;
   background-color: black;
   overflow-x: hidden;
-  padding-top: 60px;
   transition: 0.5s;
 }
 
@@ -42,12 +41,20 @@
 .sidenav .closebtn {
   position: absolute;
   top: 0;
-  right: 25px;
+  right: 0;
   font-size: 36px;
-  margin-left: 50px;
 }
+
+.closebtn {
+  position: absolute;
+  top: 0;
+  right: 0;
+  font-size: 36px;
+  text-align: right;
+}
+
 
 /* styling for main page -- pushes content to the right when nav bar opens */
 #main {
-  transition: margin-left .5s;
+  transition: margin-right .5s;
 }

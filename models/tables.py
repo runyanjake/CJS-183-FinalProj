@@ -14,6 +14,14 @@ import datetime
 def get_user_email():
     return auth.user.email if auth.user is not None else None
 
+db.define_table('user_accounts',
+                Field('user_id', 'integer', 'references auth_user', default=auth.user.id if auth.user is not None else None), 
+                Field('user_name', 'string', default="Guest"),
+                Field('colors', 'list:string', default=[0xff0000, 0x00ff00])
+                )
+                #This is barebones, can add more customization stuff
+                #auth.user is static so no email/password required
+
 db.define_table('typeracer_prompts',
                 Field('prompt', 'text', required=True)
                 )

@@ -1,4 +1,4 @@
-timestamp: 2018-05-22T15:37:27.211423
+timestamp: 2018-05-24T21:31:56.590639
 CREATE TABLE "web2py_session_finalproject"(
     "id" INTEGER PRIMARY KEY AUTOINCREMENT,
     "locked" CHAR(1),
@@ -9,7 +9,7 @@ CREATE TABLE "web2py_session_finalproject"(
     "session_data" BLOB
 );
 success!
-timestamp: 2018-05-22T15:37:27.216487
+timestamp: 2018-05-24T21:31:56.597523
 CREATE TABLE "auth_user"(
     "id" INTEGER PRIMARY KEY AUTOINCREMENT,
     "first_name" CHAR(128),
@@ -21,21 +21,21 @@ CREATE TABLE "auth_user"(
     "registration_id" CHAR(512)
 );
 success!
-timestamp: 2018-05-22T15:37:27.219118
+timestamp: 2018-05-24T21:31:56.603070
 CREATE TABLE "auth_group"(
     "id" INTEGER PRIMARY KEY AUTOINCREMENT,
     "role" CHAR(512),
     "description" TEXT
 );
 success!
-timestamp: 2018-05-22T15:37:27.221172
+timestamp: 2018-05-24T21:31:56.606293
 CREATE TABLE "auth_membership"(
     "id" INTEGER PRIMARY KEY AUTOINCREMENT,
     "user_id" INTEGER REFERENCES "auth_user" ("id") ON DELETE CASCADE  ,
     "group_id" INTEGER REFERENCES "auth_group" ("id") ON DELETE CASCADE  
 );
 success!
-timestamp: 2018-05-22T15:37:27.223146
+timestamp: 2018-05-24T21:31:56.609708
 CREATE TABLE "auth_permission"(
     "id" INTEGER PRIMARY KEY AUTOINCREMENT,
     "group_id" INTEGER REFERENCES "auth_group" ("id") ON DELETE CASCADE  ,
@@ -44,7 +44,7 @@ CREATE TABLE "auth_permission"(
     "record_id" INTEGER
 );
 success!
-timestamp: 2018-05-22T15:37:27.225711
+timestamp: 2018-05-24T21:31:56.614130
 CREATE TABLE "auth_event"(
     "id" INTEGER PRIMARY KEY AUTOINCREMENT,
     "time_stamp" TIMESTAMP,
@@ -54,7 +54,7 @@ CREATE TABLE "auth_event"(
     "description" TEXT
 );
 success!
-timestamp: 2018-05-22T15:37:27.228401
+timestamp: 2018-05-24T21:31:56.618625
 CREATE TABLE "auth_cas"(
     "id" INTEGER PRIMARY KEY AUTOINCREMENT,
     "user_id" INTEGER REFERENCES "auth_user" ("id") ON DELETE CASCADE  ,
@@ -64,116 +64,7 @@ CREATE TABLE "auth_cas"(
     "renew" CHAR(1)
 );
 success!
-timestamp: 2018-05-22T15:37:27.231380
-CREATE TABLE "users"(
-    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
-    "user_email" CHAR(512),
-    "username" TEXT,
-    "password" TEXT,
-    "account_creation_date" DATE
-);
-success!
-timestamp: 2018-05-22T15:37:27.233651
-CREATE TABLE "typeracer_prompts"(
-    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
-    "prompt" TEXT
-);
-success!
-timestamp: 2018-05-22T15:37:27.235387
-CREATE TABLE "taboo_words"(
-    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
-    "word" CHAR(512),
-    "banned_words" TEXT
-);
-success!
-timestamp: 2018-05-22T15:37:27.237936
-CREATE TABLE "talltales_instances"(
-    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
-    "room_code" TEXT,
-    "player_list" TEXT,
-    "hoster" INTEGER REFERENCES "users" ("id") ON DELETE CASCADE  ,
-    "max_players" INTEGER,
-    "turn_time_limit" INTEGER,
-    "story_text" TEXT
-);
-success!
-timestamp: 2018-05-22T15:37:27.240576
-CREATE TABLE "typeracer_instances"(
-    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
-    "room_code" TEXT,
-    "player_list" TEXT,
-    "hoster" INTEGER REFERENCES "users" ("id") ON DELETE CASCADE  ,
-    "max_players" INTEGER,
-    "turn_time_limit" INTEGER,
-    "prompt" INTEGER REFERENCES "typeracer_prompts" ("id") ON DELETE CASCADE  ,
-    "player_seedings" TEXT
-);
-success!
-timestamp: 2018-05-22T15:37:27.243319
-CREATE TABLE "taboo_instances"(
-    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
-    "room_code" CHAR(512),
-    "player_list" TEXT,
-    "hoster" INTEGER REFERENCES "users" ("id") ON DELETE CASCADE  ,
-    "max_players" INTEGER,
-    "turn_time_limit" INTEGER,
-    "secret_word" CHAR(512),
-    "player_scores" TEXT
-);
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-timestamp: 2018-05-22T16:45:11.075132
-CREATE TABLE "talltales_instances"(
-    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
-    "room_code" TEXT,
-    "player_list" TEXT,
-    "hoster" TEXT,
-    "max_players" INTEGER,
-    "turn_time_limit" INTEGER,
-    "story_text" TEXT
-);
-success!
-timestamp: 2018-05-22T16:46:51.786055
-CREATE TABLE "talltales_instances"(
-    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
-    "room_code" TEXT,
-    "player_list" TEXT,
-    "hoster" INTEGER,
-    "max_players" INTEGER,
-    "turn_time_limit" INTEGER,
-    "story_text" TEXT
-);
-success!
-timestamp: 2018-05-22T16:50:01.146309
-CREATE TABLE "talltales_instances"(
-    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
-    "room_code" TEXT,
-    "player_list" TEXT,
-    "hoster" INTEGER,
-    "max_players" INTEGER,
-    "turn_time_limit" INTEGER,
-    "story_text" TEXT
-);
-success!
-timestamp: 2018-05-24T18:22:25.206455
+timestamp: 2018-05-24T21:31:56.623795
 CREATE TABLE "user_accounts"(
     "id" INTEGER PRIMARY KEY AUTOINCREMENT,
     "user_id" INTEGER,
@@ -181,5 +72,51 @@ CREATE TABLE "user_accounts"(
     "colors" TEXT
 );
 success!
+timestamp: 2018-05-24T21:31:56.627669
+CREATE TABLE "typeracer_prompts"(
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+    "prompt" TEXT
+);
 success!
+timestamp: 2018-05-24T21:31:56.630695
+CREATE TABLE "taboo_words"(
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+    "word" CHAR(512),
+    "banned_words" TEXT
+);
 success!
+timestamp: 2018-05-24T21:31:56.634102
+CREATE TABLE "talltales_instances"(
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+    "room_code" TEXT,
+    "player_list" TEXT,
+    "hoster" INTEGER,
+    "max_players" INTEGER,
+    "turn_time_limit" INTEGER,
+    "story_text" TEXT,
+    "current_turn" INTEGER
+);
+success!
+timestamp: 2018-05-24T21:31:56.638931
+CREATE TABLE "typeracer_instances"(
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+    "room_code" TEXT,
+    "player_list" TEXT,
+    "hoster" INTEGER REFERENCES "auth_user" ("id") ON DELETE CASCADE  ,
+    "max_players" INTEGER,
+    "turn_time_limit" INTEGER,
+    "prompt" TEXT,
+    "player_seedings" TEXT
+);
+success!
+timestamp: 2018-05-24T21:31:56.647395
+CREATE TABLE "taboo_instances"(
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+    "room_code" CHAR(512),
+    "player_list" TEXT,
+    "hoster" CHAR(references auth_user),
+    "max_players" INTEGER,
+    "turn_time_limit" INTEGER,
+    "secret_word" CHAR(references taboo_words.word),
+    "player_scores" TEXT
+);

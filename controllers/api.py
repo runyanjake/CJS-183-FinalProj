@@ -68,14 +68,42 @@ def add_player_talltales():
             successful=True
         ))
 
-# #Maybe we want this method? Otherwise idk how we keep game updated. This will require additions to the database.
-# #This should accommodate skipping a turn due to timeout and taking a turn normally
-# @auth.requires_login()
-# def update_gamestate():
-# #Maybe we want this method? Otherwise idk how we keep game updated. This will require additions to the database.
-# @auth.requires_login()
-# def retrieve_gamestate():
+#Maybe we want this method? Otherwise idk how we keep game updated. This will require additions to the database.
+#This should accommodate skipping a turn due to timeout and taking a turn normally
+@auth.requires_login()
+def update_gamestate_talltales():
+    print("API: Updating Talltales gamestate.")
+    match = db(request.vars.room_code == db.talltales_instances.room_code).select(db.talltales_instances.ALL).first()
+    if match is None:
+        return response.json(dict(
+            successful=False
+        ))
+    else:
+        #perform insert
+        db(request.vars.room_code == db.talltales_instances.room_code).update(max_players=request.vars.max_players,
+                                                                              turn_time_limit=request.vars.turn_time_limit)
+        return response.json(dict(
+            successful=True
+        ))
 
+#for re-rendering the webpage periodically to check for gamestate updates
+@auth.requires_login()
+def retrieve_gamestate_talltales():
+    print("API: Retrieving Talltales gamestate.")
+    match = db(request.vars.room_code == db.talltales_instances.room_code).select(db.talltales_instances.ALL).first()
+    if match is None:
+        return response.json(dict(
+            successful=False
+        ))
+    else:
+        return response.json(dict(
+            successful=True,
+            player_list=match.player_list,
+            max_players=match.max_players,
+            turn_time_limit=match.turn_time_limit,
+            story_text=match.story_text,
+            current_turn=match.current_turn
+        ))
 
 #Update the vue listing for currently alive games.
 #Receive a unique room code and return everything under that room code.

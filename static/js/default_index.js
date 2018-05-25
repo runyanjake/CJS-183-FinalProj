@@ -32,7 +32,7 @@ var app = function() {
         }else if(choice == 2){
             $.post(talltales_addplayer,
                 {
-                    room_code: 462385
+                    room_code: 1
                 },
                 function(data) {
                     if(data.successful)
@@ -55,8 +55,7 @@ var app = function() {
             $.post(talltales_updategamestate,
                 {
                     room_code: 462385,
-                    turn_time_limit: 45,
-                    max_players: 12
+                    story_text: "Third thing in story"
                 },
                 function(data) {
                     if(data.successful)

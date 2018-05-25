@@ -30,7 +30,7 @@ var app = function() {
 
     //Used by Jake for API testing.
     self.api_tester = function(){
-        var choice = 4;
+        var choice = 2;
         if(choice == 1){
             $.post(talltales_init,
                 {
@@ -47,7 +47,7 @@ var app = function() {
         }else if(choice == 2){
             $.post(talltales_addplayer,
                 {
-                    room_code: 462385
+                    room_code: 1
                 },
                 function(data) {
                     if(data.successful)
@@ -70,8 +70,8 @@ var app = function() {
             $.post(talltales_updategamestate,
                 {
                     room_code: 462385,
-                    turn_time_limit: 45,
-                    max_players: 12
+                    turn_time_limit: 30,
+                    max_players: 10
                 },
                 function(data) {
                     if(data.successful)

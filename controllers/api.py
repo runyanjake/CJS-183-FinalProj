@@ -54,22 +54,32 @@ def add_player_talltales():
     print("API: Attempting to add player to existing instance of TallTales.")
     room_code = request.vars.room_code
     room = db(room_code == db.talltales_instances.room_code).select(db.talltales_instances.ALL).first()
-    player_list = db(room_code == db.talltales_instances.room_code).select(db.talltales_instances.player_list).first().player_list
-    if auth.user.id in player_list:
-        print("API: User is already in the game.")
+    if room is not None:
+        player_list = db(room_code == db.talltales_instances.room_code).select(db.talltales_instances.player_list).first().player_list
+        if auth.user.id in player_list:
+            print("API: User is already in the game.")
+            return response.json(dict(
+                successful=False
+            ))
+        else:
+            player_list.append(auth.user.id)
+            db(room_code == db.talltales_instances.room_code).update(player_list=player_list)
+            print("API: Added user to game.")
+            return response.json(dict(
+                successful=True
+            ))
+    else:
+        print("API: Game does not exist.")
         return response.json(dict(
             successful=False
         ))
-    else:
-        player_list.append(auth.user.id)
-        db(room_code == db.talltales_instances.room_code).update(player_list=player_list)
-        print("API: Added user to game.")
-        return response.json(dict(
-            successful=True
-        ))
 
-#Maybe we want this method? Otherwise idk how we keep game updated. This will require additions to the database.
-#This should accommodate skipping a turn due to timeout and taking a turn normally
+#Updates the gamestate.
+#### incoming packet should hold: ####
+#   request.vars.room_code = room code to add to.
+#   request.vars.max_players = max number of players.
+#   request.vars.turn_time_limit = turn length.
+# TODO: figure out if we can use this and just pass dummy values so that we can set a single arbitrary thing.
 @auth.requires_login()
 def update_gamestate_talltales():
     print("API: Updating Talltales gamestate.")
@@ -79,7 +89,6 @@ def update_gamestate_talltales():
             successful=False
         ))
     else:
-        #perform insert
         db(request.vars.room_code == db.talltales_instances.room_code).update(max_players=request.vars.max_players,
                                                                               turn_time_limit=request.vars.turn_time_limit)
         return response.json(dict(

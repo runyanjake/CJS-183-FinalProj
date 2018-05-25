@@ -26,10 +26,7 @@
 
 			<div id="right">
 
-				<!--Login button-->
-				<a href="{{=URL('default', 'user')}}" class="button" id="login_button">
-					<i class="fa fa-ban"></i>
-				</a>
+				
 
 				<!--Settings button-->
 				<a href="javascript:void(0)" class="button" onclick="open_nav()" id="settings_button">
@@ -41,6 +38,7 @@
 		
 
 
+
 		<!--Sidebar that is opened when the settings button is clicked-->
 		<div id="settings" class="sidenav">
 			<a href="javascript:void(0)" class="closebtn" onclick="close_nav()">&times;</a>
@@ -48,6 +46,17 @@
 			<a href="{{=URL('default', 'themes')}}">Themes</a>
 			
 		</div>
+
+		<!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!---->
+		<!--Hacky sign up button-->
+		<a href="{{=URL('default', 'user')}}" class="button" id="login_button">
+			<i class="fa fa-ban">Login</i>
+		</a>
+		<!--Hacky sign up button-->
+		<a href="{{=URL('default', 'user', args=['logout'])}}" class="button" id="login_button">
+			<i class="fa fa-ban">Logout (IF LOGGED IN)</i>
+		</a>
+		<!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!---->
 		
 	
 

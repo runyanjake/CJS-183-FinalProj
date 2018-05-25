@@ -17,7 +17,7 @@ def get_user_email():
 db.define_table('user_accounts',
                 Field('user_id', 'integer', 'references auth_user', default=auth.user.id if auth.user is not None else None), 
                 Field('user_name', 'string', default="Guest"),
-                Field('colors', 'list:string', default=[0xff0000, 0x00ff00])
+                Field('colors', 'list:string', default=["0xff0000", "0x00ff00"])
                 )
                 #This is barebones, can add more customization stuff
                 #auth.user is static so no email/password required
@@ -52,7 +52,7 @@ db.define_table('typeracer_instances', #Type Racer
                 Field('max_players', 'integer', default=10),
                 Field('turn_time_limit', 'integer', default=30),
                 #game specific attributes
-                Field('prompt', 'references typeracer_prompts'),
+                Field('prompt', 'text', 'references typeracer_prompts.prompt'),
                 Field('player_seedings', 'list:integer', default=[])
                 )
 
@@ -60,11 +60,12 @@ db.define_table('taboo_instances', #Taboo
                 #default game attributes
                 Field('room_code', 'string', default = ''),
                 Field('player_list', 'list:integer', 'references auth_user', default=[]),  #, 'references users'
-                Field('hoster', 'references auth_user', required=True),
+                Field('hoster', 'string', 'references auth_user', required=True),
                 Field('max_players', 'integer', default=10),
                 Field('turn_time_limit', 'integer', default=30),
                 #game specific attributes
-                Field('secret_word', 'string', 'references taboo_words'),
+                #NOTE: This did not work until we erased 'string', replaced it with 'integer', then re replaced it with 'string'
+                Field('secret_word', 'string', 'references taboo_words.word'),
                 Field('player_scores', 'list:integer', default=[])
                 )
 

@@ -63,6 +63,7 @@ var app = function() {
                         console.log("JS: Returned successfully from API call.");
                     else
                         console.log("JS: Returned unsuccessfully from API call.");
+
                 });
         }else if(choice == 5){
             $.post(talltales_getgames,
@@ -77,6 +78,21 @@ var app = function() {
                 });
         }
     }
+
+    self.join_room_code = function () {
+        $.post(talltales_addplayer, 
+            {
+                room_code: self.vue.room_code
+            }, 
+            function (data) {
+                if(data.successful)
+                    console.log("JS: Returned successfully from API call.");
+
+                else
+                    console.log("JS: Returned unsuccessfully from API call.");
+            }
+        );
+    };
 
     //Testing getting the get games method to retrieve the necessary info
     // self.get_games_tester = function () {
@@ -96,10 +112,12 @@ var app = function() {
         delimiters: ['${', '}'],
         unsafeDelimiters: ['!{', '}'],
         data: {
-            talltales_games: []
+            talltales_games: [],
+            room_code: ""
         },
         methods: {
             api_tester: self.api_tester,
+            join_room_code: self.join_room_code
             //get_games_tester: self.get_games_tester
         }
 

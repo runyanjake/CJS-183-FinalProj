@@ -20,7 +20,6 @@ def init_talltales():
     #generate a unique room code.
     id=random.random()*MAX_ROOM_COUNT
     room_code = int(id)
-    print("room code : " + str(room_code))
     matches = db(room_code == db.talltales_instances.room_code).select(db.talltales_instances.ALL).first()
     if matches is not None:
         id=random.random()*MAX_ROOM_COUNT ###### this is a theoretical infinite loop if we get unlucky with random, maybe do a loop if not found?
@@ -32,8 +31,6 @@ def init_talltales():
     hoster = auth.user.id
     story_text = []
     story_text.append(request.vars.initial_sentence)
-    print("Players: " + str(players))
-    print("Hoster: " + str(hoster))
     db.talltales_instances.insert(
         room_code = room_code,
         player_list = players,
@@ -60,10 +57,16 @@ def add_player_talltales():
     player_list = db(room_code == db.talltales_instances.room_code).select(db.talltales_instances.player_list).first().player_list
     if auth.user.id in player_list:
         print("API: User is already in the game.")
+        return response.json(dict(
+            successful=False
+        ))
     else:
         player_list.append(auth.user.id)
         db(room_code == db.talltales_instances.room_code).update(player_list=player_list)
         print("API: Added user to game.")
+        return response.json(dict(
+            successful=True
+        ))
 
 # #Maybe we want this method? Otherwise idk how we keep game updated. This will require additions to the database.
 # #This should accommodate skipping a turn due to timeout and taking a turn normally

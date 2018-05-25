@@ -30,7 +30,7 @@ var app = function() {
 
     //Used by Jake for API testing.
     self.api_tester = function(){
-        var choice = 2;
+        var choice = 1;
         if(choice == 1){
             $.post(talltales_init,
                 {

@@ -15,7 +15,7 @@ var app = function() {
 
     //Used by Jake for API testing.
     self.api_tester = function(){
-        var choice = 2;
+        var choice = 1;
         if(choice == 1){
             $.post(talltales_init,
                 {
@@ -44,16 +44,16 @@ var app = function() {
     }
 
     //Testing getting the get games method to retrieve the necessary info
-    self.get_games_tester = function () {
-        $.post(talltales_getgames, 
-            {
+    // self.get_games_tester = function () {
+    //     $.post(talltales_getgames, 
+    //         {
 
-            },
-            function (data) {
-                self.vue.talltales_games = data.talltales_games;
-                console.log("cassia returned from API");
-            })
-    }
+    //         },
+    //         function (data) {
+    //             self.vue.talltales_games = data.talltales_games;
+    //             console.log("cassia returned from API");
+    //         })
+    // }
 
     // Complete as needed.
     self.vue = new Vue({
@@ -65,7 +65,7 @@ var app = function() {
         },
         methods: {
             api_tester: self.api_tester,
-            get_games_tester: self.get_games_tester
+            //get_games_tester: self.get_games_tester
         }
 
     });

@@ -16,6 +16,9 @@ MAX_ROOM_COUNT = 999999
 #   request.vars.max_players = max number of players in the game.
 #   request.vars.turn_time_limit = length of a turn in seconds.
 #   request.vars.initial_sentence = first sentence or title of the story
+# returns:
+#   room_code = new room's code.
+#   successful = success value.
 @auth.requires_login()
 def init_talltales():
     print("API: Creating a new instance of TallTales.")
@@ -24,42 +27,51 @@ def init_talltales():
     id = random.random() * MAX_ROOM_COUNT
     room_code = int(id)
     matches = db(room_code == db.talltales_instances.room_code).select(db.talltales_instances.ALL).first()
-    while matches is not None:
+    attempts = 0
+    while matches is not None and attempts < 1000:
         id = random.random() * MAX_ROOM_COUNT  ###### this is a theoretical infinite loop if we get unlucky with random, maybe do a loop if not found?
         room_code = int(id)
         matches = db(room_code == db.talltales_instances.room_code).select(db.talltales_instances.ALL).first()
+        ++attempts
 
-    players = []
-    players.append(auth.user.id)
-    hoster = auth.user.id
-    story_text = []
-    story_text.append(request.vars.initial_sentence)
-    if(request.vars.is_public == True):
-        db.talltales_instances.insert(
-            room_code = room_code,
-            is_public=True,
-            player_list = players,
-            hoster = hoster,
-            max_players = request.vars.max_players,
-            turn_time_limit = request.vars.turn_time_limit,
-            story_text = story_text
-        )
+    if attempts != 1000:
+        players = []
+        players.append(auth.user.id)
+        hoster = auth.user.id
+        story_text = []
+        story_text.append(request.vars.initial_sentence)
+        if (request.vars.is_public == True):
+            db.talltales_instances.insert(
+                room_code=room_code,
+                is_public=True,
+                player_list=players,
+                hoster=hoster,
+                max_players=request.vars.max_players,
+                turn_time_limit=request.vars.turn_time_limit,
+                story_text=story_text
+            )
+        else:
+            db.talltales_instances.insert(
+                room_code=room_code,
+                is_public=False,
+                player_list=players,
+                hoster=hoster,
+                max_players=request.vars.max_players,
+                turn_time_limit=request.vars.turn_time_limit,
+                story_text=story_text
+            )
+
+        print("API: Created instance with room_code " + str(room_code))
+        return response.json(dict(
+            successful=True,
+            room_code=room_code
+        ))
     else:
-        db.talltales_instances.insert(
-            room_code=room_code,
-            is_public=False,
-            player_list=players,
-            hoster=hoster,
-            max_players=request.vars.max_players,
-            turn_time_limit=request.vars.turn_time_limit,
-            story_text=story_text
-        )
-
-    print("API: Created instance with room_code " + str(room_code))
-    return response.json(dict(
-        successful = True,
-        room_code = room_code
-    ))
+        print("API: Failed to create game instance.")
+        return response.json(dict(
+            successful=False,
+            room_code=-1
+        ))
 
 #@TODO JAKE: update_gamestate_talltales should verify logged in user is in that game (and that it's their turn?)
 
@@ -69,6 +81,8 @@ def init_talltales():
 #   request.vars.story_text = next line to append.
 #   request.vars.current_turn = id of auth_user who's turn it is.
 #   (Leave a value blank if you don't want it to update.)
+# returns:
+#   successful = success value.
 @auth.requires_login()
 def update_gamestate_talltales():
     print("API: Updating Talltales gamestate " + str(request.vars.room_code) + ".")
@@ -78,40 +92,46 @@ def update_gamestate_talltales():
             successful=False
         ))
     else:
-        if request.vars.story_text is not None:
-            story = match.story_text
-            story.append(request.vars.story_text)
-            db(request.vars.room_code == db.talltales_instances.room_code).update(story_text=story)
-        if request.vars.current_turn is not None:
-            db(request.vars.room_code == db.talltales_instances.room_code).update(current_turn=request.vars.current_turn)
-        return response.json(dict(
-            successful=True
-        ))
+        if auth.user.id not in match.player_list:
+            return response.json(dict(
+                successful=False
+            ))
+        else:
+            if request.vars.story_text is not None:
+                story = match.story_text
+                story.append(request.vars.story_text)
+                db(request.vars.room_code == db.talltales_instances.room_code).update(story_text=story)
+            if request.vars.current_turn is not None:
+                db(request.vars.room_code == db.talltales_instances.room_code).update(current_turn=request.vars.current_turn)
+            return response.json(dict(
+                successful=True
+            ))
 
 #### Returns the most recent database version of the gamestate for re-rendering the webpage periodically.
 # incoming packet contents:
 #   request.vars.room_code = room code to get gamestate
+# returns:
+#   match = the match (a row) containing gamestate info
+#   successful = success value.
 @auth.requires_login()
 def retrieve_gamestate_talltales():
     print("API: Retrieving Talltales gamestate " + str(request.vars.room_code) + ".")
     match = db(request.vars.room_code == db.talltales_instances.room_code).select(db.talltales_instances.ALL).first()
-    if match is None:
+    if match is None or auth.user.id not in match.player_list:
         return response.json(dict(
             successful=False
         ))
     else:
         return response.json(dict(
-            successful=True,
-            player_list=match.player_list,
-            max_players=match.max_players,
-            turn_time_limit=match.turn_time_limit,
-            story_text=match.story_text,
-            current_turn=match.current_turn
+            match=match,
+            successful=True
         ))
 
 #### Add this user to an existing instance of the game.
 # incoming packet contents:
 #   request.vars.room_code = room code to add to.
+# returns:
+#   successful = success value.
 @auth.requires_login()
 def add_player_talltales():
     print("API: Attempting to add player to existing instance of TallTales.")
@@ -140,6 +160,8 @@ def add_player_talltales():
 ####Remove a user from a game.
 # incoming packet contents:
 #   request.vars.room_code = room code to add to.
+# returns:
+#   successful = success value.
 @auth.requires_login()
 def remove_player_talltales():
     print("API: Attempting to remove player from existing instance of TallTales.")
@@ -172,6 +194,8 @@ def remove_player_talltales():
 #### Delete a game by id.
 # incoming packet contents:
 #   request.vars.room_code = room code to add to.
+# returns:
+#   successful = success value.
 @auth.requires_signature()
 def delete_game_talltales():
     return response.json(dict(
@@ -181,6 +205,9 @@ def delete_game_talltales():
 #### Update the vue listing for currently alive games.
 # incoming packet contents:
 #   request.vars.room_code = room code to add to.
+# returns:
+#   talltales_games = list of games.
+#   successful = success value.
 def get_games_talltales():
     #send in 0 for public game, otherwise send something else
     if request.vars.public == '0':

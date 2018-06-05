@@ -15,7 +15,7 @@ var app = function() {
 
     //Used by Jake for API testing.
     self.api_tester = function(){
-        var choice = 6;
+        var choice = 3;
         if(choice == 1){
             console.log("Testing API test 1 (talltales_init)");
             $.post(talltales_init,
@@ -23,7 +23,7 @@ var app = function() {
                     is_public: false,
                     max_players: 15,
                     turn_time_limit: 30,
-                    initial_sentence: "This here is a story"
+                    initial_sentence: "New story!"
                 },
                 function(data) {
                     if(data.successful == true)
@@ -47,19 +47,20 @@ var app = function() {
             console.log("Testing API test 3 (talltales_getgamestate)");
             $.post(talltales_getgamestate,
                 {
-                    room_code: 215950
+                    room_code: 898954
                 },
                 function(data) {
-                    if(data.successful)
+                    if(data.successful){
                         console.log("JS: Returned successfully from API call.");
-                    else
+                    }else{
                         console.log("JS: Returned unsuccessfully from API call.");
+                    }
                 });
         }else if(choice == 4){
             console.log("Testing API test 4 (talltales_updategamestate)");
             $.post(talltales_updategamestate,
                 {
-                    room_code: 215950,
+                    room_code: 893346,
                     story_text: "THis is part of a story!"
                 },
                 function(data) {

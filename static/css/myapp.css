@@ -59,12 +59,17 @@
   transition: margin-right .5s;
 }
 
+
 /* for the page after selecting a game */
 .holder {
   margin-left: 0px;
 }
 
-.play_w_friends_btn, .play_w_world_btn {
+.play_w_friends_btn, .play_w_world_btn, .create_new_game_btn {
   font-size: 100px;
   text-align: center;
+}
+
+.check {
+  padding: 10px;
 }

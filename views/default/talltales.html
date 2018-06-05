@@ -5,6 +5,8 @@
 <script>
     var my_url = "{{=URL('api', 'game1')}}";
     var talltales_addplayer = "{{=URL('api', 'add_player_talltales')}}";
+    var talltales_init = "{{=URL('api', 'init_talltales')}}";
+
 
 </script>
 {{end}}
@@ -14,12 +16,53 @@
 
     <div id="vue-div" class="display:none">
         <!-- Your code goes here.  Remember to call $("#vue-div").show() once you get the data for the first time. -->
-        <h1>tall tales</h1>
+        <div class="center">
+            <h1>tall tales</h1>
+
+        </div>
+
+        
 
         <div class="container center holder">
+            <!-- <input type="checkbox" v-model="tester">
+            <button v-on:click="test_check"></button> -->
+
+
+            <!--Create a new game-->
+            <div class="third padded holder">
+                <div class="create_new_game_btn">
+                    <a href="#create_new_game"><i class="fa fa-plus"></i></a>
+                </div>
+
+                <!--This is the code for the modal to create a new game-->
+                <div class="modal" id="create_new_game">
+                        <div class="twothirds white padded">
+    
+                            <div class="container">
+                                <h2>create a new game</h2>
+                                <p>generate a room code to share with your friends</p>
+                                <input type="text" v-model="initial_sentence" class="fill" placeholder="Enter the first sentence of your story.">
+                                <div class="check">
+                                    <a><span data-tooltip="If you want to just play with your friends, you will be given a room code to share with them so they can join. Otherwise, strangers will be allowed to join your game.">
+                                        public game?
+                                    </span></a>
+                                    <input type="checkbox" v-model="public_game">
+                                </div>
+                                <button v-on:click="talltales_initialize()">create new game</button>
+                            </div>
+                            
+                            <!--Buttons to close the modal-->
+                            <a class="close" href="#">x</a>
+                            <div class="right">
+                                <a class="close btn" href="#">close</a>
+                            </div>
+    
+                        </div>
+                    </div>
+            </div>
 
             <!--Enter a room code to play-->
-            <div class="half padded holder">
+            <div class="third padded holder">
                 <!--Clicking the button will open a stupid.css modal-->
                 <div class="play_w_friends_btn">
                     <a href="#enter_room_code"><i class="fa fa-users"></i></a>
@@ -27,15 +70,18 @@
                 <!--This is the code for the modal to enter the room code-->
                 <div class="modal" id="enter_room_code">
                     <div class="twothirds white padded">
-                        
-                        <h2>enter a room code</h2>
-                        <input type="text" v-model="room_code" class="fill" placeholder="e.g. 123456">
-                        
+
+                        <div class="container">
+                            <h2>join an existing game</h2>
+                            <p>enter a room code your friend shared with you to join their game.</p>
+                            <input type="text" v-model="room_code" class="fill" placeholder="e.g. 123456">
+                            <button v-on:click="join_room_code">join game</button>
+                        </div>
                         
                         <!--Buttons to close the modal-->
                         <a class="close" href="#">x</a>
                         <div class="right">
-                            <button v-on:click="join_room_code()">join</button>
+                            
                             <a class="close btn" href="#">close</a>
                         </div>
 
@@ -44,7 +90,7 @@
             </div>
 
             <!--Play a public game-->
-            <div class="half padded holder">
+            <div class="third padded holder">
                 <!--Clicking button opens stupid.css modal, will display list of games you can join-->
                 <!--Show a list of possible games to play-->
                 <div class="play_w_world_btn">

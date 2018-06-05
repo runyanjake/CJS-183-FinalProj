@@ -17,14 +17,19 @@ MAX_ROOM_COUNT = 999999
 @auth.requires_login()
 def init_talltales():
     print("API: Creating a new instance of TallTales.")
-    #generate a unique room code.
-    id=random.random()*MAX_ROOM_COUNT
-    room_code = int(id)
-    matches = db(room_code == db.talltales_instances.room_code).select(db.talltales_instances.ALL).first()
-    if matches is not None:
-        id=random.random()*MAX_ROOM_COUNT ###### this is a theoretical infinite loop if we get unlucky with random, maybe do a loop if not found?
+    
+    #if private game, generate room code, else room code = 0
+    if request.vars.public_game == "false":
+        #generate a unique room code.
+        id=random.random()*MAX_ROOM_COUNT
         room_code = int(id)
         matches = db(room_code == db.talltales_instances.room_code).select(db.talltales_instances.ALL).first()
+        if matches is not None:
+            id=random.random()*MAX_ROOM_COUNT ###### this is a theoretical infinite loop if we get unlucky with random, maybe do a loop if not found?
+            room_code = int(id)
+            matches = db(room_code == db.talltales_instances.room_code).select(db.talltales_instances.ALL).first()
+    else: 
+        room_code = 0
     print("API: Created instance with room_code " + str(room_code))
     players = []
     players.append(auth.user.id)

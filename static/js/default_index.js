@@ -15,7 +15,7 @@ var app = function() {
 
     //Used by Jake for API testing.
     self.api_tester = function(){
-        var choice = 4;
+        var choice = 1;
         if(choice == 1){
             $.post(talltales_init,
                 {
@@ -78,20 +78,47 @@ var app = function() {
         }
     }
 
+    self.test_check = function () {
+        console.log("check = " + self.vue.tester);
+    }
+
+    self.talltales_initialize = function () {
+
+
+        $.post(talltales_init,
+            {
+                max_players: 15,
+                turn_time_limit: 30,
+                initial_sentence: self.vue.initial_sentence,
+                public_game: self.vue.public_game
+            },
+            function(data) {
+                if(data.successful == true)
+                    console.log("JS: Returned successfully from API call.");
+                else
+                    console.log("JS: Returned unsuccessfully from API call.");
+            });
+    }
+
     self.join_room_code = function () {
+        console.log("join_room_code pressed: " + self.vue.room_code);
         $.post(talltales_addplayer, 
             {
                 room_code: self.vue.room_code
             }, 
             function (data) {
-                if(data.successful)
+                if(data.successful) {
+                    self.vue.room_code = "";
                     console.log("JS: Returned successfully from API call.");
-
-                else
+                }
+                else {
                     console.log("JS: Returned unsuccessfully from API call.");
+                }
             }
         );
     };
+
+    
 
     //Testing getting the get games method to retrieve the necessary info
     // self.get_games_tester = function () {
@@ -112,11 +139,16 @@ var app = function() {
         unsafeDelimiters: ['!{', '}'],
         data: {
             talltales_games: [],
-            room_code: ""
+            room_code: "",
+            initial_sentence: "",
+            public_game: false,   //not sure what this should be initialized to, can make it default to public
+            tester: false
         },
         methods: {
             api_tester: self.api_tester,
-            join_room_code: self.join_room_code
+            join_room_code: self.join_room_code,
+            talltales_initialize: self.talltales_initialize,
+            test_check: self.test_check
             //get_games_tester: self.get_games_tester
         }
 

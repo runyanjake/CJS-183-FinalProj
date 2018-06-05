@@ -100,12 +100,10 @@
                 <!--The modal that will be opened when clicking the button above-->
                 <div class="modal" id="join_public_game">
                     <div class="twothirds white padded">
-                        <h2>actual code goes here</h2>
-                        <p>all the games will be shown here</p>
-                        
+                        <h2>here are some public games you can join</h2>                        
 
-                        <div id="game_container" v-if="displaying_talltale_games">
-                            <div v-for="game in talltales_games">
+                        <div class="game_container" v-if="displaying_talltale_games">
+                            <div v-for="game in talltales_games" class="game_items">
                                 ${game.story_text[0]}
                             </div>
                         </div>

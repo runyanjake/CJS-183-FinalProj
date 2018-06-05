@@ -15,7 +15,7 @@
 
 #right {
   float: right;
-  width: 80px;
+  
 }
 
 /* styling for side nav menu */
@@ -59,6 +59,10 @@
   transition: margin-right .5s;
 }
 
+body {
+  font-family:"HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif
+}
+
 
 /* for the page after selecting a game */
 .holder {
@@ -72,4 +76,13 @@
 
 .check {
   padding: 10px;
+}
+
+.game_items {
+  padding: 5px;
+}
+
+.game_items:hover {
+  cursor: pointer;
+  background-color: #ffdd7a;
 }

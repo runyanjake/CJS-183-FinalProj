@@ -27,18 +27,34 @@
 			<div id="right">
 
 				
+				<!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!---->
+				<!--Hacky sign up button-->
+				{{if auth.user is None:}}
+				<a href="{{=URL('default', 'user')}}" class="button" id="login_button">
+					<i class="fa fa-sign-in"></i>
+				</a>
+					
 
-				<!--Settings button-->
+				{{else:}}
+
+				<!--Settings button, only shows when logged in-->
 				<a href="javascript:void(0)" class="button" onclick="open_nav()" id="settings_button">
 					<i class="fa fa-gear"></i>
 				</a>
+				<!--Hacky sign up button-->
+				<a href="{{=URL('default', 'user', args=['logout'])}}" class="button" id="login_button">
+					<i class="fa fa-sign-out"></i>
+				</a>
+
+				
+
+				{{pass}}
+				<!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!---->
+				
 
 			</div>
 		</div>
 		
-
-
-
 		<!--Sidebar that is opened when the settings button is clicked-->
 		<div id="settings" class="sidenav">
 			<a href="javascript:void(0)" class="closebtn" onclick="close_nav()">&times;</a>
@@ -47,28 +63,14 @@
 			
 		</div>
 
-		<!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!---->
-		<!--Hacky sign up button-->
-		<a href="{{=URL('default', 'user')}}" class="button" id="login_button">
-			<i class="fa fa-ban">Login</i>
-		</a>
-		<!--Hacky sign up button-->
-		<a href="{{=URL('default', 'user', args=['logout'])}}" class="button" id="login_button">
-			<i class="fa fa-ban">Logout (IF LOGGED IN)</i>
-		</a>
-		<!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!---->
-		
-	
 
 	</header>
 	  
-  	<body class="black">
+  	<body class="navy">
 
 		<!--envelopped OG main into a div w/ id main so that we could implement transition-->
 		<div id="main">
-    		<main class="white">
-      			{{include}}
-			</main>
+      		{{include}}
 		</div>
 		
 	</body>

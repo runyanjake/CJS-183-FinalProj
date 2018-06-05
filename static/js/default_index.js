@@ -93,10 +93,12 @@ var app = function() {
         }
     }
 
-    self.test_check = function () {
-        console.log("check = " + self.vue.tester);
-    }
-
+    /* talltales_initialize():
+    ----------------------------------------------------------------------------
+    Creates a public or private instance of talltales in the database.
+    Currently, max_players and turn_time_limit are defaulted but in the future we 
+    probably want users to be able to select those values themselves.
+    ---------------------------------------------------------------------------- */
     self.talltales_initialize = function () {
 
         $.post(talltales_init,
@@ -114,6 +116,11 @@ var app = function() {
             });
     }
 
+    /* join_room_code():
+    ----------------------------------------------------------------------------
+    User can join a private game by entering a room code (presumably shared with them by a friend).
+    Adds that user to the player_list for the game associated with that room code
+    ----------------------------------------------------------------------------*/
     self.join_room_code = function () {
         console.log("join_room_code pressed: " + self.vue.room_code);
         $.post(talltales_addplayer, 
@@ -134,9 +141,15 @@ var app = function() {
 
     
 
-    //Testing getting the get games method to retrieve the necessary info
+    /* get_games():
+    ----------------------------------------------------------------------------
+    Retrieves all the games in db.talltales_instances and stores them in self.vue.talltales_games.
+    Passing in 0 to api.py specifies it is a public game, anything else means private.
+    Currently, this is only used for displaying public games so hardcoded to 0.
+    ----------------------------------------------------------------------------*/
     self.get_games = function () {
         console.log("get_games clicked");
+        
         $.post(talltales_getgames, 
             {
                 public: 0
@@ -147,6 +160,11 @@ var app = function() {
             })
     }
 
+    /* show_games():
+    ----------------------------------------------------------------------------
+    Function to toggle displaying the public games (in the modal).
+    Calls get_games().
+    ----------------------------------------------------------------------------*/
     self.show_games = function() {
         console.log("show_games clicked");
         self.vue.displaying_talltale_games = !self.vue.displaying_talltale_games;
@@ -164,14 +182,12 @@ var app = function() {
             room_code: "",
             initial_sentence: "",
             public_game: false,   //not sure what this should be initialized to, can make it default to public
-            tester: false,
             displaying_talltale_games: false
         },
         methods: {
             api_tester: self.api_tester,
             join_room_code: self.join_room_code,
             talltales_initialize: self.talltales_initialize,
-            test_check: self.test_check,
             get_games: self.get_games_tester,
             show_games: self.show_games
         }

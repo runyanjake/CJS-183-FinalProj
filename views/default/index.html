@@ -16,13 +16,22 @@
 <div class="main_content">
 
     <div id="vue-div" class="display:none">
-        <!-- Your code goes here.  Remember to call $("#vue-div").show() once you get the data for the first time. -->
-        <h1>welcome to our game site</h1>
-        <a class="btn rounded" v-on:click="api_tester()">Test API Button</a>
-        <a href="{{=URL('default', 'talltales')}}" class="btn rounded">tall tales</a>
-        <a href="{{=URL('default', 'taboo')}}" class="btn rounded">taboo</a>
-        <a href="{{=URL('default', 'typeracer')}}" class="btn rounded">typeracer</a>
-        <!-- <a class="btn rounded" v-on:click="get_games_tester()">Testing getting games</a> -->
+        {{if auth.user is None:}}
+
+        <div id="not_logged_in">
+            <h1>sup, login to play</h1>
+        </div>
+
+        {{else:}}
+        <div id="logged_in">
+            <h1>welcome to our game site</h1>
+            <a class="btn rounded" v-on:click="api_tester()">Test API Button</a>
+            <a href="{{=URL('default', 'talltales')}}" class="btn rounded">tall tales</a>
+            <a href="{{=URL('default', 'taboo')}}" class="btn rounded">taboo</a>
+            <a href="{{=URL('default', 'typeracer')}}" class="btn rounded">typeracer</a>
+            <!-- <a class="btn rounded" v-on:click="get_games_tester()">Testing getting games</a> -->
+        </div>
+            {{pass}}
     </div>
 
 </div>

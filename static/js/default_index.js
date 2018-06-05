@@ -15,11 +15,12 @@ var app = function() {
 
     //Used by Jake for API testing.
     self.api_tester = function(){
-        var choice = 1;
+        var choice = 6;
         if(choice == 1){
             console.log("Testing API test 1 (talltales_init)");
             $.post(talltales_init,
                 {
+                    is_public: false,
                     max_players: 15,
                     turn_time_limit: 30,
                     initial_sentence: "This here is a story"
@@ -34,7 +35,7 @@ var app = function() {
             console.log("Testing API test 2 (talltales_addplayer)");
             $.post(talltales_addplayer,
                 {
-                    room_code: 588666
+                    room_code: 215950
                 },
                 function(data) {
                     if(data.successful)
@@ -46,7 +47,7 @@ var app = function() {
             console.log("Testing API test 3 (talltales_getgamestate)");
             $.post(talltales_getgamestate,
                 {
-                    room_code: 588666
+                    room_code: 215950
                 },
                 function(data) {
                     if(data.successful)
@@ -58,8 +59,8 @@ var app = function() {
             console.log("Testing API test 4 (talltales_updategamestate)");
             $.post(talltales_updategamestate,
                 {
-                    room_code: 588666,
-                    story_text: "Third thing in story"
+                    room_code: 215950,
+                    story_text: "THis is part of a story!"
                 },
                 function(data) {
                     if(data.successful)
@@ -69,6 +70,7 @@ var app = function() {
 
                 });
         }else if(choice == 5){
+            console.log("Testing API test 5 (talltales_getgames)");
             $.post(talltales_getgames,
                 {
 
@@ -80,9 +82,10 @@ var app = function() {
                         console.log("JS: Returned unsuccessfully from API call.");
                 });
         }else if(choice == 6){
+            console.log("Testing API test 6 (talltales_removeplayer)");
             $.post(talltales_removeplayer,
                 {
-                    room_code: 588666
+                    room_code: 215950
                 },
                 function(data) {
                     if(data.successful)

@@ -6,7 +6,7 @@
     var my_url = "{{=URL('api', 'game1')}}";
     var talltales_addplayer = "{{=URL('api', 'add_player_talltales')}}";
     var talltales_init = "{{=URL('api', 'init_talltales')}}";
-
+    var talltales_getgames = "{{=URL('api', 'get_games_talltales')}}";
 
 </script>
 {{end}}
@@ -93,7 +93,7 @@
             <div class="third padded holder">
                 <!--Clicking button opens stupid.css modal, will display list of games you can join-->
                 <!--Show a list of possible games to play-->
-                <div class="play_w_world_btn">
+                <div class="play_w_world_btn" v-on:click="show_games">
                     <a href="#join_public_game"><i class="fa fa-globe"></i></a>
                 </div>
 
@@ -102,9 +102,18 @@
                     <div class="twothirds white padded">
                         <h2>actual code goes here</h2>
                         <p>all the games will be shown here</p>
+                        
+
+                        <div id="game_container" v-if="displaying_talltale_games">
+                            <div v-for="game in talltales_games">
+                                ${game.story_text[0]}
+                            </div>
+                        </div>
+
+                        
                         <a class="close" href="#">x</a>
                         <div class="right">
-                            <a class="close btn" href="#">close</a>
+                            <a class="close btn" href="#" v-on:click="show_games">close</a>
                         </div>
                     </div>
                 </div>

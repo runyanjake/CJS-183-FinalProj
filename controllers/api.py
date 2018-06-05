@@ -45,7 +45,8 @@ def init_talltales():
         story_text = story_text
     )
     return response.json(dict(
-        successful = True
+        successful = True,
+        room_code = room_code
     ))
 
 #Updates the gamestate.
@@ -153,31 +154,40 @@ def remove_player_talltales():
             successful=False
         ))
 
-#Delete a game by id.
+        #Delete a game by id.
 @auth.requires_signature()
 def delete_game_talltales():
     return response.json(dict(
         successful=False
     ))
-
+    
 #Update the vue listing for currently alive games.
 #Receive a unique room code and return everything under that room code.
-# def get_games_talltales():
-#     print("API: Retrieving all instances of TallTales games.")
-#     games = []
-#     rows = db().select(db.talltales_instances.ALL)
-#     for i, r in rows:
-#         t = dict(
-#             room_code = r.room_code,
-#             player_list = r.player_list,
-#             hoster = r.hoster,
-#             max_players = r.max_players,
-#             turn_time_limit = r.turn_time_limit,
-#             secret_word = r.secret_word,
-#             player_scores = r.player_scores
-#         )
-#         games.append(t)
+def get_games_talltales():
+    #send in 0 for public game, otherwise send something else
+    if request.vars.public == '0':
+        rows = db(db.talltales_instances.room_code == 0).select(db.talltales_instances.ALL)
+        print("API: Retrieving public instances of TallTales games.")
+    else:
+        rows = db().select(db.talltales_instances.ALL)
+        print("API: Retrieving all instances of TallTales games.")
+    games = []
+    for r in rows:
+        print(r)
+    
+    for r in rows:
+        t = dict(
+            room_code = r.room_code,
+            player_list = r.player_list,
+            hoster = r.hoster,
+            max_players = r.max_players,
+            turn_time_limit = r.turn_time_limit,
+            story_text = r.story_text,
+            current_turn = r.current_turn
+        )
+        print(t)
+        games.append(t)
 
-#     return response.json(dict(
-#         talltales_games=games
-#     ))
+    return response.json(dict(
+        talltales_games=games
+    ))

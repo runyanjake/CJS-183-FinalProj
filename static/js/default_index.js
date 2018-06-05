@@ -15,12 +15,7 @@ var app = function() {
 
     //Used by Jake for API testing.
     self.api_tester = function(){
-<<<<<<< HEAD
         var choice = 1;
-=======
-        console.log("Running an API function test. (Make sure you're signed in!)");
-        var choice = 6;
->>>>>>> 6d7cf35aee4b1ef9d37d76e342e0a329c8b7ad1b
         if(choice == 1){
             console.log("Testing API test 1 (talltales_init)");
             $.post(talltales_init,
@@ -104,7 +99,6 @@ var app = function() {
 
     self.talltales_initialize = function () {
 
-
         $.post(talltales_init,
             {
                 max_players: 15,
@@ -141,16 +135,24 @@ var app = function() {
     
 
     //Testing getting the get games method to retrieve the necessary info
-    // self.get_games_tester = function () {
-    //     $.post(talltales_getgames, 
-    //         {
+    self.get_games = function () {
+        console.log("get_games clicked");
+        $.post(talltales_getgames, 
+            {
+                public: 0
+            },
+            function (data) {
+                self.vue.talltales_games = data.talltales_games;
+                console.log("cassia returned from API");
+            })
+    }
 
-    //         },
-    //         function (data) {
-    //             self.vue.talltales_games = data.talltales_games;
-    //             console.log("cassia returned from API");
-    //         })
-    // }
+    self.show_games = function() {
+        console.log("show_games clicked");
+        self.vue.displaying_talltale_games = !self.vue.displaying_talltale_games;
+        console.log("displaying_talltales_games = " + self.vue.displaying_talltale_games);
+        self.get_games();
+    }
 
     // Complete as needed.
     self.vue = new Vue({
@@ -162,14 +164,16 @@ var app = function() {
             room_code: "",
             initial_sentence: "",
             public_game: false,   //not sure what this should be initialized to, can make it default to public
-            tester: false
+            tester: false,
+            displaying_talltale_games: false
         },
         methods: {
             api_tester: self.api_tester,
             join_room_code: self.join_room_code,
             talltales_initialize: self.talltales_initialize,
-            test_check: self.test_check
-            //get_games_tester: self.get_games_tester
+            test_check: self.test_check,
+            get_games: self.get_games_tester,
+            show_games: self.show_games
         }
 
     });

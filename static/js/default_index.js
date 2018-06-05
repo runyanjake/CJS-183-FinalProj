@@ -110,7 +110,7 @@ var app = function() {
                 max_players: 15,
                 turn_time_limit: 30,
                 initial_sentence: self.vue.initial_sentence,
-                public_game: self.vue.public_game
+                is_public: self.vue.checkbox_is_public
             },
             function(data) {
                 if(data.successful == true)
@@ -185,7 +185,7 @@ var app = function() {
             talltales_games: [],
             room_code: "",
             initial_sentence: "",
-            public_game: false,   //not sure what this should be initialized to, can make it default to public
+            checkbox_is_public: false,   //not sure what this should be initialized to, can make it default to public
             displaying_talltale_games: false
         },
         methods: {

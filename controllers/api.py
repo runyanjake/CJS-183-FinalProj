@@ -40,7 +40,7 @@ def init_talltales():
         hoster = auth.user.id
         story_text = []
         story_text.append(request.vars.initial_sentence)
-        if (request.vars.is_public == True):
+        if (request.vars.is_public == 'true' or request.vars.is_public == True):
             db.talltales_instances.insert(
                 room_code=room_code,
                 is_public=True,
@@ -211,7 +211,7 @@ def delete_game_talltales():
 def get_games_talltales():
     #send in 0 for public game, otherwise send something else
     if request.vars.public == '0':
-        rows = db(db.talltales_instances.room_code == 0).select(db.talltales_instances.ALL)
+        rows = db(db.talltales_instances.is_public == True).select(db.talltales_instances.ALL)
         print("API: Retrieving public instances of TallTales games.")
     else:
         rows = db().select(db.talltales_instances.ALL)
@@ -228,7 +228,8 @@ def get_games_talltales():
             max_players = r.max_players,
             turn_time_limit = r.turn_time_limit,
             story_text = r.story_text,
-            current_turn = r.current_turn
+            current_turn = r.current_turn,
+            is_public = r.is_public
         )
         print(t)
         games.append(t)

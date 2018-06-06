@@ -48,7 +48,9 @@
                                     </span></a>
                                     <input type="checkbox" v-model="checkbox_is_public">
                                 </div>
-                                <button v-on:click="talltales_initialize()">create new game</button>
+                                <a href="{{=URL('talltales', 'game')}}">
+                                    <button v-on:click="talltales_initialize()">create new game</button>
+                                </a>
                             </div>
                             
                             <!--Buttons to close the modal-->

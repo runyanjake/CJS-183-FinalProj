@@ -113,10 +113,11 @@ var app = function() {
                 is_public: self.vue.checkbox_is_public
             },
             function(data) {
-                if(data.successful == true)
+                if(data.successful == true){
                     console.log("JS: Returned successfully from API call.");
-                else
+                }else{
                     console.log("JS: Returned unsuccessfully from API call.");
+                }
             });
     }
 

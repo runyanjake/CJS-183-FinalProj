@@ -10,6 +10,7 @@
     var talltales_getgamestate = "{{=URL('api', 'retrieve_gamestate_talltales')}}";
     var talltales_updategamestate = "{{=URL('api', 'update_gamestate_talltales')}}";
     var talltales_getgames = "{{=URL('api', 'get_games_talltales')}}";
+    var talltales_lobby = "{{=URL('talltales', 'game')}}";
 </script>
 {{end}}
 
@@ -27,36 +28,28 @@
             <div id="logged_in" class="container center">
                 <!--<a class="btn rounded" v-on:click="api_tester()">Test API Button</a>-->
                 
-                
                 <div id="tall_tales" class="third">
-                    <a href="{{=URL('default', 'talltales')}}" class="btn oval" id="button_orange">
+                    <a href="{{=URL('talltales', 'join')}}" class="btn oval" id="button_orange">
                         <h3>tall tales</h3>
                     </a>
-                    <!-- <button class="btn oval" id="button_orange" href="{{=URL('default', 'talltales')}}">
-                        <h3><a href="{{=URL('default', 'talltales')}}">tall tales</a></h3>
-                    </button> -->
-                    
-                    
-                </div>
-                <div id="taboo" class="third">
-                    <a href="{{=URL('default', 'taboo')}}" class="btn oval" id="button_yellow">
-                        <h3>taboo</h3>
-                    </a>
-                    
-                </div>
-                <div id="typeracer" class="third">
-                    <a href="{{=URL('default', 'typeracer')}}" class="btn oval" id="button_green">
-                        <h3>typeracer</h3>
-                    </a>
-                    
-                    
                 </div>
 
-                <!-- <a class="btn rounded" v-on:click="get_games_tester()">Testing getting games</a> -->
+                <div id="taboo" class="third">
+                    <a href="{{=URL('taboo', 'join')}}" class="btn oval" id="button_yellow">
+                        <h3>taboo</h3>
+                    </a>
+                </div>
+
+                <div id="typeracer" class="third">
+                    <a href="{{=URL('typeracer', 'join')}}" class="btn oval" id="button_green">
+                        <h3>typeracer</h3>
+                    </a>
+                </div>
+
             </div>
                 {{pass}}
 
-        </div>
+    
     </div>
 
 </div>

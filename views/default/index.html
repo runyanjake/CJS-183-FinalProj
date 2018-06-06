@@ -16,22 +16,47 @@
 <div class="main_content">
 
     <div id="vue-div" class="display:none">
-        {{if auth.user is None:}}
+        <div class="container" id="main_page_container">
+            {{if auth.user is None:}}
 
-        <div id="not_logged_in">
-            <h1>sup, login to play</h1>
-        </div>
+            <div id="not_logged_in" class="center">
+                <h1>sup, <a href="{{=URL('default', 'user')}}">login</a> to play</h1>
+            </div>
 
-        {{else:}}
-        <div id="logged_in">
-            <h1>welcome to our game site</h1>
-            <a class="btn rounded" v-on:click="api_tester()">Test API Button</a>
-            <a href="{{=URL('default', 'talltales')}}" class="btn rounded">tall tales</a>
-            <a href="{{=URL('default', 'taboo')}}" class="btn rounded">taboo</a>
-            <a href="{{=URL('default', 'typeracer')}}" class="btn rounded">typeracer</a>
-            <!-- <a class="btn rounded" v-on:click="get_games_tester()">Testing getting games</a> -->
+            {{else:}}
+            <div id="logged_in" class="container center">
+                <!--<a class="btn rounded" v-on:click="api_tester()">Test API Button</a>-->
+                
+                
+                <div id="tall_tales" class="third">
+                    <a href="{{=URL('default', 'talltales')}}" class="btn oval" id="button_orange">
+                        <h3>tall tales</h3>
+                    </a>
+                    <!-- <button class="btn oval" id="button_orange" href="{{=URL('default', 'talltales')}}">
+                        <h3><a href="{{=URL('default', 'talltales')}}">tall tales</a></h3>
+                    </button> -->
+                    
+                    
+                </div>
+                <div id="taboo" class="third">
+                    <a href="{{=URL('default', 'taboo')}}" class="btn oval" id="button_yellow">
+                        <h3>taboo</h3>
+                    </a>
+                    
+                </div>
+                <div id="typeracer" class="third">
+                    <a href="{{=URL('default', 'typeracer')}}" class="btn oval" id="button_green">
+                        <h3>typeracer</h3>
+                    </a>
+                    
+                    
+                </div>
+
+                <!-- <a class="btn rounded" v-on:click="get_games_tester()">Testing getting games</a> -->
+            </div>
+                {{pass}}
+
         </div>
-            {{pass}}
     </div>
 
 </div>

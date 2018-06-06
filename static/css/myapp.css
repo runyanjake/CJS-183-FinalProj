@@ -3,17 +3,28 @@
   color: #bb8833;
 }
 
+/*----------------------------------------------------------------------------*/
+/* LAYOUT.HTML (i.e. applicable to every page)*/
+/*----------------------------------------------------------------------------*/
+#main {
+  transition: margin-right .5s;
+}
+
+body {
+  font-family:"HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif
+}
+
 /* top nav links */
 .button {
   font-size: 30px;
 }
 
-#left {
+#top_nav_left {
   width: 40px;
   float: left;
 }
 
-#right {
+#top_nav_right {
   float: right;
   
 }
@@ -53,18 +64,71 @@
   text-align: right;
 }
 
-
-/* styling for main page -- pushes content to the right when nav bar opens */
-#main {
-  transition: margin-right .5s;
+/*----------------------------------------------------------------------------*/
+/* INDEX.HTML */
+/*----------------------------------------------------------------------------*/
+#main_page_container {
+  margin: 30px;
+  position: relative;
+  height: 80vh;
 }
 
-body {
-  font-family:"HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif
+#not_logged_in {
+  text-align: center;
+  position: absolute;
+  top: 43%;
+  left: -10px;
+}
+
+#logged_in {
+  text-align: center;
+  position: absolute;
+  top: 30%;
 }
 
 
-/* for the page after selecting a game */
+#tall_tales {
+  text-align: center;
+}
+
+#taboo {
+  text-align: center;
+}
+
+#typeracer {
+  text-align: center;
+}
+
+#button_orange {
+  width: 75%;
+  padding-top: 33.5%;
+  padding-bottom: 33.5%;
+  background-color: #ffa500;
+  position: relative;
+
+}
+
+#button_yellow {
+  width: 75%;
+  padding-top: 33.5%;
+  padding-bottom: 33.5%;
+  background-color: #ffdd00;
+  position: relative;
+
+}
+
+#button_green {
+  width: 75%;
+  padding-top: 33.5%;
+  padding-bottom: 33.5%;
+  background-color: #6ce547;
+  position: relative;
+
+}
+
+/*----------------------------------------------------------------------------*/
+/* START GAME OPTIONS (page after picking a game)*/
+/*----------------------------------------------------------------------------*/
 .holder {
   margin-left: 0px;
 }
@@ -74,10 +138,13 @@ body {
   text-align: center;
 }
 
-.check {
+/* "create new game" modal*/
+.public_or_not_tooltip {
   padding: 10px;
 }
 
+
+/* "join public game" modal */
 .game_items {
   padding: 5px;
 }
@@ -86,3 +153,5 @@ body {
   cursor: pointer;
   background-color: #ffdd7a;
 }
+/*----------------------------------------------------------------------------*/
+

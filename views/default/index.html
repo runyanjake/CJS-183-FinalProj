@@ -10,6 +10,7 @@
     var talltales_getgamestate = "{{=URL('api', 'retrieve_gamestate_talltales')}}";
     var talltales_updategamestate = "{{=URL('api', 'update_gamestate_talltales')}}";
     var talltales_getgames = "{{=URL('api', 'get_games_talltales')}}";
+    var talltales_lobby = "{{=URL('talltales', 'game')}}";
 </script>
 {{end}}
 
@@ -26,9 +27,9 @@
         <div id="logged_in">
             <h1>welcome to our game site</h1>
             <a class="btn rounded" v-on:click="api_tester()">Test API Button</a>
-            <a href="{{=URL('default', 'talltales')}}" class="btn rounded">tall tales</a>
-            <a href="{{=URL('default', 'taboo')}}" class="btn rounded">taboo</a>
-            <a href="{{=URL('default', 'typeracer')}}" class="btn rounded">typeracer</a>
+            <a href="{{=URL('talltales', 'join')}}" class="btn rounded">tall tales</a>
+            <a href="{{=URL('taboo', 'join')}}" class="btn rounded">taboo</a>
+            <a href="{{=URL('typeracer', 'join')}}" class="btn rounded">typeracer</a>
             <!-- <a class="btn rounded" v-on:click="get_games_tester()">Testing getting games</a> -->
         </div>
             {{pass}}

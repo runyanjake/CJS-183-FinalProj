@@ -114,9 +114,7 @@ var app = function() {
             function(data) {
                 if(data.successful == true){
                     console.log("JS: Returned successfully from API call.");
-                    console.log("Current room code: " + data.room_code);
                     self.vue.current_room_code = data.room_code;
-                    console.log("After assignment room code: " + self.vue.current_room_code);
                 }else{
                     console.log("JS: Returned unsuccessfully from API call.");
                 }
@@ -149,20 +147,21 @@ var app = function() {
 
     }
 
-    /* join_room_code():
+    /* join_room_by_code():
     ----------------------------------------------------------------------------
     User can join a private game by entering a room code (presumably shared with them by a friend).
     Adds that user to the player_list for the game associated with that room code
     ----------------------------------------------------------------------------*/
-    self.join_room_code = function () {
-        console.log("join_room_code pressed: " + self.vue.room_code);
+    self.join_room_by_code = function () {
+        console.log("join_room_code pressed: " + self.vue.join_room_code);
         $.post(talltales_addplayer, 
             {
-                room_code: self.vue.room_code
+                room_code: self.vue.join_room_code
             }, 
             function (data) {
                 if(data.successful) {
-                    self.vue.room_code = "";
+                    self.vue.current_room_code = self.vue.join_room_code;
+                    self.vue.join_room_code = "";
                     console.log("JS: Returned successfully from API call.");
                 }
                 else {
@@ -170,6 +169,8 @@ var app = function() {
                 }
             }
         );
+        //Update in lobby state, which updates HTML
+        self.vue.is_in_lobby = true;
     };
 
     
@@ -226,24 +227,34 @@ var app = function() {
         delimiters: ['${', '}'],
         unsafeDelimiters: ['!{', '}'],
         data: {
+            //Join via new game vue variables
             talltales_games: [],
-            room_code: "",
-            initial_sentence: "",
             checkbox_is_public: false,   //not sure what this should be initialized to, can make it default to public
+            initial_sentence: "",
+
+            //Join via room_code vue variables
+            join_room_code: "",
+
+            //Join via global vue variables
             displaying_talltale_games: false,
 
+            //Vue variables common to ALL GAMES
             current_gamestate: null, //Object(?) holding the currently viewed game information.
             current_room_code: -1,
-
             is_in_lobby: false,
+
+            //Shane's Taboo things
+            //Jake: i think that we should hold all of the gamestate in its own vue var
+            //(for talltales i did current_gamestate which is returned a row from the API)
             host: null,
             player_list: [],
+
 
 
         },
         methods: {
             api_tester: self.api_tester,
-            join_room_code: self.join_room_code,
+            join_room_by_code: self.join_room_by_code,
             talltales_initialize: self.talltales_initialize,
             talltales_leave: self.talltales_leave,
             get_games: self.get_games_tester,

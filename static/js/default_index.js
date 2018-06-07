@@ -161,6 +161,7 @@ var app = function() {
             function (data) {
                 if(data.successful) {
                     self.vue.current_room_code = self.vue.join_room_code;
+                    console.log("Joining Room " + self.vue.current_room_code);
                     self.vue.join_room_code = "";
                     console.log("JS: Returned successfully from API call.");
                 }

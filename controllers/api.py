@@ -162,14 +162,37 @@ def add_player_talltales():
 #   request.vars.room_code = room code to remove from to.
 # returns:
 #   successful = success value.
+
+
+
+
+
+
+
+
+
+
+# Jake's TODOS: When hoster leaves, promote oldest person to hoster.
+#               Viewing public games should trigger a reload of the currently available games in the case that someone from another window added a game.
+
+
+
+
+
+
+
+
+
+
+
 @auth.requires_login()
 def remove_player_talltales():
     print("API: Attempting to remove player from existing instance of TallTales.")
     room_code = request.vars.room_code
     room = db(room_code == db.talltales_instances.room_code).select(db.talltales_instances.ALL).first()
     if room is not None:
-        player_list = db(room_code == db.talltales_instances.room_code).select(
-            db.talltales_instances.player_list).first().player_list
+        game = db(room_code == db.talltales_instances.room_code).select(db.talltales_instances.ALL).first()
+        player_list = game.player_list
         if auth.user.id not in player_list:
             print("API: User " + str(auth.user.id) + " was never in game instance " + str(room_code) + ".")
             return response.json(dict(
@@ -187,6 +210,9 @@ def remove_player_talltales():
                     successful=True
                 ))
             else:
+                if auth.user.id == game.hoster:
+                    print("Hoster is leaving, promoting player " + str(new_player_list[0]) + " to hoster.")
+                    db(room_code == db.talltales_instances.room_code).update(hoster=new_player_list[0])
                 db(room_code == db.talltales_instances.room_code).update(player_list=new_player_list)
                 print("API: Removed user " + str(auth.user.id) + " from game instance " + str(room_code) + ".")
                 return response.json(dict(

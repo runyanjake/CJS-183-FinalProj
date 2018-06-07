@@ -159,7 +159,7 @@ def add_player_talltales():
 
 ####Remove a user from a game.
 # incoming packet contents:
-#   request.vars.room_code = room code to add to.
+#   request.vars.room_code = room code to remove from to.
 # returns:
 #   successful = success value.
 @auth.requires_login()
@@ -180,11 +180,18 @@ def remove_player_talltales():
             for player_id in player_list:
                 if auth.user.id != player_id:
                     new_player_list.append(player_id)
-            db(room_code == db.talltales_instances.room_code).update(player_list=new_player_list)
-            print("API: Removed user " + str(auth.user.id) + " from game instance " + str(room_code) + ".")
-            return response.json(dict(
-                successful=True
-            ))
+            if new_player_list == []:
+                db(room_code == db.talltales_instances.room_code).delete()
+                print("API: Removed user " + str(auth.user.id) + " from game instance " + str(room_code) + ". They were last player, so the gamestate was deleted too.")
+                return response.json(dict(
+                    successful=True
+                ))
+            else:
+                db(room_code == db.talltales_instances.room_code).update(player_list=new_player_list)
+                print("API: Removed user " + str(auth.user.id) + " from game instance " + str(room_code) + ".")
+                return response.json(dict(
+                    successful=True
+                ))
     else:
         print("API: Game instance " + str(room_code) + " does not exist.")
         return response.json(dict(
@@ -198,6 +205,7 @@ def remove_player_talltales():
 #   successful = success value.
 @auth.requires_signature()
 def delete_game_talltales():
+    # db(request.vars.room_code == db.talltales_instances.room_code).delete()
     return response.json(dict(
         successful=False
     ))

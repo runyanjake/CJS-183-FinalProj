@@ -104,7 +104,6 @@ var app = function() {
     probably want users to be able to select those values themselves.
     ---------------------------------------------------------------------------- */
     self.talltales_initialize = function () {
-
         $.post(talltales_init,
             {
                 max_players: 15,
@@ -115,10 +114,39 @@ var app = function() {
             function(data) {
                 if(data.successful == true){
                     console.log("JS: Returned successfully from API call.");
+                    console.log("Current room code: " + data.room_code);
+                    self.vue.current_room_code = data.room_code;
+                    console.log("After assignment room code: " + self.vue.current_room_code);
                 }else{
                     console.log("JS: Returned unsuccessfully from API call.");
                 }
             });
+        //Update in lobby state, which updates HTML
+        self.vue.is_in_lobby = true;
+    }
+
+    /* talltales_leave():
+    ----------------------------------------------------------------------------
+    Called when a player leaves a lobby.
+    ---------------------------------------------------------------------------- */
+    self.talltales_leave = function () {
+        //TODO: REMOVE PLAYER FROM DATABASE GAMESTATE
+        $.post(talltales_removeplayer,
+            {
+                room_code: self.vue.current_room_code
+            },
+            function(data) {
+                if(data.successful == true){
+                    console.log("JS: Returned successfully from API call.");
+                }else{
+                    console.log("JS: Returned unsuccessfully from API call.");
+                }
+            });
+        //Update view things, which updates HTML
+        self.vue.is_in_lobby = false;
+        self.vue.checkbox_is_public = false;
+
+
     }
 
     /* join_room_code():
@@ -204,6 +232,10 @@ var app = function() {
             checkbox_is_public: false,   //not sure what this should be initialized to, can make it default to public
             displaying_talltale_games: false,
 
+            current_gamestate: null, //Object(?) holding the currently viewed game information.
+            current_room_code: -1,
+
+            is_in_lobby: false,
             host: null,
             player_list: [],
 
@@ -213,6 +245,7 @@ var app = function() {
             api_tester: self.api_tester,
             join_room_code: self.join_room_code,
             talltales_initialize: self.talltales_initialize,
+            talltales_leave: self.talltales_leave,
             get_games: self.get_games_tester,
             show_games: self.show_games
         }

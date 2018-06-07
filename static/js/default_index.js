@@ -109,7 +109,7 @@ var app = function() {
                 max_players: 15,
                 turn_time_limit: 30,
                 initial_sentence: self.vue.initial_sentence,
-                is_public: self.vue.checkbox_is_public
+                is_public: self.vue.is_public
             },
             function(data) {
                 if(data.successful == true){
@@ -144,7 +144,7 @@ var app = function() {
             });
         //Update view things, which updates HTML
         self.vue.is_in_lobby = false;
-        self.vue.checkbox_is_public = false;
+        self.vue.is_public = false;
 
 
     }
@@ -229,7 +229,7 @@ var app = function() {
             talltales_games: [],
             room_code: "",
             initial_sentence: "",
-            checkbox_is_public: false,   //not sure what this should be initialized to, can make it default to public
+            is_public: false,   //not sure what this should be initialized to, can make it default to public
             displaying_talltale_games: false,
 
             current_gamestate: null, //Object(?) holding the currently viewed game information.

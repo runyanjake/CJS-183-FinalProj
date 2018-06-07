@@ -104,7 +104,14 @@
             </div>
         </div>
         <div v-else>
-            IN GAME
+            <div id="previous_sentence">
+                <h1>previous sentence, which is long as foooooook (and if my thing somehow ended up being even longggggger than this, I have overflow set to scroll so apparently a scrollbar will hsow up and what happens when it's just a bit longer?</h1>
+            </div>
+            <div id="your_sentence">
+                <input id="your_sentence_input" type="text" placeholder="Enter the next line of the story">
+
+            </div>
+
             <button v-on:click="talltales_leave()">leave game</button>
         </div>
     </div> <!-- Ends the vue div -->

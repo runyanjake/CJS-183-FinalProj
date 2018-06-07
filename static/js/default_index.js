@@ -6,6 +6,48 @@ var app = function() {
 
     Vue.config.silent = false; // show all warnings
 
+    //load background so it stays for each page
+    change_background = function () {
+        if (sessionStorage.getItem('bg_color')) {
+            console.log("entered if");
+            console.log("session storage = " + sessionStorage.getItem('bg_color'));
+            document.body.style.backgroundColor = sessionStorage.getItem('bg_color');
+            console.log("session storage = " + sessionStorage.getItem('bg_color'));
+
+        }else{
+            console.log("entered else");
+            document.body.style.backgroundColor =  "#ffd621";
+            sessionStorage.setItem('bg_color', "#ffd621");
+        }
+    }
+    //Toggle themes
+    self.switch_theme = function (theme_code) {
+        //yellow theme
+        if (theme_code == 1) {
+            document.body.style.background = "#ffd621";
+            sessionStorage.setItem('bg_color', "#ffd621");
+        }
+        //teal theme
+        else if (theme_code == 2) {
+            document.body.style.background = "#2dd8bf";
+            sessionStorage.setItem('bg_color', "#2dd8bf");
+        }
+        //pink theme
+        else if (theme_code == 3) {
+            document.body.style.background = "#ff91ca";
+            sessionStorage.setItem('bg_color', "#ff91ca");
+        }
+        //orange theme
+        else if (theme_code == 4) {
+            document.body.style.background = "#ffb30f";
+            sessionStorage.setItem('bg_color', "#ffb30f");
+        }
+        else if (theme_code == 5) {
+            document.body.style.background = "#b67fff";
+            sessionStorage.setItem('bg_color', "#b67fff");
+        }
+    }
+
     // Extends an array
     self.extend = function(a, b) {
         for (var i = 0; i < b.length; i++) {
@@ -235,13 +277,14 @@ var app = function() {
             current_gamestate: null, //Object(?) holding the currently viewed game information.
             current_room_code: -1,
 
-            is_in_lobby: false,
+            is_in_lobby: true,
             host: null,
             player_list: [],
 
 
         },
         methods: {
+            switch_theme: self.switch_theme,
             api_tester: self.api_tester,
             join_room_code: self.join_room_code,
             talltales_initialize: self.talltales_initialize,
@@ -252,6 +295,7 @@ var app = function() {
 
     });
 
+    change_background();
     $("#vue-div").show();
     return self;
 };

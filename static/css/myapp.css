@@ -11,7 +11,17 @@
 }
 
 body {
-  font-family:"HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif
+  font-family:"HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+  background: #ffd800;
+  color: white;
+}
+
+a {
+  color: #fff000;
+}
+
+a:hover {
+  color: #fff000 !important;
 }
 
 /* top nav links */
@@ -153,5 +163,79 @@ body {
   cursor: pointer;
   background-color: #ffdd7a;
 }
-/*----------------------------------------------------------------------------*/
 
+/*----------------------------------------------------------------------------*/
+/* PLAYING TALLTALES GAME */
+/*----------------------------------------------------------------------------*/
+input[type=text]#your_sentence_input {
+  background-color: transparent;
+  color: white;
+  font-size: 40px;
+  font-weight: bold;
+  border-bottom: gray solid 1px;
+  padding-bottom: 0px !important;
+  margin: 10px !important;
+  height: 10vh;
+}
+
+::placeholder {
+  color: #c4c4c4;
+  opacity: 1;
+}
+
+input[type=text]#your_sentence_input:hover {
+  background-color: none !important;
+}
+
+#previous_sentence {
+  overflow: scroll;
+  height: 80vh;
+}
+
+
+
+/*----------------------------------------------------------------------------*/
+/* THEMES page */
+/*----------------------------------------------------------------------------*/
+#themes_square_holder_parent {
+  position: relative;
+  top: 40px;
+}
+
+#themes_square_holder {
+  position: absolute;
+  left: 10%;
+  top: 40%;
+  width: 80%;
+}
+
+.square {
+  width: 50px;
+  height: 50px;
+  display: inline-block;
+  border: 1px solid lightgray;
+}
+
+.square_text {
+  display: inline-block;
+}
+
+#yellow_theme_square {
+  background-color: #ffd800;
+}
+
+#teal_theme_square {
+  background-color: #2dd8bf;
+}
+
+#pink_theme_square {
+  background-color: #ff91ca;
+}
+
+#orange_theme_square {
+  background-color: #ffb30f;
+}
+
+#purple_theme_square {
+  background-color: #b67fff;
+}

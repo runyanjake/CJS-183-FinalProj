@@ -28,7 +28,7 @@ thead tr {background-color:#f1f1f1}
 tbody tr {border-bottom:2px solid #f1f1f1}
 td, th {padding: 5px; text-align: left; vertical-align:top}
 thead th {vertical-align:bottom}
-header, main, footer {display:block; with:100%} /* IE fix */
+header, main, footer {display:block; width:100%} /* IE fix */
 
 @media all and (max-width:599px) {
   h1{font-size:2em}
@@ -40,7 +40,7 @@ header, main, footer {display:block; with:100%} /* IE fix */
 }
 
 /*** buttons ***/
-.btn, button, [type=button], [type=submit] {padding:0.5em 1em; margin:0 0.5em 0.5em 0; display:inline-block; background-color:#26a69a; color:white}
+.btn, button, [type=button], [type=submit] {padding:0.5em 1em; margin:0 0.5em 0.5em 0; display:inline-block; background-color:#fff000; color:white}
 .btn:hover, button:hover, [type=button]:hover, [type=submit]:hover {box-shadow:0 0 10px #666; text-decoration:none; cursor:pointer}
 .btn.small, table .btn {padding:0.25em 0.5em; font-size:0.8em}
 .btn.large {padding:1em 2em; font-size:1.2em}
@@ -65,7 +65,7 @@ header, main, footer {display:block; with:100%} /* IE fix */
 .hidden {display:none !important}
 
 /*** forms ***/
-input:not([type]), input:not([type=checkbox]):not([type=radio]):not([type=button]):not([type=submit]), [type=file]:before {outline:none; padding:0.5em 1em; margin:0.5px; border-bottom:1px solid #ddd; width:100%}
+input:not([type]), input:not([type=checkbox]):not([type=radio]):not([type=button]):not([type=submit]), [type=file]:before {outline:none; padding:0.5em 1em; margin:0.5px; width:100%}
 textarea {width:100%; border:1px solid #ddd; padding:4px 8px; outline:none; outline:none}
 select {-webkit-appearance:none; outline:none; padding:0.5em 1em; border-radius:0; margin:0.5px; border-bottom:1px solid #ddd; width:100%;background-color:transparent}
 input, textarea, select, button, .btn {font-size:12px}
@@ -245,7 +245,7 @@ input:invalid, input.error, textarea:invalid, textarea.error {background: #ffdfd
 
 /**** underline effect ***/
 a:not(.btn):not(.noeffect) {position:relative}
-a:not(.btn):not(.noeffect):hover {color:#26a69a}
+a:not(.btn):not(.noeffect):hover {color:#fff000}
 a:not(.btn):not(.noeffect):hover:after {width:100%}
 a:not(.btn):not(.noeffect):after {
   display:block;
@@ -254,7 +254,7 @@ a:not(.btn):not(.noeffect):after {
   bottom:-1px;
   width:0;
   height:2px;
-  background-color:#26a69a;
+  background-color:#fff000;
   content:"";
   transition:width 0.2s;
 }

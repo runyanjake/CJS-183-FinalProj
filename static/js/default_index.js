@@ -146,6 +146,7 @@ var app = function() {
     probably want users to be able to select those values themselves.
     ---------------------------------------------------------------------------- */
     self.talltales_initialize = function () {
+        console.log("JS: Creating tall tales game instance.");
         $.post(talltales_init,
             {
                 max_players: 15,
@@ -156,13 +157,14 @@ var app = function() {
             function(data) {
                 if(data.successful == true){
                     console.log("JS: Returned successfully from API call.");
-                    self.vue.current_room_code = data.room_code;
+                    self.vue.current_gamestate = data.gamestate;
+                    //Update in lobby state, which updates HTML
+                    self.vue.is_in_lobby = true;
+                    self.talltales_gameloop();
                 }else{
                     console.log("JS: Returned unsuccessfully from API call.");
                 }
             });
-        //Update in lobby state, which updates HTML
-        self.vue.is_in_lobby = true;
     }
 
     /* talltales_join_by_stored_code():
@@ -172,25 +174,6 @@ var app = function() {
     Adds that user to the player_list for the game associated with that room code
     ----------------------------------------------------------------------------*/
     self.talltales_join_by_stored_code = function () {
-//        console.log("join_room_code pressed: " + self.vue.join_room_code);
-//        $.post(talltales_addplayer,
-//            {
-//                room_code: self.vue.join_room_code
-//            },
-//            function (data) {
-//                if(data.successful) {
-//                    self.vue.current_room_code = self.vue.join_room_code;
-//                    console.log("Joining Room " + self.vue.current_room_code);
-//                    self.vue.join_room_code = "";
-//                    console.log("JS: Returned successfully from API call.");
-//                }
-//                else {
-//                    console.log("JS: Returned unsuccessfully from API call.");
-//                }
-//            }
-//        );
-//        //Update in lobby state, which updates HTML
-//        self.vue.is_in_lobby = true;
         self.vue.talltales_join_by_code(self.vue.join_room_code);
         self.vue.join_room_code = "";
     };
@@ -201,23 +184,25 @@ var app = function() {
     Adds that user to the player_list for the game associated with that room code
     ----------------------------------------------------------------------------*/
     self.talltales_join_by_code = function (room_code) {
+        console.log("JS: Joining tall tales game instance.");
         $.post(talltales_addplayer,
             {
                 room_code: room_code
             },
             function (data) {
                 if(data.successful) {
-                    self.vue.current_room_code = room_code;
-                    console.log("Joining Room " + self.vue.current_room_code);
+                    self.vue.current_gamestate = data.gamestate;
+                    console.log("Joining Room " + self.vue.current_gamestate.room_code);
                     console.log("JS: Returned successfully from API call.");
+                    //Update in lobby state, which updates HTML
+                    self.vue.is_in_lobby = true;
+                    self.talltales_gameloop();
                 }
                 else {
                     console.log("JS: Returned unsuccessfully from API call.");
                 }
             }
         );
-        //Update in lobby state, which updates HTML
-        self.vue.is_in_lobby = true;
     };
 
     /* talltales_leave():
@@ -227,7 +212,7 @@ var app = function() {
     self.talltales_leave = function () {
         $.post(talltales_removeplayer,
             {
-                room_code: self.vue.current_room_code
+                room_code: self.vue.current_gamestate.room_code
             },
             function(data) {
                 if(data.successful == true){
@@ -239,8 +224,32 @@ var app = function() {
         //Update view things, which updates HTML
         self.vue.is_in_lobby = false;
         self.vue.is_public = false;
+    }
 
-
+    /* talltales_gameloop():
+    ----------------------------------------------------------------------------
+    Refreshes gamestate for render. Should be called in JS loop with setInterval.
+    ---------------------------------------------------------------------------- */
+    self.talltales_gameloop = function() {
+        if(self.vue.is_in_lobby){
+            console.log("Should be starting game loop now.");
+            window.setInterval(self.talltales_gamerefresh(), 2000);
+        }
+    }
+    self.talltales_gamerefresh = function () {
+        console.log("Updating gamestate for room " + self.vue.current_gamestate.room_code + ".");
+//        $.post(talltales_getgamestate,
+//            {
+//                room_code: self.vue.current_gamestate.room_code
+//            },
+//            function(data) {
+//                if(data.successful == true){
+//                    self.vue.current_gamestate = data.match;
+//                    console.log("JS: Returned successfully from API call.");
+//                }else{
+//                    console.log("JS: Returned unsuccessfully from API call.");
+//                }
+//            });
     }
 
     
@@ -309,9 +318,7 @@ var app = function() {
             displaying_talltale_games: false,
 
             //Vue variables common to ALL GAMES
-            current_gamestate: null, //Object(?) holding the currently viewed game information.
-            current_room_code: -1,
-
+            current_gamestate: [], //Object(?) holding the currently viewed game information.
             is_in_lobby: false,
 
             //Shane's Taboo things

@@ -13,11 +13,11 @@
 <div class="main_content">
 
     <div id="vue-div" class="display:none">
-        <div id="themes_square_holder_parent">
-            
+        <div> <!-- changed from <div id="themes_square_holder_parent"> because this broke it for me -jake -->
+
             <div id="themes_square_holder">
                 <h1>pick a theme</h1>
-                
+
                 <div id="pink_theme" v-on:click="switch_theme(3)">
                     <div class="square" id="pink_theme_square"></div>
                     <div class="square_text">pink</div>
@@ -27,12 +27,12 @@
                     <div class="square" id="orange_theme_square"></div>
                     <div class="square_text">orange</div>
                 </div>
-                
+
                 <div id="yellow_theme" v-on:click="switch_theme(1)">
                     <div class="square" id="yellow_theme_square"></div>
                     <div class="square_text">yellow</div>
                 </div>
-                
+
                 <div id="teal_theme" v-on:click="switch_theme(2)">
                     <div class="square" id="teal_theme_square"></div>
                     <div class="square_text">turquoise</div>
@@ -43,7 +43,7 @@
                     <div class="square_text">purple</div>
                 </div>
 
-               
+
             </div>
         </div>
     </div>

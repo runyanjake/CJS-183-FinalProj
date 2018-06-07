@@ -156,9 +156,7 @@ var app = function() {
             function(data) {
                 if(data.successful == true){
                     console.log("JS: Returned successfully from API call.");
-                    console.log("Current room code: " + data.room_code);
                     self.vue.current_room_code = data.room_code;
-                    console.log("After assignment room code: " + self.vue.current_room_code);
                 }else{
                     console.log("JS: Returned unsuccessfully from API call.");
                 }
@@ -167,12 +165,66 @@ var app = function() {
         self.vue.is_in_lobby = true;
     }
 
+    /* talltales_join_by_stored_code():
+    ----------------------------------------------------------------------------
+    User can join a private game by entering a room code (presumably shared with them by a friend).
+    Room codes are set via v-model to self.vue.join_room_code
+    Adds that user to the player_list for the game associated with that room code
+    ----------------------------------------------------------------------------*/
+    self.talltales_join_by_stored_code = function () {
+//        console.log("join_room_code pressed: " + self.vue.join_room_code);
+//        $.post(talltales_addplayer,
+//            {
+//                room_code: self.vue.join_room_code
+//            },
+//            function (data) {
+//                if(data.successful) {
+//                    self.vue.current_room_code = self.vue.join_room_code;
+//                    console.log("Joining Room " + self.vue.current_room_code);
+//                    self.vue.join_room_code = "";
+//                    console.log("JS: Returned successfully from API call.");
+//                }
+//                else {
+//                    console.log("JS: Returned unsuccessfully from API call.");
+//                }
+//            }
+//        );
+//        //Update in lobby state, which updates HTML
+//        self.vue.is_in_lobby = true;
+        self.vue.talltales_join_by_code(self.vue.join_room_code);
+        self.vue.join_room_code = "";
+    };
+
+    /* talltales_join_public():
+    ----------------------------------------------------------------------------
+    User can join a public game by passing the public game's room code.
+    Adds that user to the player_list for the game associated with that room code
+    ----------------------------------------------------------------------------*/
+    self.talltales_join_by_code = function (room_code) {
+        $.post(talltales_addplayer,
+            {
+                room_code: room_code
+            },
+            function (data) {
+                if(data.successful) {
+                    self.vue.current_room_code = room_code;
+                    console.log("Joining Room " + self.vue.current_room_code);
+                    console.log("JS: Returned successfully from API call.");
+                }
+                else {
+                    console.log("JS: Returned unsuccessfully from API call.");
+                }
+            }
+        );
+        //Update in lobby state, which updates HTML
+        self.vue.is_in_lobby = true;
+    };
+
     /* talltales_leave():
     ----------------------------------------------------------------------------
     Called when a player leaves a lobby.
     ---------------------------------------------------------------------------- */
     self.talltales_leave = function () {
-        //TODO: REMOVE PLAYER FROM DATABASE GAMESTATE
         $.post(talltales_removeplayer,
             {
                 room_code: self.vue.current_room_code
@@ -190,29 +242,6 @@ var app = function() {
 
 
     }
-
-    /* join_room_code():
-    ----------------------------------------------------------------------------
-    User can join a private game by entering a room code (presumably shared with them by a friend).
-    Adds that user to the player_list for the game associated with that room code
-    ----------------------------------------------------------------------------*/
-    self.join_room_code = function () {
-        console.log("join_room_code pressed: " + self.vue.room_code);
-        $.post(talltales_addplayer, 
-            {
-                room_code: self.vue.room_code
-            }, 
-            function (data) {
-                if(data.successful) {
-                    self.vue.room_code = "";
-                    console.log("JS: Returned successfully from API call.");
-                }
-                else {
-                    console.log("JS: Returned unsuccessfully from API call.");
-                }
-            }
-        );
-    };
 
     
 
@@ -242,9 +271,9 @@ var app = function() {
     ----------------------------------------------------------------------------*/
     self.show_games = function() {
         console.log("show_games clicked");
+        self.get_games();
         self.vue.displaying_talltale_games = !self.vue.displaying_talltale_games;
         console.log("displaying_talltales_games = " + self.vue.displaying_talltale_games);
-        self.get_games();
     };
 
     /* TABOO FUNCTIONS */
@@ -268,26 +297,38 @@ var app = function() {
         delimiters: ['${', '}'],
         unsafeDelimiters: ['!{', '}'],
         data: {
+            //Join via new game vue variables
             talltales_games: [],
-            room_code: "",
-            initial_sentence: "",
             is_public: false,   //not sure what this should be initialized to, can make it default to public
+            initial_sentence: "",
+
+            //Join via room_code vue variables
+            join_room_code: "",
+
+            //Join via global vue variables
             displaying_talltale_games: false,
 
+            //Vue variables common to ALL GAMES
             current_gamestate: null, //Object(?) holding the currently viewed game information.
             current_room_code: -1,
 
-            is_in_lobby: true,
+            is_in_lobby: false,
+
+            //Shane's Taboo things
+            //Jake: i think that we should hold all of the gamestate in its own vue var
+            //(for talltales i did current_gamestate which is returned a row from the API)
             host: null,
             player_list: [],
+
 
 
         },
         methods: {
             switch_theme: self.switch_theme,
             api_tester: self.api_tester,
-            join_room_code: self.join_room_code,
             talltales_initialize: self.talltales_initialize,
+            talltales_join_by_stored_code: self.talltales_join_by_stored_code, //specific for join where we store code via v-model
+            talltales_join_by_code: self.talltales_join_by_code, //specific for join where we receive code as param to function
             talltales_leave: self.talltales_leave,
             get_games: self.get_games_tester,
             show_games: self.show_games

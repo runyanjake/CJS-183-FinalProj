@@ -162,14 +162,15 @@ def add_player_talltales():
 #   request.vars.room_code = room code to remove from to.
 # returns:
 #   successful = success value.
+
 @auth.requires_login()
 def remove_player_talltales():
     print("API: Attempting to remove player from existing instance of TallTales.")
     room_code = request.vars.room_code
     room = db(room_code == db.talltales_instances.room_code).select(db.talltales_instances.ALL).first()
     if room is not None:
-        player_list = db(room_code == db.talltales_instances.room_code).select(
-            db.talltales_instances.player_list).first().player_list
+        game = db(room_code == db.talltales_instances.room_code).select(db.talltales_instances.ALL).first()
+        player_list = game.player_list
         if auth.user.id not in player_list:
             print("API: User " + str(auth.user.id) + " was never in game instance " + str(room_code) + ".")
             return response.json(dict(
@@ -187,6 +188,9 @@ def remove_player_talltales():
                     successful=True
                 ))
             else:
+                if auth.user.id == game.hoster:
+                    print("API: Hoster is leaving, promoting player " + str(new_player_list[0]) + " to hoster.")
+                    db(room_code == db.talltales_instances.room_code).update(hoster=new_player_list[0])
                 db(room_code == db.talltales_instances.room_code).update(player_list=new_player_list)
                 print("API: Removed user " + str(auth.user.id) + " from game instance " + str(room_code) + ".")
                 return response.json(dict(
@@ -226,9 +230,6 @@ def get_games_talltales():
         print("API: Retrieving all instances of TallTales games.")
     games = []
     for r in rows:
-        print(r)
-    
-    for r in rows:
         t = dict(
             room_code = r.room_code,
             player_list = r.player_list,
@@ -240,7 +241,7 @@ def get_games_talltales():
             is_public = r.is_public,
             created_on = r.created_on
         )
-        print(t)
+        print("adding game to list: " + str(t))
         games.append(t)
 
     return response.json(dict(

@@ -162,8 +162,8 @@ var app = function() {
             function (data) {
                 self.vue.talltales_games = data.talltales_games;
                 console.log("cassia returned from API");
-            })
-    }
+            });
+    };
 
     /* show_games():
     ----------------------------------------------------------------------------
@@ -175,7 +175,22 @@ var app = function() {
         self.vue.displaying_talltale_games = !self.vue.displaying_talltale_games;
         console.log("displaying_talltales_games = " + self.vue.displaying_talltale_games);
         self.get_games();
-    }
+    };
+
+    /* TABOO FUNCTIONS */
+
+    self.taboo_init = function() {
+        $.post(taboo_init_url,
+            { 
+                max_players: self.vue.max_players,
+                turn_time_limit: self.vue.turn_time_limit,
+                is_public: self.vue.is_public
+            },
+            function(data) {
+                self.vue.player_list = data.player_list;
+                self.vue.host = self.vue.player_list[0];
+            });
+    };
 
     // Complete as needed.
     self.vue = new Vue({
@@ -187,7 +202,12 @@ var app = function() {
             room_code: "",
             initial_sentence: "",
             checkbox_is_public: false,   //not sure what this should be initialized to, can make it default to public
-            displaying_talltale_games: false
+            displaying_talltale_games: false,
+
+            host: null,
+            player_list: [],
+
+
         },
         methods: {
             api_tester: self.api_tester,

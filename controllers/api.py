@@ -211,7 +211,7 @@ def delete_game_talltales():
 def get_games_talltales():
     #send in 0 for public game, otherwise send something else
     if request.vars.public == '0':
-        rows = db(db.talltales_instances.is_public == True).select(db.talltales_instances.ALL)
+        rows = db(db.talltales_instances.is_public == True).select(db.talltales_instances.ALL, orderby=~db.talltales_instances.created_on)
         print("API: Retrieving public instances of TallTales games.")
     else:
         rows = db().select(db.talltales_instances.ALL)
@@ -229,7 +229,8 @@ def get_games_talltales():
             turn_time_limit = r.turn_time_limit,
             story_text = r.story_text,
             current_turn = r.current_turn,
-            is_public = r.is_public
+            is_public = r.is_public,
+            created_on = r.created_on
         )
         print(t)
         games.append(t)

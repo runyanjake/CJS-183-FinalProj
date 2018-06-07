@@ -39,6 +39,7 @@ db.define_table('talltales_instances', #Tall Tales
                 Field('hoster', 'integer', 'references auth_user', default=auth.user.id if auth.user is not None else None),
                 Field('max_players', 'integer', default=10),
                 Field('turn_time_limit', 'integer', default=30),
+                Field('created_on', 'datetime', default=datetime.datetime.utcnow()),
                 #game specific attributes
                 Field('story_text', 'list:string', default=[]),
                 Field('current_turn', 'integer', 'references auth_user', default=auth.user.id if auth.user is not None else None)
@@ -51,6 +52,7 @@ db.define_table('typeracer_instances', #Type Racer
                 Field('hoster', 'references auth_user', required=True),
                 Field('max_players', 'integer', default=10),
                 Field('turn_time_limit', 'integer', default=30),
+                Field('created_on', 'datetime', default=datetime.datetime.utcnow()),
                 #game specific attributes
                 Field('prompt', 'text', 'references typeracer_prompts.prompt'),
                 Field('player_seedings', 'list:integer', default=[])
@@ -63,6 +65,7 @@ db.define_table('taboo_instances', #Taboo
                 Field('hoster', 'string', 'references auth_user', required=True),
                 Field('max_players', 'integer', default=10),
                 Field('turn_time_limit', 'integer', default=30),
+                Field('created_on', 'datetime', default=datetime.datetime.utcnow()),
                 #game specific attributes
                 #NOTE: This did not work until we erased 'string', replaced it with 'integer', then re replaced it with 'string'
                 Field('secret_word', 'string', 'references taboo_words.word'),

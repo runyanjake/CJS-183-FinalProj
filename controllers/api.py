@@ -163,28 +163,6 @@ def add_player_talltales():
 # returns:
 #   successful = success value.
 
-
-
-
-
-
-
-
-
-
-# Jake's TODOS: When hoster leaves, promote oldest person to hoster.
-#               Viewing public games should trigger a reload of the currently available games in the case that someone from another window added a game.
-
-
-
-
-
-
-
-
-
-
-
 @auth.requires_login()
 def remove_player_talltales():
     print("API: Attempting to remove player from existing instance of TallTales.")
@@ -211,7 +189,7 @@ def remove_player_talltales():
                 ))
             else:
                 if auth.user.id == game.hoster:
-                    print("Hoster is leaving, promoting player " + str(new_player_list[0]) + " to hoster.")
+                    print("API: Hoster is leaving, promoting player " + str(new_player_list[0]) + " to hoster.")
                     db(room_code == db.talltales_instances.room_code).update(hoster=new_player_list[0])
                 db(room_code == db.talltales_instances.room_code).update(player_list=new_player_list)
                 print("API: Removed user " + str(auth.user.id) + " from game instance " + str(room_code) + ".")
@@ -252,9 +230,6 @@ def get_games_talltales():
         print("API: Retrieving all instances of TallTales games.")
     games = []
     for r in rows:
-        print(r)
-    
-    for r in rows:
         t = dict(
             room_code = r.room_code,
             player_list = r.player_list,
@@ -266,7 +241,7 @@ def get_games_talltales():
             is_public = r.is_public,
             created_on = r.created_on
         )
-        print(t)
+        print("adding game to list: " + str(t))
         games.append(t)
 
     return response.json(dict(

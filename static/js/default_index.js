@@ -229,9 +229,9 @@ var app = function() {
     ----------------------------------------------------------------------------*/
     self.show_games = function() {
         console.log("show_games clicked");
+        self.get_games();
         self.vue.displaying_talltale_games = !self.vue.displaying_talltale_games;
         console.log("displaying_talltales_games = " + self.vue.displaying_talltale_games);
-        self.get_games();
     };
 
     /* TABOO FUNCTIONS */
@@ -257,7 +257,7 @@ var app = function() {
         data: {
             //Join via new game vue variables
             talltales_games: [],
-            checkbox_is_public: false,   //not sure what this should be initialized to, can make it default to public
+            is_public: false,   //not sure what this should be initialized to, can make it default to public
             initial_sentence: "",
 
             //Join via room_code vue variables

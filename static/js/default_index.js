@@ -9,25 +9,23 @@ var app = function() {
     //load background so it stays for each page
     change_background = function () {
         if (sessionStorage.getItem('bg_color')) {
-            console.log("entered if");
-            console.log("session storage = " + sessionStorage.getItem('bg_color'));
+            
             document.body.style.backgroundColor = sessionStorage.getItem('bg_color');
-            console.log("session storage = " + sessionStorage.getItem('bg_color'));
 
         }else{
             console.log("entered else");
-            document.body.style.backgroundColor =  "#ffd621";
-            sessionStorage.setItem('bg_color', "#ffd621");
+            document.body.style.backgroundColor =  "#b67fff";
+            sessionStorage.setItem('bg_color', "#b67fff");
         }
     }
     //Toggle themes
     self.switch_theme = function (theme_code) {
-        //yellow theme
+        //green theme
         if (theme_code == 1) {
-            document.body.style.background = "#ffd621";
-            sessionStorage.setItem('bg_color', "#ffd621");
+            document.body.style.background = "#74d300";
+            sessionStorage.setItem('bg_color', "#74d300");
         }
-        //teal theme
+        //turquoise theme
         else if (theme_code == 2) {
             document.body.style.background = "#2dd8bf";
             sessionStorage.setItem('bg_color', "#2dd8bf");
@@ -42,6 +40,7 @@ var app = function() {
             document.body.style.background = "#ffb30f";
             sessionStorage.setItem('bg_color', "#ffb30f");
         }
+        //purple theme
         else if (theme_code == 5) {
             document.body.style.background = "#b67fff";
             sessionStorage.setItem('bg_color', "#b67fff");

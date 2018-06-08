@@ -12,7 +12,7 @@
 
 body {
   font-family:"HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
-  background: #ffd800;
+  background: #b67fff;
   color: white;
 }
 
@@ -23,6 +23,22 @@ a {
 a:hover {
   color: #fff000 !important;
 }
+a:not(.btn):not(.noeffect) {position:relative}
+a:not(.btn):not(.noeffect):hover {color:#fff000}
+a:not(.btn):not(.noeffect):hover:after {width:100%}
+a:not(.btn):not(.noeffect):after {
+  display:block;
+  position:absolute;
+  left:0;
+  bottom:-1px;
+  width:0;
+  height:2px;
+  background-color:#fff000;
+  content:"";
+  transition:width 0.2s;
+}
+
+
 
 /* top nav links */
 .button {
@@ -167,15 +183,19 @@ a:hover {
 /*----------------------------------------------------------------------------*/
 /* PLAYING TALLTALES GAME */
 /*----------------------------------------------------------------------------*/
+#talltale_game_page {
+  position: relative;
+}
+
 input[type=text]#your_sentence_input {
   background-color: transparent;
   color: white;
   font-size: 40px;
   font-weight: bold;
-  border-bottom: gray solid 1px;
   padding-bottom: 0px !important;
-  margin: 10px !important;
-  height: 10vh;
+  margin-left: 10px !important;
+  margin-right: 10px !important;
+  height: 9vh;
 }
 
 ::placeholder {
@@ -188,10 +208,36 @@ input[type=text]#your_sentence_input:hover {
 }
 
 #previous_sentence {
+  margin-top: 30px;
+  margin-left: 15px;
   overflow: scroll;
   height: 80vh;
 }
 
+#close_game_button {
+  font-size: 40px;
+  font-weight: bold;
+  position: absolute;
+  left: 15px;
+  display: inline-block;
+}
+
+#close_game_button:hover {
+  cursor: pointer;
+  color: #ffdd00;
+}
+
+#close_game_button:hover + #close_game_msg {
+  cursor: pointer;
+  visibility: visible;
+}
+
+#close_game_msg {
+  visibility: hidden;
+  position: relative;
+  left: 50px;
+  top: 20px;
+}
 
 
 /*----------------------------------------------------------------------------*/
@@ -220,8 +266,8 @@ input[type=text]#your_sentence_input:hover {
   display: inline-block;
 }
 
-#yellow_theme_square {
-  background-color: #ffd800;
+#green_theme_square {
+  background-color: #74d300;
 }
 
 #teal_theme_square {

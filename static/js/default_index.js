@@ -194,6 +194,11 @@ var app = function() {
                     self.vue.current_gamestate = data.gamestate;
                     console.log("Joining Room " + self.vue.current_gamestate.room_code);
                     console.log("JS: Returned successfully from API call.");
+
+                    if(self.vue.displaying_talltale_games)
+                        self.vue.displaying_talltale_games = false; //Turn off if redirecting via "join game" button
+                    console.log("displaying tall tales games = " + self.vue.displaying_talltale_games);
+
                     //Update in lobby state, which updates HTML
                     self.vue.is_in_lobby = true;
                     self.talltales_gameloop();

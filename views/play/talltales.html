@@ -8,6 +8,7 @@
     var talltales_init = "{{=URL('api', 'init_talltales')}}";
     var talltales_getgames = "{{=URL('api', 'get_games_talltales')}}";
     var talltales_removeplayer = "{{=URL('api', 'remove_player_talltales')}}";
+    var talltales_getgamestate = "{{=URL('api', 'retrieve_gamestate_talltales')}}";
 
 </script>
 {{end}}
@@ -106,7 +107,14 @@
         <div v-else id="talltale_game_page">
            
             <div id="previous_sentence">
-                <h1>previous sentence, which is long as foooooook (and if my thing somehow ended up being even longggggger than this, I have overflow set to scroll so apparently a scrollbar will hsow up and what happens when it's just a bit longer?</h1>
+                <h5>Room Code: ${current_gamestate.room_code}</h5>
+                <h5>Public Status: ${current_gamestate.is_public}</h5>
+                <h5>Player List: ${current_gamestate.player_list}</h5>
+                <h5>Hoster: ${current_gamestate.hoster}</h5>
+                <h5>Max Room Size: ${current_gamestate.max_players}</h5>
+                <h5>Turn Time Limit (s): ${current_gamestate.turn_time_limit}</h5>
+                <h5>Story Text: ${current_gamestate.story_text}</h5>
+
             </div>
             <div id="your_sentence">
                 <input id="your_sentence_input" type="text" placeholder="Enter the next line of the story">

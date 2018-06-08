@@ -62,8 +62,10 @@ def init_talltales():
             )
 
         print("API: Created instance with room_code " + str(room_code))
+        newroom = db(room_code == db.talltales_instances.room_code).select(db.talltales_instances.ALL).first()
         return response.json(dict(
             successful=True,
+            gamestate = newroom,
             room_code=room_code
         ))
     else:
@@ -148,7 +150,9 @@ def add_player_talltales():
             player_list.append(auth.user.id)
             db(room_code == db.talltales_instances.room_code).update(player_list=player_list)
             print("API: Added user " + str(auth.user.id) + " to game instance " + str(room_code) + ".")
+            newroom = db(room_code == db.talltales_instances.room_code).select(db.talltales_instances.ALL).first()
             return response.json(dict(
+                gamestate=newroom,
                 successful=True
             ))
     else:

@@ -81,33 +81,57 @@ def init_talltales():
 # incoming packet contents
 #   request.vars.room_code = room code to add to.
 #   request.vars.story_text = next line to append.
-#   request.vars.current_turn = id of auth_user who's turn it is.
 #   (Leave a value blank if you don't want it to update.)
 # returns:
 #   successful = success value.
 @auth.requires_login()
-def update_gamestate_talltales():
+def take_turn_talltales():
     print("API: Updating Talltales gamestate " + str(request.vars.room_code) + ".")
     match = db(request.vars.room_code == db.talltales_instances.room_code).select(db.talltales_instances.ALL).first()
     if match is None:
+        print("match does not exists")
         return response.json(dict(
             successful=False
         ))
     else:
-        if auth.user.id not in match.player_list:
+        if auth.user.id != match.current_turn:
+            print("Not ur turn")
             return response.json(dict(
                 successful=False
             ))
         else:
-            if request.vars.story_text is not None:
-                story = match.story_text
-                story.append(request.vars.story_text)
-                db(request.vars.room_code == db.talltales_instances.room_code).update(story_text=story)
-            if request.vars.current_turn is not None:
-                db(request.vars.room_code == db.talltales_instances.room_code).update(current_turn=request.vars.current_turn)
-            return response.json(dict(
-                successful=True
-            ))
+            print("match exists")
+            if auth.user.id not in match.player_list:
+                print("author not in game")
+                return response.json(dict(
+                    successful=False
+                ))
+            else:
+                print("author in game")
+                print("story text: " + str(request.vars.new_text))
+                if request.vars.new_text is not None:
+                    story = match.story_text
+                    story.append(request.vars.new_text)
+                    db(request.vars.room_code == db.talltales_instances.room_code).update(story_text=story)
+
+                #Always update turn, allows us to skip turns on timeout.
+                old_turn = match.current_turn
+                new_turn = match.player_list[0]
+                is_next = False
+                for player in match.player_list:
+                    if is_next == True:
+                        new_turn = player
+                        is_next == False
+                    if player == old_turn:
+                        is_next = True
+                db(request.vars.room_code == db.talltales_instances.room_code).update(current_turn=new_turn)
+
+                #re-query
+                updated_match = db(request.vars.room_code == db.talltales_instances.room_code).select(db.talltales_instances.ALL).first()
+                return response.json(dict(
+                    match=updated_match,
+                    successful=True
+                ))
 
 #### Returns the most recent database version of the gamestate for re-rendering the webpage periodically.
 # incoming packet contents:

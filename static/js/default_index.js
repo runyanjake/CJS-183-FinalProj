@@ -260,6 +260,31 @@ var app = function() {
         }
     }
 
+    /* talltales_submitturn():
+    ----------------------------------------------------------------------------
+    Submits one's turn and advances gamestate's record of whose turn it is.
+    ---------------------------------------------------------------------------- */
+    self.talltales_submitturn = function () {
+        if(self.vue.is_in_lobby){
+            console.log("Submitting turn for room " + self.vue.current_gamestate.room_code + ".");
+            $.post(talltales_taketurn,
+            {
+                room_code: self.vue.current_gamestate.room_code,
+                new_text: self.vue.talltales_new_sentence
+            },
+            function(data) {
+                if(data.successful == true){
+                    self.vue.current_gamestate = data.match;
+                    console.log("JS: Returned successfully from API call.");
+                }else{
+                    console.log("JS: Returned unsuccessfully from API call.");
+                }
+            });
+        }else{
+            console.log("Not ur turn to submit stuff.");
+        }
+    }
+
     
 
     /* get_games():
@@ -330,6 +355,9 @@ var app = function() {
             current_gamestate: [], //Object(?) holding the currently viewed game information.
             is_in_lobby: false,
 
+            //Talltales things
+            talltales_new_sentence: "",
+
             //Shane's Taboo things
             //Jake: i think that we should hold all of the gamestate in its own vue var
             //(for talltales i did current_gamestate which is returned a row from the API)
@@ -345,6 +373,7 @@ var app = function() {
             talltales_initialize: self.talltales_initialize,
             talltales_join_by_stored_code: self.talltales_join_by_stored_code, //specific for join where we store code via v-model
             talltales_join_by_code: self.talltales_join_by_code, //specific for join where we receive code as param to function
+            talltales_submitturn: self.talltales_submitturn,
             talltales_leave: self.talltales_leave,
             get_games: self.get_games_tester,
             show_games: self.show_games

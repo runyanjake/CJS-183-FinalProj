@@ -9,7 +9,7 @@
     var talltales_getgames = "{{=URL('api', 'get_games_talltales')}}";
     var talltales_removeplayer = "{{=URL('api', 'remove_player_talltales')}}";
     var talltales_getgamestate = "{{=URL('api', 'retrieve_gamestate_talltales')}}";
-
+    var talltales_taketurn = "{{=URL('api', 'take_turn_talltales')}}";
 </script>
 {{end}}
 
@@ -110,15 +110,18 @@
                 <h5>Room Code: ${current_gamestate.room_code}</h5>
                 <h5>Public Status: ${current_gamestate.is_public}</h5>
                 <h5>Player List: ${current_gamestate.player_list}</h5>
+                <h5>Current Turn: ${current_gamestate.current_turn}</h5>
                 <h5>Hoster: ${current_gamestate.hoster}</h5>
                 <h5>Max Room Size: ${current_gamestate.max_players}</h5>
                 <h5>Turn Time Limit (s): ${current_gamestate.turn_time_limit}</h5>
                 <h5>Story Text: ${current_gamestate.story_text}</h5>
 
             </div>
-            <div id="your_sentence">
-                <input id="your_sentence_input" type="text" placeholder="Enter the next line of the story">
-
+            <div id="your_sentence" class="left">
+                <input id="your_sentence_input" v-model="talltales_new_sentence" type="text" placeholder="Enter the next line of the story">
+            </div>
+            <div id="submit_turn" class="right">
+                <button v-on:click="talltales_submitturn">Submit Turn</button>
             </div>
             <div id="close_game_button" v-on:click="talltales_leave()">
                 x

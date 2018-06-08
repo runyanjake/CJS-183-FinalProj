@@ -232,24 +232,28 @@ var app = function() {
     ---------------------------------------------------------------------------- */
     self.talltales_gameloop = function() {
         if(self.vue.is_in_lobby){
-            console.log("Should be starting game loop now.");
-            window.setInterval(self.talltales_gamerefresh(), 2000);
+            self.vue.db_repeatedquery_timer = setInterval(self.talltales_gamerefresh, 2000);
         }
     }
     self.talltales_gamerefresh = function () {
-        console.log("Updating gamestate for room " + self.vue.current_gamestate.room_code + ".");
-//        $.post(talltales_getgamestate,
-//            {
-//                room_code: self.vue.current_gamestate.room_code
-//            },
-//            function(data) {
-//                if(data.successful == true){
-//                    self.vue.current_gamestate = data.match;
-//                    console.log("JS: Returned successfully from API call.");
-//                }else{
-//                    console.log("JS: Returned unsuccessfully from API call.");
-//                }
-//            });
+        if(self.vue.is_in_lobby){
+            console.log("Updating gamestate for room " + self.vue.current_gamestate.room_code + ".");
+            $.post(talltales_getgamestate,
+            {
+                room_code: self.vue.current_gamestate.room_code
+            },
+            function(data) {
+                if(data.successful == true){
+                    self.vue.current_gamestate = data.match;
+                    console.log("JS: Returned successfully from API call.");
+                }else{
+                    console.log("JS: Returned unsuccessfully from API call.");
+                }
+            });
+        }else{
+            clearInterval(self.vue.db_repeatedquery_timer);
+            self.vue.db_repeatedquery_timer = null;
+        }
     }
 
     
@@ -318,6 +322,7 @@ var app = function() {
             displaying_talltale_games: false,
 
             //Vue variables common to ALL GAMES
+            db_repeatedquery_timer: null,
             current_gamestate: [], //Object(?) holding the currently viewed game information.
             is_in_lobby: false,
 

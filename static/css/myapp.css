@@ -20,7 +20,12 @@ a {
   color: #fff000;
 }
 
-a:hover {
+#tooltip {
+  color: darkgray;
+}
+
+
+a:hover:not(#tooltip) {
   color: #fff000 !important;
 }
 a:not(.btn):not(.noeffect) {position:relative}
@@ -38,7 +43,10 @@ a:not(.btn):not(.noeffect):after {
   transition:width 0.2s;
 }
 
-
+.btn:not(#button_orange):not(#button_yellow):not(#button_green) {
+  background-color: #d1aeff !important;
+  color: black;
+}
 
 /* top nav links */
 .button {
@@ -159,14 +167,23 @@ a:not(.btn):not(.noeffect):after {
   margin-left: 0px;
 }
 
-.play_w_friends_btn, .play_w_world_btn, #create_new_game {
+.play_w_friends_btn, .play_w_world_btn, .create_new_game_btn {
   font-size: 100px;
   text-align: center;
+  position: relative;
 }
 
-.create_new_game_btn {
+.btn_text {
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%);
+  width: 200px;
   font-size: 20px;
+  text-align: center;
+  margin: 20px;
+  margin-left: -5px;
 }
+
 
 /* "create new game" modal*/
 .public_or_not_tooltip {
@@ -200,8 +217,14 @@ input[type=text]#your_sentence_input {
   padding-bottom: 0px !important;
   margin-left: 10px !important;
   margin-right: 10px !important;
-  height: 9vh;
+  width: 90%;
+  float: left;
 }
+
+#submit_turn {
+  width: 10%;
+  margin-left: 90%;
+  margin-top: 33px;}
 
 ::placeholder {
   color: #c4c4c4;
@@ -212,14 +235,33 @@ input[type=text]#your_sentence_input:hover {
   background-color: none !important;
 }
 
+#game_info_bar {
+  height:80vh;
+  width: 20%;
+  float: left;
+  padding: 15px;
+  background-color: #cca6fd;
+  margin-top: 10px;
+  margin-right: 5px;
+}
 #previous_sentence {
+  padding:15px;
   margin-top: 30px;
-  margin-left: 15px;
+  margin-left: 22%;
   overflow: scroll;
   height: 80vh;
+  width: 70%;
 }
 
+
 #close_game_button {
+  background-color: white;
+  color: white;
+}
+
+
+
+/* #close_game_button {
   font-size: 40px;
   font-weight: bold;
   position: absolute;
@@ -242,7 +284,7 @@ input[type=text]#your_sentence_input:hover {
   position: relative;
   left: 50px;
   top: 20px;
-}
+} */
 
 
 /*----------------------------------------------------------------------------*/

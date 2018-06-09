@@ -18,10 +18,32 @@
 
 		<div id="button_container">
 			<div id="top_nav_left">
+
+
 				<!--Home button-->
-				<a href="{{=URL('default', 'index.html')}}" class="button" id="home_button">
-					<i class="fa fa-home"></i>
-				</a>
+				<div class="button" id="home_button">
+						<a href="{{=URL('default', 'index.html')}}"><i class="fa fa-home"></i></a>
+				</div>
+
+
+				<!--JAKES ATTEMPT AT GETTING HOME BUTTON TO NOT MEM LEAK-->
+				<!--<div id="vue-div" class="display:none">-->
+					<!--<div id="top_nav_left_two">-->
+						<!--&lt;!&ndash;Home button&ndash;&gt;-->
+						<!--<div v-if="is_in_lobby">-->
+							<!--<div class="button" id="home_button_with_js" v-on:click="talltales_leave">-->
+									<!--<a href="{{=URL('default', 'index.html')}}"><i class="fa fa-home">and leave</i></a>-->
+							<!--</div>-->
+						<!--</div>-->
+						<!--<div v-if="!is_in_lobby">-->
+							<!--<div class="button" id="home_button">-->
+									<!--<a href="{{=URL('default', 'index.html')}}"><i class="fa fa-home"></i></a>-->
+							<!--</div>-->
+						<!--</div>-->
+					<!--</div>-->
+				<!--</div>-->
+
+
 			</div>
 
 			<div id="top_nav_right">

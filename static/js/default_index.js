@@ -6,6 +6,11 @@ var app = function() {
 
     Vue.config.silent = false; // show all warnings
 
+    //Function to call the game-leaving function on page unload
+    $(window).unload(function(){
+        self.talltales_leave();
+    });
+
     //load background so it stays for each page
     change_background = function () {
         if (sessionStorage.getItem('bg_color')) {

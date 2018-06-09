@@ -299,6 +299,7 @@ var app = function() {
             function(data) {
                 if (data.successful == true) {
                     self.vue.current_gamestate = data.match;
+                    
                     console.log("JS: Returned successfully from API call.");
                 }
                 else {

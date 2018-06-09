@@ -30,6 +30,9 @@
                 <div class="third padded holder">
                     <div class="create_new_game_btn">
                         <a href="#create_new_game"><i class="fa fa-plus"></i></a>
+                        <div class="btn_text">
+                            create a new game
+                        </div>
                     </div>
                     <!--This is the code for the modal to create a new game-->
                     <div class="modal" id="create_new_game">
@@ -37,10 +40,9 @@
 
                             <div class="container">
                                 <h2>create a new game</h2>
-                                <p>generate a room code to share with your friends</p>
                                 <input type="text" v-model="story_title" class="fill" placeholder="Enter the title of your story.">
                                 <div class="public_or_not_tooltip">
-                                    <a><span data-tooltip="If you want to just play with your friends, you will be given a room code to share with them so they can join. Otherwise, strangers will be allowed to join your game.">
+                                    <a id="tooltip"><span data-tooltip="If you want to just play with your friends, you will be given a room code to share with them so they can join. Otherwise, strangers will be allowed to join your game.">
                                         public game?
                                     </span></a>
                                     <input type="checkbox" v-model="is_public">
@@ -61,6 +63,9 @@
                     <!--Clicking the button will open a stupid.css modal-->
                     <div class="play_w_friends_btn">
                         <a href="#enter_room_code"><i class="fa fa-users"></i></a>
+                        <div class="btn_text">
+                            join a private game by room code
+                        </div>
                     </div>
                     <!--This is the code for the modal to enter the room code-->
                     <div class="modal" id="enter_room_code">
@@ -86,6 +91,9 @@
                     <!--Show a list of possible games to play-->
                     <div class="play_w_world_btn" v-on:click="show_games">
                         <a href="#join_public_game"><i class="fa fa-globe"></i></a>
+                        <div class="btn_text">
+                            join a public game
+                        </div>
                     </div>
                     <!--The modal that will be opened when clicking the button above-->
                     <div class="modal" id="join_public_game">
@@ -106,32 +114,39 @@
             </div>
         </div>
         <div v-else id="talltale_game_page">
-           
-            <div id="previous_sentence">
-                <h5>Title of Story: ${current_gamestate.story_text[0]}</h5>
-                <h5>Room Code: ${current_gamestate.room_code}</h5>
-                <h5>Public Status: ${current_gamestate.is_public}</h5>
-                <h5>Player List: ${current_gamestate.player_list}</h5>
-                <h5>Current Turn: ${current_gamestate.current_turn}</h5>
-                <h5>Hoster: ${current_gamestate.hoster}</h5>
-                <h5>Max Room Size: ${current_gamestate.max_players}</h5>
-                <h5>Turn Time Limit (s): ${current_gamestate.turn_time_limit}</h5>
-                <h5>Story Text: ${current_gamestate.story_text}</h5>
+            <div id="game_info_bar">
+                    <button id="close_game_button" v-on:click="talltales_leave()">
+                        exit
+                    </button>
 
+                    <h5>Title of Story: ${current_gamestate.story_text[0]}</h5>
+                    <h5>Room Code: ${current_gamestate.room_code}</h5>
+                    <h5>Public Status: ${current_gamestate.is_public}</h5>
+                    <!-- <h5>Your Player ID: {{auth.user.first_name}}</h5> -->
+                    <h5>Player List: ${current_gamestate.player_list}</h5>
+                    <h5>Current Turn: ${current_gamestate.current_turn}</h5>
+                    <h5>Hoster: ${current_gamestate.hoster}</h5>
+                    <h5>Max Room Size: ${current_gamestate.max_players}</h5>
+                    <h5>Turn Time Limit (s): ${current_gamestate.turn_time_limit}</h5>
+                    
+            </div>    
+            <div id="previous_sentence">
+                    <h1>${current_gamestate.story_text}</h1>
+                    
             </div>
-            <div id="your_sentence" class="left">
-                <input id="your_sentence_input" v-model="talltales_new_sentence" type="text" placeholder="Enter the next line of the story">
+
+            <div id="your_sentence">
+                <input id="your_sentence_input" v-model="talltales_new_sentence" v-on:keyup.enter="talltales_submitturn" type="text" placeholder="Enter the next line of the story">
             </div>
             <div id="submit_turn" class="right">
                 <button v-on:click="talltales_submitturn">Submit Turn</button>
             </div>
             <div id="close_game_button" v-on:click="leave_game(0)">
                 x
-            </div>
-
-            <div id="close_game_msg">
+            </div>                
+            <!-- <div id="close_game_msg">
                 Leave game
-            </div>
+            </div> -->
 
         </div>
     </div> 

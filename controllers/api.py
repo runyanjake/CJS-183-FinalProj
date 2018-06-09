@@ -58,6 +58,7 @@ def initialize():
         hoster = auth.user.id
         story_text = []
         story_text.append(request.vars.story_title)
+        public = False
         if (request.vars.is_public == 'true' or request.vars.is_public == True):
             public = True
         r.insert(
@@ -126,7 +127,7 @@ def take_turn_talltales():
                 for player in match.player_list:
                     if is_next == True:
                         new_turn = player
-                        is_next == False
+                        is_next = False
                     if player == old_turn:
                         is_next = True
                 db(request.vars.room_code == db.talltales_instances.room_code).update(current_turn=new_turn)

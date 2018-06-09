@@ -265,7 +265,6 @@ var app = function() {
     Submits one's turn and advances gamestate's record of whose turn it is.
     ---------------------------------------------------------------------------- */
     self.talltales_submitturn = function () {
-        getElementById("#your_sentence_input").val("");
         if(self.vue.is_in_lobby){
             console.log("Submitting turn for room " + self.vue.current_gamestate.room_code + ".");
             $.post(talltales_taketurn,

@@ -159,9 +159,13 @@ a:not(.btn):not(.noeffect):after {
   margin-left: 0px;
 }
 
-.play_w_friends_btn, .play_w_world_btn, .create_new_game_btn {
+.play_w_friends_btn, .play_w_world_btn, #create_new_game {
   font-size: 100px;
   text-align: center;
+}
+
+.create_new_game_btn {
+  font-size: 20px;
 }
 
 /* "create new game" modal*/
@@ -183,6 +187,7 @@ a:not(.btn):not(.noeffect):after {
 /*----------------------------------------------------------------------------*/
 /* PLAYING TALLTALES GAME */
 /*----------------------------------------------------------------------------*/
+
 #talltale_game_page {
   position: relative;
 }

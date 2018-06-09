@@ -280,6 +280,7 @@ var app = function() {
             self.vue.db_repeatedquery_timer = null;
         }
     };
+    
 
     /* talltales_submitturn():
     ----------------------------------------------------------------------------

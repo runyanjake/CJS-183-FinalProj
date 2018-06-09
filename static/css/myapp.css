@@ -224,7 +224,7 @@ input[type=text]#your_sentence_input {
 #submit_turn {
   width: 10%;
   margin-left: 90%;
-  margin-top: 33px;}
+  margin-top: 40px;}
 
 ::placeholder {
   color: #c4c4c4;

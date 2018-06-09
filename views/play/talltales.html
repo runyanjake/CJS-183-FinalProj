@@ -13,6 +13,9 @@
 </script>
 {{end}}
 
+<!--On unload, player must leave game.-->
+<body onunload="talltales_leave()">
+
 <div class="main_content">
 
 
@@ -37,7 +40,7 @@
                             <div class="container">
                                 <h2>create a new game</h2>
                                 <p>generate a room code to share with your friends</p>
-                                <input type="text" v-model="initial_sentence" class="fill" placeholder="Enter the first sentence of your story.">
+                                <input type="text" v-model="initial_sentence" class="fill" placeholder="Enter the title of your story.">
                                 <div class="public_or_not_tooltip">
                                     <a><span data-tooltip="If you want to just play with your friends, you will be given a room code to share with them so they can join. Otherwise, strangers will be allowed to join your game.">
                                         public game?
@@ -107,6 +110,7 @@
         <div v-else id="talltale_game_page">
            
             <div id="previous_sentence">
+                <h5>Title of Story: ${current_gamestate.story_text[0]}</h5>
                 <h5>Room Code: ${current_gamestate.room_code}</h5>
                 <h5>Public Status: ${current_gamestate.is_public}</h5>
                 <h5>Player List: ${current_gamestate.player_list}</h5>

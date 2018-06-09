@@ -15,7 +15,7 @@ MAX_ROOM_COUNT = 999999
 #   request.vars.is_public = is game public?.
 #   request.vars.max_players = max number of players in the game.
 #   request.vars.turn_time_limit = length of a turn in seconds.
-#   request.vars.initial_sentence = first sentence or title of the story
+#   request.vars.story_title = title of the story
 # returns:
 #   room_code = new room's code.
 #   successful = success value.
@@ -38,8 +38,9 @@ def init_talltales():
         players = []
         players.append(auth.user.id)
         hoster = auth.user.id
+        print("API: auth.user.id is " + str(auth.user.id) + " on CREATION of game.\n")
         story_text = []
-        story_text.append(request.vars.initial_sentence)
+        story_text.append(request.vars.story_title)
         if (request.vars.is_public == 'true' or request.vars.is_public == True):
             db.talltales_instances.insert(
                 room_code=room_code,
@@ -163,6 +164,7 @@ def add_player_talltales():
     print("API: Attempting to add player to existing instance of TallTales.")
     room_code = request.vars.room_code
     room = db(room_code == db.talltales_instances.room_code).select(db.talltales_instances.ALL).first()
+    print("API: auth.user.id is " + str(auth.user.id) + " on JOINING of game.\n")
     if room is not None:
         player_list = db(room_code == db.talltales_instances.room_code).select(db.talltales_instances.player_list).first().player_list
         if auth.user.id in player_list:
@@ -273,6 +275,6 @@ def get_games_talltales():
         games.append(t)
 
     return response.json(dict(
-        talltales_games=games,
+        public_games=games,
         successful=True
     ))

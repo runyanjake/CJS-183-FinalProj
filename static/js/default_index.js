@@ -252,7 +252,7 @@ var app = function() {
     ---------------------------------------------------------------------------- */
     self.vue_loop = function (gametype) {
         if(self.vue.is_in_game){
-            self.vue.db_repeatedquery_timer = setInterval(self.update_vue(gametype), 2000);
+            self.vue.db_repeatedquery_timer = setInterval(function() { self.update_vue(gametype); }, 2000);
         }
     };
 
@@ -275,6 +275,7 @@ var app = function() {
             });
         }
         else {
+            console.log("clearing interval");
             clearInterval(self.vue.db_repeatedquery_timer);
             self.vue.db_repeatedquery_timer = null;
         }
@@ -376,7 +377,7 @@ var app = function() {
             talltales_leave: self.talltales_leave,
 	   		get_games: self.get_games,
             show_games: self.show_games,
-            taboo_init: self.taboo_init,
+            vue_loop: self.vue_loop,
         }
 
     });

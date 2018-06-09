@@ -58,6 +58,7 @@ def initialize():
         hoster = auth.user.id
         story_text = []
         story_text.append(request.vars.story_title)
+        public = False
         if (request.vars.is_public == 'true' or request.vars.is_public == True):
             public = True
         r.insert(

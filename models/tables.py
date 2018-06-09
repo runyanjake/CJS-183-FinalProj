@@ -68,7 +68,7 @@ db.define_table('taboo_instances', #Taboo
                 Field('created_on', 'datetime', default=datetime.datetime.utcnow()),
                 #game specific attributes
                 #NOTE: This did not work until we erased 'string', replaced it with 'integer', then re replaced it with 'string'
-                Field('secret_word', 'string', 'references taboo_words.word'),
+                Field('taboo_word_row', 'integer', 'references taboo_words'),
                 Field('player_scores', 'list:integer', default=[])
                 )
 

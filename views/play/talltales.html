@@ -2,13 +2,14 @@
 
 {{block head}}
 <script src="{{=URL('static', 'js/vue.js')}}"></script>
+<script src="{{=URL('static', 'js/default_index.js')}}"></script>
 <script>
     var my_url = "{{=URL('api', 'game1')}}";
-    var talltales_addplayer = "{{=URL('api', 'add_player_talltales')}}";
-    var talltales_init = "{{=URL('api', 'init_talltales')}}";
+    var add_player_url = "{{=URL('api', 'add_player')}}";
+    var initialize_game_url = "{{=URL('api', 'initialize')}}";
     var talltales_getgames = "{{=URL('api', 'get_games_talltales')}}";
     var talltales_removeplayer = "{{=URL('api', 'remove_player_talltales')}}";
-    var talltales_getgamestate = "{{=URL('api', 'retrieve_gamestate_talltales')}}";
+    var get_gamestate_url = "{{=URL('api', 'get_gamestate')}}";
     var talltales_taketurn = "{{=URL('api', 'take_turn_talltales')}}";
 </script>
 {{end}}
@@ -17,7 +18,7 @@
 
 
     <div id="vue-div" class="display:none">
-        <div v-if="!is_in_lobby">
+        <div v-if="!is_in_game">
             <!-- Your code goes here.  Remember to call $("#vue-div").show() once you get the data for the first time. -->
             <div class="center">
                 <h1>tall tales</h1>
@@ -38,14 +39,14 @@
                             <div class="container">
                                 <h2>create a new game</h2>
                                 <p>generate a room code to share with your friends</p>
-                                <input type="text" v-model="initial_sentence" class="fill" placeholder="Enter the first sentence of your story.">
+                                <input type="text" v-model="story_title" class="fill" placeholder="Enter the title of your story.">
                                 <div class="public_or_not_tooltip">
                                     <a><span data-tooltip="If you want to just play with your friends, you will be given a room code to share with them so they can join. Otherwise, strangers will be allowed to join your game.">
                                         public game?
                                     </span></a>
                                     <input type="checkbox" v-model="is_public">
                                 </div>
-                                <button v-on:click="talltales_initialize()">create new game</button>
+                                <button v-on:click="initialize(0)">create new game</button>
                             </div>
                             <!--Buttons to close the modal-->
                             <a class="close" href="#">x</a>
@@ -69,7 +70,7 @@
                                 <h2>join an existing game</h2>
                                 <p>enter a room code your friend shared with you to join their game.</p>
                                 <input type="text" v-model="join_room_code" class="fill" placeholder="e.g. 123456">
-                                <button v-on:click="talltales_join_by_stored_code">join game</button>
+                                <button v-on:click="join_by_stored_code(0)">join game</button>
                             </div>
                             <!--Buttons to close the modal-->
                             <a class="close" href="#">x</a>
@@ -91,9 +92,9 @@
                     <div class="modal" id="join_public_game">
                         <div class="twothirds white padded">
                             <h2>here are some public games you can join</h2>
-                            <div class="game_container" v-if="displaying_talltale_games">
-                                <div v-for="game in talltales_games" class="game_items container">
-                                    ${game.story_text[0]} <button v-on:click="talltales_join_by_code(game.room_code)">Join Game</button>
+                            <div class="game_container" v-if="displaying_public_games">
+                                <div v-for="game in public_games" class="game_items container">
+                                    ${game.story_text[0]} <button v-on:click="join_by_code(0, game.room_code)">Join Game</button>
                                 </div>
                             </div>
                             <a class="close" href="#">x</a>
@@ -108,6 +109,7 @@
         <div v-else id="talltale_game_page">
            
             <div id="previous_sentence">
+                <h5>Title of Story: ${current_gamestate.story_text[0]}</h5>
                 <h5>Room Code: ${current_gamestate.room_code}</h5>
                 <h5>Public Status: ${current_gamestate.is_public}</h5>
                 <h5>Player List: ${current_gamestate.player_list}</h5>
@@ -136,5 +138,3 @@
     </div> 
 
 </div>
-
-<script src="{{=URL('static', 'js/default_index.js')}}"></script>

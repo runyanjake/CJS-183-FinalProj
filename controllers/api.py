@@ -10,28 +10,46 @@ MAX_ROOM_COUNT = 999999
 ######################## TALL TALES API METHODS ########################
 ########################################################################
 
-#### Initializes a new instnce of the talltales game.
+#### Initializes a new instance of a game.
 # incoming packet contents:
+#   request.vars.gametype = which of the three games will be created:
+#       - 0 is talltales, 1 is taboo, 2 is typeracer
 #   request.vars.is_public = is game public?.
 #   request.vars.max_players = max number of players in the game.
 #   request.vars.turn_time_limit = length of a turn in seconds.
-#   request.vars.initial_sentence = first sentence or title of the story
+#   request.vars.story_title = title of the story (for talltales)
 # returns:
 #   room_code = new room's code.
 #   successful = success value.
+
 @auth.requires_login()
-def init_talltales():
-    print("API: Creating a new instance of TallTales.")
+def initialize():
+    print("API: Creating a new instance of game " + str(request.vars.gametype))
+    gametype = int(request.vars.gametype)
 
     # generate a unique room code.
     id = random.random() * MAX_ROOM_COUNT
     room_code = int(id)
-    matches = db(room_code == db.talltales_instances.room_code).select(db.talltales_instances.ALL).first()
+
+    # determine which game type to find a valid code for
+    if gametype is 0:
+        q = room_code == db.talltales_instances.room_code
+        r = db.talltales_instances
+
+    elif gametype is 1:
+        q = room_code == db.taboo_instances.room_code
+        r = db.taboo_instances
+
+    else:
+        q = room_code == db.typeracer_instances.room_code
+        r = db.typeracer_instances
+
+    matches = db(q).select().first()
     attempts = 0
     while matches is not None and attempts < 1000:
         id = random.random() * MAX_ROOM_COUNT  ###### this is a theoretical infinite loop if we get unlucky with random, maybe do a loop if not found?
         room_code = int(id)
-        matches = db(room_code == db.talltales_instances.room_code).select(db.talltales_instances.ALL).first()
+        matches = db(room_code == db.talltales_instances.room_code).select().first()
         ++attempts
 
     if attempts != 1000:
@@ -39,30 +57,22 @@ def init_talltales():
         players.append(auth.user.id)
         hoster = auth.user.id
         story_text = []
-        story_text.append(request.vars.initial_sentence)
+        story_text.append(request.vars.story_title)
         if (request.vars.is_public == 'true' or request.vars.is_public == True):
-            db.talltales_instances.insert(
+            public = True
+        r.insert(
                 room_code=room_code,
-                is_public=True,
+                is_public=public,
                 player_list=players,
                 hoster=hoster,
                 max_players=request.vars.max_players,
-                turn_time_limit=request.vars.turn_time_limit,
-                story_text=story_text
+                turn_time_limit=request.vars.turn_time_limit
             )
-        else:
-            db.talltales_instances.insert(
-                room_code=room_code,
-                is_public=False,
-                player_list=players,
-                hoster=hoster,
-                max_players=request.vars.max_players,
-                turn_time_limit=request.vars.turn_time_limit,
-                story_text=story_text
-            )
+        if gametype is 0:
+            db(room_code == r.room_code).update(story_text= story_text)
+        print("API: Created instance of game " + str(request.vars.gametype) + " with room_code " + str(room_code))
 
-        print("API: Created instance with room_code " + str(room_code))
-        newroom = db(room_code == db.talltales_instances.room_code).select(db.talltales_instances.ALL).first()
+        newroom = db(q).select().first()
         return response.json(dict(
             successful=True,
             gamestate = newroom,
@@ -89,7 +99,6 @@ def take_turn_talltales():
     print("API: Updating Talltales gamestate " + str(request.vars.room_code) + ".")
     match = db(request.vars.room_code == db.talltales_instances.room_code).select(db.talltales_instances.ALL).first()
     if match is None:
-        print("match does not exists")
         return response.json(dict(
             successful=False
         ))
@@ -100,15 +109,11 @@ def take_turn_talltales():
                 successful=False
             ))
         else:
-            print("match exists")
             if auth.user.id not in match.player_list:
-                print("author not in game")
                 return response.json(dict(
                     successful=False
                 ))
             else:
-                print("author in game")
-                print("story text: " + str(request.vars.new_text))
                 if request.vars.new_text is not None:
                     story = match.story_text
                     story.append(request.vars.new_text)
@@ -140,16 +145,27 @@ def take_turn_talltales():
 #   match = the match (a row) containing gamestate info
 #   successful = success value.
 @auth.requires_login()
-def retrieve_gamestate_talltales():
-    print("API: Retrieving Talltales gamestate " + str(request.vars.room_code) + ".")
-    match = db(request.vars.room_code == db.talltales_instances.room_code).select(db.talltales_instances.ALL).first()
+def get_gamestate():
+    gametype = int(request.vars.gametype)
+    room_code = request.vars.room_code
+    print("API: Retrieving gamestate of room " + str(request.vars.room_code) + " (type " + str(gametype) + ").")
+    if gametype is 0:
+        q = room_code == db.talltales_instances.room_code
+
+    elif gametype is 1:
+        q = room_code == db.taboo_instances.room_code
+
+    else:
+        q = room_code == db.typeracer_instances.room_code
+
+    match = db(q).select().first()
     if match is None or auth.user.id not in match.player_list:
         return response.json(dict(
             successful=False
         ))
     else:
         return response.json(dict(
-            match=match,
+            gamestate=match,
             successful=True
         ))
 
@@ -159,22 +175,34 @@ def retrieve_gamestate_talltales():
 # returns:
 #   successful = success value.
 @auth.requires_login()
-def add_player_talltales():
-    print("API: Attempting to add player to existing instance of TallTales.")
+def add_player():
+    gametype = int(request.vars.gametype)
+    print("API: Attempting to add player to existing instance of game type " + str(gametype))
     room_code = request.vars.room_code
-    room = db(room_code == db.talltales_instances.room_code).select(db.talltales_instances.ALL).first()
+
+    if gametype is 0:
+        q = room_code == db.talltales_instances.room_code
+
+    elif gametype is 1:
+        q = room_code == db.taboo_instances.room_code
+
+    else:
+        q = room_code == db.typeracer_instances.room_code
+
+    room = db(q).select().first()
+    print("API: auth.user.id is " + str(auth.user.id) + " on JOINING of game.\n")
     if room is not None:
-        player_list = db(room_code == db.talltales_instances.room_code).select(db.talltales_instances.player_list).first().player_list
+        player_list = room.player_list
         if auth.user.id in player_list:
-            print("API: User " + str(auth.user.id) + " is already in game instance " + str(room_code) + ".")
+            print("API: User " + str(auth.user.id) + " is already in game instance " + str(room_code))
             return response.json(dict(
                 successful=False
             ))
         else:
             player_list.append(auth.user.id)
-            db(room_code == db.talltales_instances.room_code).update(player_list=player_list)
-            print("API: Added user " + str(auth.user.id) + " to game instance " + str(room_code) + ".")
-            newroom = db(room_code == db.talltales_instances.room_code).select(db.talltales_instances.ALL).first()
+            db(q).update(player_list=player_list)
+            print("API: Added user " + str(auth.user.id) + " to game instance " + str(room_code) + " (type " + str(gametype) + ")")
+            newroom = db(q).select().first()
             return response.json(dict(
                 gamestate=newroom,
                 successful=True
@@ -219,6 +247,25 @@ def remove_player_talltales():
                 if auth.user.id == game.hoster:
                     print("API: Hoster is leaving, promoting player " + str(new_player_list[0]) + " to hoster.")
                     db(room_code == db.talltales_instances.room_code).update(hoster=new_player_list[0])
+
+
+
+                if auth.user.id == game.current_turn:
+                    #update the turn if it's the person who's leaving's turn.
+                    old_turn = room.current_turn
+                    new_turn = room.player_list[0]
+                    is_next = False
+                    for player in room.player_list:
+                        if is_next == True:
+                            new_turn = player
+                            is_next == False
+                        if player == old_turn:
+                            is_next = True
+                    db(request.vars.room_code == db.talltales_instances.room_code).update(current_turn=new_turn)
+                    print("API: Current turn's player leaving, passing turn to " + str(new_turn) + ".")
+
+
+
                 db(room_code == db.talltales_instances.room_code).update(player_list=new_player_list)
                 print("API: Removed user " + str(auth.user.id) + " from game instance " + str(room_code) + ".")
                 return response.json(dict(
@@ -273,6 +320,6 @@ def get_games_talltales():
         games.append(t)
 
     return response.json(dict(
-        talltales_games=games,
+        public_games=games,
         successful=True
     ))

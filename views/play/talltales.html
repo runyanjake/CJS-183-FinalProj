@@ -115,7 +115,7 @@
         </div>
         <div v-else id="talltale_game_page">
             <div id="game_info_bar">
-                    <button id="close_game_button" v-on:click="talltales_leave()">
+                    <button id="close_game_button" v-on:click="leave_game(0)">
                         exit
                     </button>
 
@@ -141,9 +141,9 @@
             <div id="submit_turn" class="right">
                 <button v-on:click="talltales_submitturn">Submit Turn</button>
             </div>
-            <div id="close_game_button" v-on:click="leave_game(0)">
+            <!-- <div id="close_game_button" v-on:click="leave_game(0)">
                 x
-            </div>                
+            </div>                 -->
             <!-- <div id="close_game_msg">
                 Leave game
             </div> -->

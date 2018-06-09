@@ -8,7 +8,7 @@
     var add_player_url = "{{=URL('api', 'add_player')}}";
     var initialize_game_url = "{{=URL('api', 'initialize')}}";
     var talltales_getgames = "{{=URL('api', 'get_games_talltales')}}";
-    var talltales_removeplayer = "{{=URL('api', 'remove_player_talltales')}}";
+    var remove_player_url = "{{=URL('api', 'remove_player')}}";
     var get_gamestate_url = "{{=URL('api', 'get_gamestate')}}";
     var talltales_taketurn = "{{=URL('api', 'take_turn_talltales')}}";
 </script>
@@ -125,7 +125,7 @@
             <div id="submit_turn" class="right">
                 <button v-on:click="talltales_submitturn">Submit Turn</button>
             </div>
-            <div id="close_game_button" v-on:click="talltales_leave()">
+            <div id="close_game_button" v-on:click="leave_game(0)">
                 x
             </div>
 

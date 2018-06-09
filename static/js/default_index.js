@@ -6,9 +6,8 @@ var app = function() {
 
     Vue.config.silent = false; // show all warnings
 
-    //Function to call the game-leaving function on page unload
     $(window).unload(function(){
-        self.talltales_leave();
+    	self.talltales_leave();
     });
 
     //load background so it stays for each page
@@ -154,7 +153,7 @@ var app = function() {
     self.initialize = function (gametype) {
         console.log("JS: Creating game instance.");
 
-        $.post(init,
+        $.post(initialize_game_url,
             {	
             	gametype: gametype,
                 max_players: 15,
@@ -166,9 +165,10 @@ var app = function() {
                 if (data.successful == true) {
                     console.log("JS: Returned successfully from API call.");
                     self.vue.current_gamestate = data.gamestate;
+                    console.log("self.vue.current_gamestate is " + data.gamestate);
                     //Update in lobby state, which updates HTML
                     self.vue.is_in_game = true;
-                    self.vue_loop();
+                    self.vue_loop(gametype);
                 }
                 else {
                     console.log("JS: Returned unsuccessfully from API call.");
@@ -177,26 +177,27 @@ var app = function() {
         
     };
 
-    /* talltales_join_by_stored_code():
+    /* join_by_stored_code():
     ----------------------------------------------------------------------------
     User can join a private game by entering a room code (presumably shared with them by a friend).
     Room codes are set via v-model to self.vue.join_room_code
     Adds that user to the player_list for the game associated with that room code
     ----------------------------------------------------------------------------*/
-    self.talltales_join_by_stored_code = function () {
-        self.vue.talltales_join_by_code(self.vue.join_room_code);
+    self.join_by_stored_code = function (gametype) {
+        self.vue.join_by_code(gametype, self.vue.join_room_code);
         self.vue.join_room_code = "";
     };
 
-    /* talltales_join_public():
+    /* join_by_code():
     ----------------------------------------------------------------------------
     User can join a public game by passing the public game's room code.
     Adds that user to the player_list for the game associated with that room code
     ----------------------------------------------------------------------------*/
-    self.talltales_join_by_code = function (room_code) {
+    self.join_by_code = function (gametype, room_code) {
         console.log("JS: Joining tall tales game instance.");
-        $.post(talltales_addplayer,
+        $.post(add_player_url,
             {
+            	gametype: gametype,
                 room_code: room_code
             },
             function (data) {
@@ -205,13 +206,14 @@ var app = function() {
                     console.log("Joining Room " + self.vue.current_gamestate.room_code);
                     console.log("JS: Returned successfully from API call.");
 
-                    if(self.vue.displaying_public_games)
-                        self.vue.displaying_public_games = false; //Turn off if redirecting via "join game" button
-                    console.log("displaying tall tales games = " + self.vue.displaying_public_games);
+                    if (self.vue.displaying_public_games) {
+						self.vue.displaying_public_games = false; //Turn off if redirecting via "join game" button
+                    }
+                    console.log("displaying public games = " + self.vue.displaying_public_games);
 
                     //Update in lobby state, which updates HTML
                     self.vue.is_in_game = true;
-                    self.vue_loop();
+                    self.vue_loop(gametype);
                 }
                 else {
                     console.log("JS: Returned unsuccessfully from API call.");
@@ -225,7 +227,8 @@ var app = function() {
     Called when a player leaves a lobby.
     ---------------------------------------------------------------------------- */
     self.talltales_leave = function () {
-        $.post(talltales_removeplayer,
+    	if (self.vue.current_gamestate != null) {
+    		 $.post(talltales_removeplayer,
             {
                 room_code: self.vue.current_gamestate.room_code
             },
@@ -237,33 +240,36 @@ var app = function() {
                     console.log("JS: Returned unsuccessfully from API call.");
                 }
             });
-        //Update view things, which updates HTML
-        self.vue.is_in_game = false;
-        self.vue.is_public = false;
+    		//Update view things, which updates HTML
+    		self.vue.is_in_game = false;
+        	self.vue.is_public = false;
+    	}
     };
 
     /* vue_loop():
     ----------------------------------------------------------------------------
     Refreshes gamestate for render. Should be called in JS loop with setInterval.
     ---------------------------------------------------------------------------- */
-    self.vue_loop = function() {
+    self.vue_loop = function (gametype) {
         if(self.vue.is_in_game){
-            self.vue.db_repeatedquery_timer = setInterval(self.update_vue, 2000);
+            self.vue.db_repeatedquery_timer = setInterval(self.update_vue(gametype), 2000);
         }
     };
 
-    self.update_vue = function () {
+    self.update_vue = function (gametype) {
         if (self.vue.is_in_game) {
             console.log("Updating gamestate for room " + self.vue.current_gamestate.room_code + ".");
-            $.post(talltales_getgamestate,
+            $.post(get_gamestate_url,
             {
+            	gametype: gametype,
                 room_code: self.vue.current_gamestate.room_code
             },
             function(data) {
-                if(data.successful == true){
-                    self.vue.current_gamestate = data.match;
+                if (data.successful == true) {
+                    self.vue.current_gamestate = data.gamestate;
                     console.log("JS: Returned successfully from API call.");
-                }else{
+                }
+                else {
                     console.log("JS: Returned unsuccessfully from API call.");
                 }
             });
@@ -364,8 +370,8 @@ var app = function() {
             switch_theme: self.switch_theme,
             api_tester: self.api_tester,
             initialize: self.initialize,
-            talltales_join_by_stored_code: self.talltales_join_by_stored_code, //specific for join where we store code via v-model
-            talltales_join_by_code: self.talltales_join_by_code, //specific for join where we receive code as param to function
+            join_by_stored_code: self.join_by_stored_code, //specific for join where we store code via v-model
+            join_by_code: self.join_by_code, //specific for join where we receive code as param to function
             talltales_submitturn: self.talltales_submitturn,
             talltales_leave: self.talltales_leave,
 	   		get_games: self.get_games,

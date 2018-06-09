@@ -2,13 +2,14 @@
 
 {{block head}}
 <script src="{{=URL('static', 'js/vue.js')}}"></script>
+<script src="{{=URL('static', 'js/default_index.js')}}"></script>
 <script>
     var my_url = "{{=URL('api', 'game1')}}";
-    var talltales_addplayer = "{{=URL('api', 'add_player_talltales')}}";
-    var init = "{{=URL('api', 'init_talltales')}}";
+    var add_player_url = "{{=URL('api', 'add_player')}}";
+    var initialize_game_url = "{{=URL('api', 'initialize')}}";
     var talltales_getgames = "{{=URL('api', 'get_games_talltales')}}";
     var talltales_removeplayer = "{{=URL('api', 'remove_player_talltales')}}";
-    var talltales_getgamestate = "{{=URL('api', 'retrieve_gamestate_talltales')}}";
+    var get_gamestate_url = "{{=URL('api', 'get_gamestate')}}";
     var talltales_taketurn = "{{=URL('api', 'take_turn_talltales')}}";
 </script>
 {{end}}
@@ -68,7 +69,7 @@
                                 <h2>join an existing game</h2>
                                 <p>enter a room code your friend shared with you to join their game.</p>
                                 <input type="text" v-model="join_room_code" class="fill" placeholder="e.g. 123456">
-                                <button v-on:click="talltales_join_by_stored_code">join game</button>
+                                <button v-on:click="join_by_stored_code(0)">join game</button>
                             </div>
                             <!--Buttons to close the modal-->
                             <a class="close" href="#">x</a>
@@ -92,7 +93,7 @@
                             <h2>here are some public games you can join</h2>
                             <div class="game_container" v-if="displaying_public_games">
                                 <div v-for="game in public_games" class="game_items container">
-                                    ${game.story_text[0]} <button v-on:click="talltales_join_by_code(game.room_code)">Join Game</button>
+                                    ${game.story_text[0]} <button v-on:click="join_by_code(0, game.room_code)">Join Game</button>
                                 </div>
                             </div>
                             <a class="close" href="#">x</a>
@@ -136,5 +137,3 @@
     </div> 
 
 </div>
-
-<script src="{{=URL('static', 'js/default_index.js')}}"></script>

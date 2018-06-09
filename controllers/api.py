@@ -77,7 +77,8 @@ def initialize():
         return response.json(dict(
             successful=True,
             gamestate = newroom,
-            room_code=room_code
+            room_code=room_code,
+            gametype=gametype
         ))
     else:
         print("API: Failed to create game instance.")
@@ -99,6 +100,8 @@ def initialize():
 def take_turn_talltales():
     print("API: Updating Talltales gamestate " + str(request.vars.room_code) + ".")
     match = db(request.vars.room_code == db.talltales_instances.room_code).select(db.talltales_instances.ALL).first()
+    print("match.current_turn is " + str(match.current_turn) + ".")
+    print("auth.user.id is " + str(auth.user.id) + ".")
     if match is None:
         return response.json(dict(
             successful=False
@@ -221,15 +224,25 @@ def add_player():
 #   successful = success value.
 
 @auth.requires_login()
-def remove_player_talltales():
-    print("API: Attempting to remove player from existing instance of TallTales.")
+def remove_player():
+    gametype = int(request.vars.gametype)
+    print("API: Attempting to remove player from existing instance of game type " + str(gametype))
     room_code = request.vars.room_code
-    room = db(room_code == db.talltales_instances.room_code).select(db.talltales_instances.ALL).first()
+
+    if gametype is 0:
+        q = room_code == db.talltales_instances.room_code
+
+    elif gametype is 1:
+        q = room_code == db.taboo_instances.room_code
+
+    else:
+        q = room_code == db.typeracer_instances.room_code
+
+    room = db(q).select().first()
     if room is not None:
-        game = db(room_code == db.talltales_instances.room_code).select(db.talltales_instances.ALL).first()
-        player_list = game.player_list
+        player_list = room.player_list
         if auth.user.id not in player_list:
-            print("API: User " + str(auth.user.id) + " was never in game instance " + str(room_code) + ".")
+            print("API: User " + str(auth.user.id) + " was not in game instance " + str(room_code) + ".")
             return response.json(dict(
                 successful=False
             ))
@@ -239,35 +252,32 @@ def remove_player_talltales():
                 if auth.user.id != player_id:
                     new_player_list.append(player_id)
             if new_player_list == []:
-                db(room_code == db.talltales_instances.room_code).delete()
+                db(q).delete()
                 print("API: Removed user " + str(auth.user.id) + " from game instance " + str(room_code) + ". They were last player, so the gamestate was deleted too.")
                 return response.json(dict(
                     successful=True
                 ))
             else:
-                if auth.user.id == game.hoster:
+                if auth.user.id == room.hoster:
                     print("API: Hoster is leaving, promoting player " + str(new_player_list[0]) + " to hoster.")
-                    db(room_code == db.talltales_instances.room_code).update(hoster=new_player_list[0])
+                    db(q).update(hoster=new_player_list[0])
 
-
-
-                if auth.user.id == game.current_turn:
+                if auth.user.id == room.current_turn:
                     #update the turn if it's the person who's leaving's turn.
                     old_turn = room.current_turn
                     new_turn = room.player_list[0]
                     is_next = False
-                    for player in room.player_list:
+                    for player in player_list:
                         if is_next == True:
                             new_turn = player
                             is_next == False
                         if player == old_turn:
                             is_next = True
-                    db(request.vars.room_code == db.talltales_instances.room_code).update(current_turn=new_turn)
+                    db(q).update(current_turn=new_turn)
                     print("API: Current turn's player leaving, passing turn to " + str(new_turn) + ".")
 
 
-
-                db(room_code == db.talltales_instances.room_code).update(player_list=new_player_list)
+                db(q).update(player_list=new_player_list)
                 print("API: Removed user " + str(auth.user.id) + " from game instance " + str(room_code) + ".")
                 return response.json(dict(
                     successful=True

@@ -7,7 +7,9 @@ var app = function() {
     Vue.config.silent = false; // show all warnings
 
     $(window).unload(function(){
-    	self.talltales_leave();
+    	if (self.vue.is_in_game) {
+    		self.leave_game(self.vue.current_gamestate.gametype);
+    	}
     });
 
     //load background so it stays for each page
@@ -226,10 +228,11 @@ var app = function() {
     ----------------------------------------------------------------------------
     Called when a player leaves a lobby.
     ---------------------------------------------------------------------------- */
-    self.talltales_leave = function () {
+    self.leave_game = function (gametype) {
     	if (self.vue.current_gamestate != null) {
-    		 $.post(talltales_removeplayer,
-            {
+    		 $.post(remove_player_url,
+            {	
+            	gametype: gametype,
                 room_code: self.vue.current_gamestate.room_code
             },
             function(data) {
@@ -267,10 +270,10 @@ var app = function() {
             function(data) {
                 if (data.successful == true) {
                     self.vue.current_gamestate = data.gamestate;
-                    console.log("JS: Returned successfully from API call.");
+                    console.log("JS: Returned successfully from API call (update_vue).");
                 }
                 else {
-                    console.log("JS: Returned unsuccessfully from API call.");
+                    console.log("JS: Returned unsuccessfully from API call (update_vue).");
                 }
             });
         }
@@ -287,7 +290,7 @@ var app = function() {
     Submits one's turn and advances gamestate's record of whose turn it is.
     ---------------------------------------------------------------------------- */
     self.talltales_submitturn = function () {
-        if(self.vue.is_in_game){
+        if (self.vue.is_in_game) {
             console.log("Submitting turn for room " + self.vue.current_gamestate.room_code + ".");
             $.post(talltales_taketurn,
             {
@@ -295,15 +298,17 @@ var app = function() {
                 new_text: self.vue.talltales_new_sentence
             },
             function(data) {
-                if(data.successful == true){
+                if (data.successful == true) {
                     self.vue.current_gamestate = data.match;
                     
                     console.log("JS: Returned successfully from API call.");
-                }else{
+                }
+                else {
                     console.log("JS: Returned unsuccessfully from API call.");
                 }
             });
-        }else{
+        }
+        else {
             console.log("Not ur turn to submit stuff.");
         }
     };
@@ -376,7 +381,7 @@ var app = function() {
             join_by_stored_code: self.join_by_stored_code, //specific for join where we store code via v-model
             join_by_code: self.join_by_code, //specific for join where we receive code as param to function
             talltales_submitturn: self.talltales_submitturn,
-            talltales_leave: self.talltales_leave,
+            leave_game: self.leave_game,
 	   		get_games: self.get_games,
             show_games: self.show_games,
             vue_loop: self.vue_loop,

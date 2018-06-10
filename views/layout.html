@@ -11,9 +11,12 @@
 	    <link href="{{=URL('static','css/myapp.css')}}" rel="stylesheet" type="text/css"/>
 	    <link rel="stylesheet" href="{{=URL('static', 'font-awesome-4.6.3/css/font-awesome.min.css')}}">
 		{{include "web2py_ajax.html"}}
-		
+		<!-- <script src="{{=URL('static', 'js/vue.js')}}"></script> -->
+		<!-- <script src="{{=URL('static', 'js/default_index.js')}}"></script> -->
+		<script src="{{=URL('static', 'js/layout_manager.js')}}"></script>
 		
 	</head>
+
  	<header>
 
 		<div id="button_container">
@@ -21,13 +24,20 @@
 
 
 				<!--Home button-->
-				<div class="button" id="home_button">
-						<a href="{{=URL('default', 'index.html')}}"><i class="fa fa-home"></i></a>
+
+				<div id="home_button" class="button">
+					<a href="{{=URL('default', 'index.html')}}"><i class="fa fa-home"></i></a>
 				</div>
 
-
 				<!--JAKES ATTEMPT AT GETTING HOME BUTTON TO NOT MEM LEAK-->
-				<!--<div id="vue-div" class="display:none">-->
+				<!-- <div id="vue-div" class="display:none">
+					<div v-if="is_in_game">
+						<p> In lobby </p>
+					</div>
+					<div v-if="!is_in_game">
+						<p> Not in lobby </p>
+					</div> -->
+
 					<!--<div id="top_nav_left_two">-->
 						<!--&lt;!&ndash;Home button&ndash;&gt;-->
 						<!--<div v-if="is_in_lobby">-->
@@ -41,7 +51,7 @@
 							<!--</div>-->
 						<!--</div>-->
 					<!--</div>-->
-				<!--</div>-->
+				<!-- </div> -->
 
 
 			</div>
@@ -96,8 +106,6 @@
 		</div>
 		
 	</body>
-
-	
 	  
  	<script src="{{=URL('static','js/marked.min.js')}}"></script>
   	<script src="{{=URL('static','js/vue.min.js')}}"></script>

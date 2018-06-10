@@ -9,6 +9,7 @@ var app = function() {
     $(window).unload(function(){
     	if (self.vue.is_in_game) {
     		self.leave_game(self.vue.current_gamestate.gametype);
+            toggle();
     	}
     });
 

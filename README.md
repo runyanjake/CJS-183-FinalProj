@@ -68,6 +68,11 @@ git status (status)
 > Jake did y. </br>
 > Shane did abs(exp(z^x%p)). </br>
 
+##### Historical Evidence: Beta Testing Round II
+> Special thanks to beta testers Bryan and Julian.
+![alt text][logo]
+[logo]: https://github.com/runyanjake/CJS-183-FinalProj/blob/master/betaii.png "Beta Testing Round II"
+
 ----------------------------------------------------------------------------
 
 ### Contact the Authors

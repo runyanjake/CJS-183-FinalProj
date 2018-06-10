@@ -249,7 +249,8 @@ var app = function() {
             });
     		//Update view things, which updates HTML
     		self.vue.is_in_game = false;
-        	self.vue.is_public = false;
+            self.vue.is_public = false;
+            self.vue.current_story = '';
     	}
     };
 
@@ -274,6 +275,7 @@ var app = function() {
             function(data) {
                 if (data.successful == true) {
                     self.vue.current_gamestate = data.gamestate;
+                    self.update_story();
                     console.log("JS: Returned successfully from API call (update_vue).");
                 }
                 else {
@@ -305,6 +307,7 @@ var app = function() {
             function(data) {
                 if (data.successful == true) {
                     self.vue.current_gamestate = data.match;
+                    self.update_story();
                     self.vue.talltales_new_sentence = "";
                     console.log("JS: Returned successfully from API call.");
                 }
@@ -318,7 +321,13 @@ var app = function() {
         }
     };
 
-    
+    self.update_story = function () {
+        var string = '';
+        for (var i = 1; i < self.vue.current_gamestate.story_text.length; i++) {
+            string += self.vue.current_gamestate.story_text[i] + " ";
+        }
+        self.vue.current_story = string;
+    }
 
     /* get_games():
     ----------------------------------------------------------------------------
@@ -372,6 +381,7 @@ var app = function() {
             is_in_game: false,
             is_public: false, //this is toggled by the checkbox on creating a game
             public_games: [],
+            current_story: '', //implemented so that the story is printed as a string instead of as an array
 
             //Talltales things
             talltales_new_sentence: "", //Text box on game page to enter new sentence

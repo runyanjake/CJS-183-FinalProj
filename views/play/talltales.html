@@ -100,8 +100,8 @@
                         <div class="twothirds white padded">
                             <h2>here are some public games you can join</h2>
                             <div class="game_container" v-if="displaying_public_games">
-                                <div v-for="game in public_games" class="game_items container">
-                                    ${game.story_text[0]} <button v-on:click="join_by_code(0, game.room_code); toggle();">Join Game</button>
+                                <div v-for="game in public_games" class="game_items container" v-on:click="join_by_code(0, game.room_code); toggle();">
+                                    ${game.story_text[0]}
                                 </div>
                             </div>
                             <a class="close" href="#" v-on:click="show_games">x</a>
@@ -114,37 +114,42 @@
             </div>
         </div>
         <div v-else id="talltale_game_page">
-            <div id="game_info_bar">
-                    <button id="close_game_button" v-on:click="leave_game(0); toggle();">
-                        exit
-                    </button>
-
+            <div id="exit_button_container">
+                <button id="close_game_button" v-on:click="leave_game(0); toggle();">
+                    exit
+                </button>
+            </div>
+            
+            <div id="game_stuff">
+                <div id="game_info_bar">
+                    
                     <h5>Title of Story: ${current_gamestate.story_text[0]}</h5>
                     <h5>Room Code: ${current_gamestate.room_code}</h5>
                     <h5>Public Status: ${current_gamestate.is_public}</h5>
                     <h5>Your Player ID: {{=auth.user.id}}</h5>
-                    <h5>Player List: ${current_gamestate.player_list}</h5>
-                    <h5>Current Turn: ${current_gamestate.current_turn}</h5>
+                    <h5>Player List: ${current_gamestate.player_list}</h5>                    <h5>Current Turn: ${current_gamestate.current_turn}</h5>
                     <h5>Hoster: ${current_gamestate.hoster}</h5>
                     <h5>Max Room Size: ${current_gamestate.max_players}</h5>
                     <h5>Turn Time Limit (s): ${current_gamestate.turn_time_limit}</h5>
-                    <div v-if="current_gamestate.current_turn == {{=auth.user.id}}">
+                    <div v-if="current_gamestate.current_turn == {{=auth.user.id}}" id="turn">
                         <h5>it's your turn!</h5>
-                    </div>
-                    
-            </div>    
-            <div id="previous_sentence">
-                <h1>${current_gamestate.story_text}</h1>
-                    
-            </div>
+                    </div>                    
+                </div>    
 
-            <div id="your_sentence">
-                <input id="your_sentence_input" v-model="talltales_new_sentence" v-on:keyup.enter="talltales_submitturn" type="text" placeholder="Enter the next line of the story">
+                <div id="previous_sentence">
+                    <h1>${current_story}</h1>
+                    <!-- <h1>${current_gamestate.story_text}</h1>  -->
+                </div>
             </div>
-            <div id="submit_turn" class="right">
-                <button v-on:click="talltales_submitturn">Submit Turn</button>
+            
+            <div id="lower_bar">
+                <div id="your_sentence">
+                    <input id="your_sentence_input" v-model="talltales_new_sentence" v-on:keyup.enter="talltales_submitturn" type="text" placeholder="Enter the next line of the story">
+                </div>
+                <div id="submit_turn" class="right">
+                    <button v-on:click="talltales_submitturn">Submit Turn</button>
+                </div>
             </div>
-
         </div>
     </div> 
 

@@ -192,6 +192,11 @@ a:not(.btn):not(.noeffect):after {
 
 
 /* "join public game" modal */
+#join_public_game {
+  overflow:scroll;
+}
+
+
 .game_items {
   padding: 5px;
 }
@@ -209,23 +214,58 @@ a:not(.btn):not(.noeffect):after {
   position: relative;
 }
 
+/*container holding exit button */
+
+#exit_button_container {
+  height: 35px;
+}
+
+/*container holding game_bar and previous sentence */
+#game_stuff {
+  height: 85vh;
+  padding: 0 20px;
+}
+
+#game_info_bar {
+  width: 20%;
+  height: 85vh;
+  float: left;
+  padding: 20px;
+  background-color: #cca6fd;
+  overflow: scroll;
+}
+
+#previous_sentence {
+  padding:15px;
+  margin-left: 20%;
+  height: 85vh;
+  overflow: scroll;
+  width: 80%;
+  /* background-color: #ffc6fb; */
+}
+
+h5 #turn {
+  color: yellow;
+}
+
+/*lower bar holds your input sentence and submit button */
+#lower_bar {
+  height: 10vh;
+}
+
+#your_sentence_input {
+  width: 90%;
+  float: left;
+}
+
 input[type=text]#your_sentence_input {
   background-color: transparent;
   color: white;
   font-size: 40px;
   font-weight: bold;
   padding-bottom: 0px !important;
-  margin-left: 10px !important;
-  margin-right: 10px !important;
-  width: 90%;
-  float: left;
+  padding-right: 0px !important;
 }
-
-#submit_turn {
-  width: 10%;
-  margin-left: 90%;
-  margin-top: 40px;}
-
 ::placeholder {
   color: #c4c4c4;
   opacity: 1;
@@ -235,57 +275,18 @@ input[type=text]#your_sentence_input:hover {
   background-color: none !important;
 }
 
-#game_info_bar {
-  height:80vh;
-  width: 20%;
-  float: left;
-  padding: 15px;
-  background-color: #cca6fd;
-  margin-top: 10px;
-  margin-right: 5px;
-}
-#previous_sentence {
-  padding:15px;
-  margin-top: 30px;
-  margin-left: 22%;
-  overflow: scroll;
-  height: 80vh;
-  width: 70%;
+#submit_turn {
+  position: relative;
+  top: -35px;
+  width: 10%;
+  margin-left: 90%;
 }
 
 
 #close_game_button {
-  background-color: white;
+  float:right;
   color: white;
 }
-
-
-
-/* #close_game_button {
-  font-size: 40px;
-  font-weight: bold;
-  position: absolute;
-  left: 15px;
-  display: inline-block;
-}
-
-#close_game_button:hover {
-  cursor: pointer;
-  color: #ffdd00;
-}
-
-#close_game_button:hover + #close_game_msg {
-  cursor: pointer;
-  visibility: visible;
-}
-
-#close_game_msg {
-  visibility: hidden;
-  position: relative;
-  left: 50px;
-  top: 20px;
-} */
-
 
 /*----------------------------------------------------------------------------*/
 /* THEMES page */

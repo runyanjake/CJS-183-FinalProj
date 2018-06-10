@@ -63,9 +63,7 @@ def initialize():
     if attempts != 1000:
         players = []
         current_user = db(int(auth.user.id) == db.user_accounts.user_id).select().first().user_name
-        print("current_user is " + str(current_user))
         players.append(current_user)
-        print("players is " + str(players))
         hoster = current_user
         story_text = []
         story_text.append(request.vars.story_title)
@@ -81,7 +79,6 @@ def initialize():
                 turn_time_limit=request.vars.turn_time_limit,
                 current_turn=current_user
             )
-        print("Past the insert " + str(d))
         if gametype is 0:
             db(room_code == r.room_code).update(story_text= story_text)
 
@@ -187,6 +184,41 @@ def take_turn_talltales():
                     match=updated_match,
                     successful=True
                 ))
+
+#### Attempts to timeout a user from their turn if they are past their time.
+# incoming packet contents
+#   request.vars.room_code = room code to add to.
+# returns:
+#   successful = success value.
+@auth.requires_login()
+def timeout_turn_talltales():
+    match = db(request.vars.room_code == db.talltales_instances.room_code).select().first()
+    curturn = match.current_turn
+    current_user = db(auth.user.id == db.user_accounts.user_id).select().first().user_name
+    print("Current turn is " + str(curturn) + " and user is " + str(auth.user.id))
+    if curturn == current_user:
+        # Always update turn, allows us to skip turns on timeout.
+        old_turn = match.current_turn
+        new_turn = match.player_list[0]
+        is_next = False
+        for player in match.player_list:
+            if is_next == True:
+                new_turn = player
+                is_next = False
+            if player == old_turn:
+                is_next = True
+        db(request.vars.room_code == db.talltales_instances.room_code).update(current_turn=new_turn)
+
+        # re-query
+        updated_match = db(request.vars.room_code == db.talltales_instances.room_code).select().first()
+        return response.json(dict(
+            match=updated_match,
+            successful=True
+        ))
+    else:
+        return response.json(dict(
+            successful=False
+        ))
 
 #### Returns the most recent database version of the gamestate for re-rendering the webpage periodically.
 # incoming packet contents:
@@ -357,14 +389,11 @@ def delete_game_talltales():
 #   successful = success value.
 
 def get_games():
-    print("request.vars.gametype is " + str(request.vars.gametype))
     gametype = int(request.vars.gametype)
-    # gametype = 0
     print("API: Retrieving public instances of game type" + str(gametype))
     games = []
 
     if gametype is 0:
-        print("Yes it is")
         q = db.talltales_instances
         rows = db(q).select()
         for game in rows:
@@ -397,7 +426,6 @@ def get_games():
                 taboo_word_row_id=game.taboo_word_row_id,
                 player_scores=player_scores
             )
-        print("Adding taboo game to list: " + str(t))
         games.append(t)
 
     else:

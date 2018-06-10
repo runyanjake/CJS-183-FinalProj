@@ -142,6 +142,42 @@ def take_turn_talltales():
                     successful=True
                 ))
 
+#### Attempts to timeout a user from their turn if they are past their time.
+# incoming packet contents
+#   request.vars.room_code = room code to add to.
+# returns:
+#   successful = success value.
+@auth.requires_login()
+def timeout_turn_talltales():
+    match = db(request.vars.room_code == db.talltales_instances.room_code).select(db.talltales_instances.ALL).first()
+    curturn = match.current_turn
+    print("Current turn is " + str(curturn) + " and user is " + str(auth.user.id))
+    if curturn == auth.user.id:
+        print("\n\n\nThis user's turn should be skipped.")
+        # Always update turn, allows us to skip turns on timeout.
+        old_turn = match.current_turn
+        new_turn = match.player_list[0]
+        is_next = False
+        for player in match.player_list:
+            if is_next == True:
+                new_turn = player
+                is_next = False
+            if player == old_turn:
+                is_next = True
+        db(request.vars.room_code == db.talltales_instances.room_code).update(current_turn=new_turn)
+
+        # re-query
+        updated_match = db(request.vars.room_code == db.talltales_instances.room_code).select(db.talltales_instances.ALL).first()
+        return response.json(dict(
+            match=updated_match,
+            successful=True
+        ))
+    else:
+        print("this users turn should NOT be skipped.")
+        return response.json(dict(
+            successful=False
+        ))
+
 #### Returns the most recent database version of the gamestate for re-rendering the webpage periodically.
 # incoming packet contents:
 #   request.vars.room_code = room code to get gamestate

@@ -374,11 +374,24 @@ var app = function() {
         if(self.vue.turn_countdown_timer != null){
                 clearInterval(self.vue.turn_countdown_timer);
         }
-        self.vue.timer_time = 30;
+        self.vue.timer_time = self.vue.current_gamestate.turn_time_limit;
         self.vue.turn_countdown_timer = setInterval(function(){
             if(self.vue.timer_time > 0){
                 console.log("Refreshing clock.")
                 self.vue.timer_time -= 1;
+            }else{
+                $.post(talltales_turntimeout,
+                {
+                    room_code: self.vue.current_gamestate.room_code
+                },
+                function (data) {
+                    if(data.successful){
+                        console.log("JS: Skipped a user's turn due to timeout.");
+                        self.vue.current_gamestate = data.match;
+                    }else{
+
+                    }
+                });
             }
         }, 1000);
     };
@@ -388,7 +401,7 @@ var app = function() {
     Resets the timer.
     ----------------------------------------------------------------------------*/
     self.timer_reset = function () {
-        self.vue.timer_time = 30;
+        self.vue.timer_time = self.vue.current_gamestate.turn_time_limit;
     };
 
      /* tiemr_stop():

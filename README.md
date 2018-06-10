@@ -70,8 +70,10 @@ git status (status)
 
 ##### Historical Evidence: Beta Testing Round II
 > Special thanks to beta testers Bryan and Julian.
+
 ![alt text][logo]
-[logo]: https://github.com/runyanjake/CJS-183-FinalProj/blob/master/betaii.png "Beta Testing Round II"
+
+[logo]: https://github.com/runyanjake/CJS-183-FinalProj/blob/master/betaii.png "Logo Title Text 2"
 
 ----------------------------------------------------------------------------
 

@@ -266,6 +266,7 @@ var app = function() {
     self.update_vue = function (gametype) {
         if (self.vue.is_in_game) {
             console.log("Updating gamestate for room " + self.vue.current_gamestate.room_code + ".");
+            var oldturn = self.vue.current_gamestate.current_turn
             $.post(get_gamestate_url,
             {
             	gametype: gametype,
@@ -275,6 +276,10 @@ var app = function() {
                 if (data.successful == true) {
                     self.vue.current_gamestate = data.gamestate;
                     console.log("JS: Returned successfully from API call (update_vue).");
+                    if(self.vue.current_gamestate.current_turn != oldturn){
+                        console.log("It just became Someone Else's turn!");
+                        self.timer_start();
+                    }
                 }
                 else {
                     console.log("JS: Returned unsuccessfully from API call (update_vue).");
@@ -307,6 +312,11 @@ var app = function() {
                     self.vue.current_gamestate = data.match;
                     self.vue.talltales_new_sentence = "";
                     console.log("JS: Returned successfully from API call.");
+                    if(self.vue.turn_countdown_timer == null){
+                        self.timer_start();
+                    }else{
+                        self.timer_reset();
+                    }
                 }
                 else {
                     console.log("JS: Returned unsuccessfully from API call.");
@@ -354,6 +364,43 @@ var app = function() {
     	self.vue.displaying_public_games = !self.vue.displaying_public_games;
 
     };
+
+     /* tiemr_start():
+    ----------------------------------------------------------------------------
+    Starts the timer.
+    ----------------------------------------------------------------------------*/
+    self.timer_start = function () {
+        if(self.vue.turn_countdown_timer != null){
+                clearInterval(self.vue.turn_countdown_timer);
+        }
+        self.vue.timer_time = 30;
+        self.vue.turn_countdown_timer = setInterval(function(){
+            if(self.vue.timer_time > 0){
+                console.log("Refreshing clock.")
+                self.vue.timer_time -= 1;
+            }
+        }, 1000);
+    };
+
+     /* tiemr_reset():
+    ----------------------------------------------------------------------------
+    Resets the timer.
+    ----------------------------------------------------------------------------*/
+    self.timer_reset = function () {
+        self.vue.timer_time = 30;
+    };
+
+     /* tiemr_stop():
+    ----------------------------------------------------------------------------
+    Stops the timer.
+    ----------------------------------------------------------------------------*/
+    self.timer_stop = function () {
+        if(self.vue.turn_countdown_timer != null){
+                clearInterval(self.vue.turn_countdown_timer);
+                self.vue.turn_countdown_timer = null;
+        }
+        self.vue.timer_time = 0;
+    };
    
     /* TABOO FUNCTIONS */
 
@@ -372,6 +419,8 @@ var app = function() {
             is_in_game: false,
             is_public: false, //this is toggled by the checkbox on creating a game
             public_games: [],
+            timer_time: 0,
+            turn_countdown_timer: null,
 
             //Talltales things
             talltales_new_sentence: "", //Text box on game page to enter new sentence

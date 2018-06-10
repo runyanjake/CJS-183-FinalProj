@@ -128,9 +128,11 @@
                     <h5>Hoster: ${current_gamestate.hoster}</h5>
                     <h5>Max Room Size: ${current_gamestate.max_players}</h5>
                     <h5>Turn Time Limit (s): ${current_gamestate.turn_time_limit}</h5>
+                    <h5>Time Remaining: ${timer_time}</h5>
                     <div v-if="current_gamestate.current_turn == {{=auth.user.id}}">
                         <h5>it's your turn!</h5>
                     </div>
+
                     
             </div>    
             <div id="previous_sentence">

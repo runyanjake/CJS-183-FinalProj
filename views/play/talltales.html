@@ -11,6 +11,7 @@
     var remove_player_url = "{{=URL('api', 'remove_player')}}";
     var get_gamestate_url = "{{=URL('api', 'get_gamestate')}}";
     var talltales_taketurn = "{{=URL('api', 'take_turn_talltales')}}";
+    var talltales_turntimeout = "{{=URL('api', 'timeout_turn_talltales')}}";
 </script>
 {{end}}
 
@@ -115,7 +116,7 @@
         </div>
         <div v-else id="talltale_game_page">
             <div id="exit_button_container">
-                <button id="close_game_button" v-on:click="leave_game(0); toggle();">
+                <button id="close_game_button" v-on:click="leave_game(0); timer_stop(); toggle();">
                     exit
                 </button>
             </div>
@@ -123,6 +124,7 @@
             <div id="game_stuff">
                 <div id="game_info_bar">
                     
+
                     <h5>Title of Story: ${current_gamestate.story_text[0]}</h5>
                     <h5>Room Code: ${current_gamestate.room_code}</h5>
                     <h5>Public Status: ${current_gamestate.is_public}</h5>
@@ -131,6 +133,7 @@
                     <h5>Hoster: ${current_gamestate.hoster}</h5>
                     <h5>Max Room Size: ${current_gamestate.max_players}</h5>
                     <h5>Turn Time Limit (s): ${current_gamestate.turn_time_limit}</h5>
+                    <h5>Time Remaining: ${timer_time}</h5>
                     <div v-if="current_gamestate.current_turn == {{=auth.user.id}}" id="turn">
                         <h5>it's your turn!</h5>
                     </div>                    

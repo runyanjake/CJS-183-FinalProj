@@ -58,7 +58,9 @@ git push origin <branchname/master>
 git branch <branchname> (creation)
 git branch -d <branchname> (deletion)
 git merge <otherbranch> (writes changes in otherbranch on top of current branch)
-^ if working from a local branch, merge master on top of it, and then switch to master and merge the local branch on top of master. Now, master is up to date with all changes made on the local branch.
+^ if working from a local branch, merge master on top of it, and then switch to master
+  and merge the local branch on top of master. Now, master is up to date with all changes
+  made on the local branch.
 git status (status)
 ```
 

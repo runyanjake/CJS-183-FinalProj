@@ -171,6 +171,9 @@ var app = function() {
                     //Update in lobby state, which updates HTML
                     self.vue.is_in_game = true;
                     self.vue_loop(gametype);
+
+                    //clear the title text
+                    self.vue.story_title = "";
                 }
                 else {
                     console.log("JS: Returned unsuccessfully from API call.");
@@ -187,7 +190,7 @@ var app = function() {
     ----------------------------------------------------------------------------*/
     self.join_by_stored_code = function (gametype) {
         self.vue.join_by_code(gametype, self.vue.join_room_code);
-        self.vue.join_room_code = "";
+        //self.vue.join_room_code = "";
     };
 
     /* join_by_code():
@@ -290,6 +293,7 @@ var app = function() {
     Submits one's turn and advances gamestate's record of whose turn it is.
     ---------------------------------------------------------------------------- */
     self.talltales_submitturn = function () {
+        
         if (self.vue.is_in_game) {
             console.log("Submitting turn for room " + self.vue.current_gamestate.room_code + ".");
             $.post(talltales_taketurn,
@@ -300,7 +304,7 @@ var app = function() {
             function(data) {
                 if (data.successful == true) {
                     self.vue.current_gamestate = data.match;
-                    
+                    self.vue.talltales_new_sentence = "";
                     console.log("JS: Returned successfully from API call.");
                 }
                 else {

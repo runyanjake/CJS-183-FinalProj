@@ -128,6 +128,9 @@
                     <h5>Hoster: ${current_gamestate.hoster}</h5>
                     <h5>Max Room Size: ${current_gamestate.max_players}</h5>
                     <h5>Turn Time Limit (s): ${current_gamestate.turn_time_limit}</h5>
+                    <div v-if="current_gamestate.current_turn == {{=auth.user.id}}">
+                        <h5>it's your turn!</h5>
+                    </div>
                     
             </div>    
             <div id="previous_sentence">
@@ -141,12 +144,6 @@
             <div id="submit_turn" class="right">
                 <button v-on:click="talltales_submitturn">Submit Turn</button>
             </div>
-            <!-- <div id="close_game_button" v-on:click="leave_game(0)">
-                x
-            </div>                 -->
-            <!-- <div id="close_game_msg">
-                Leave game
-            </div> -->
 
         </div>
     </div> 

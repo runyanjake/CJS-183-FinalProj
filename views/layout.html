@@ -70,11 +70,11 @@
 				{{else:}}
 
 				<!--Settings button, only shows when logged in-->
-				<a href="javascript:void(0)" class="button" onclick="open_nav()" id="settings_button">
+				<a id="settings_button" href="javascript:void(0)" class="button" onclick="open_nav()">
 					<i class="fa fa-gear"></i>
 				</a>
 				<!--Hacky sign up button-->
-				<a href="{{=URL('default', 'user', args=['logout'])}}" class="button" id="login_button">
+				<a id="login_button" href="{{=URL('default', 'user', args=['logout'])}}" class="button">
 					<i class="fa fa-sign-out"></i>
 				</a>
 

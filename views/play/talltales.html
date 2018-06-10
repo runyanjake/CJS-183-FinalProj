@@ -47,7 +47,7 @@
                                     </span></a>
                                     <input type="checkbox" v-model="is_public">
                                 </div>
-                                <button v-on:click="initialize(0)">create new game</button>
+                                <button v-on:click="initialize(0); toggle();">create new game</button>
                             </div>
                             <!--Buttons to close the modal-->
                             <a class="close" href="#">x</a>
@@ -74,7 +74,7 @@
                                 <h2>join an existing game</h2>
                                 <p>enter a room code your friend shared with you to join their game.</p>
                                 <input type="text" v-model="join_room_code" class="fill" placeholder="e.g. 123456">
-                                <button v-on:click="join_by_stored_code(0)">join game</button>
+                                <button v-on:click="join_by_stored_code(0); toggle();">join game</button>
                             </div>
                             <!--Buttons to close the modal-->
                             <a class="close" href="#">x</a>
@@ -101,7 +101,7 @@
                             <h2>here are some public games you can join</h2>
                             <div class="game_container" v-if="displaying_public_games">
                                 <div v-for="game in public_games" class="game_items container">
-                                    ${game.story_text[0]} <button v-on:click="join_by_code(0, game.room_code)">Join Game</button>
+                                    ${game.story_text[0]} <button v-on:click="join_by_code(0, game.room_code); toggle();">Join Game</button>
                                 </div>
                             </div>
                             <a class="close" href="#">x</a>
@@ -115,7 +115,7 @@
         </div>
         <div v-else id="talltale_game_page">
             <div id="game_info_bar">
-                    <button id="close_game_button" v-on:click="leave_game(0)">
+                    <button id="close_game_button" v-on:click="leave_game(0); toggle();">
                         exit
                     </button>
 

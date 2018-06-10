@@ -99,7 +99,7 @@ var app = function() {
                     //Update in lobby state, which updates HTML
                     self.vue.is_in_game = true;
                     self.vue_loop(gametype);
-
+                    //Boinkers
                     //clear the title text
                     self.vue.story_title = "";
                 }

@@ -11,8 +11,6 @@
 	    <link href="{{=URL('static','css/myapp.css')}}" rel="stylesheet" type="text/css"/>
 	    <link rel="stylesheet" href="{{=URL('static', 'font-awesome-4.6.3/css/font-awesome.min.css')}}">
 		{{include "web2py_ajax.html"}}
-		<!-- <script src="{{=URL('static', 'js/vue.js')}}"></script> -->
-		<!-- <script src="{{=URL('static', 'js/default_index.js')}}"></script> -->
 		<script src="{{=URL('static', 'js/layout_manager.js')}}"></script>
 		
 	</head>
@@ -22,44 +20,15 @@
 		<div id="button_container">
 			<div id="top_nav_left">
 
-
 				<!--Home button-->
-
 				<div id="home_button" class="button">
 					<a href="{{=URL('default', 'index.html')}}"><i class="fa fa-home"></i></a>
 				</div>
-
-				<!--JAKES ATTEMPT AT GETTING HOME BUTTON TO NOT MEM LEAK-->
-				<!-- <div id="vue-div" class="display:none">
-					<div v-if="is_in_game">
-						<p> In lobby </p>
-					</div>
-					<div v-if="!is_in_game">
-						<p> Not in lobby </p>
-					</div> -->
-
-					<!--<div id="top_nav_left_two">-->
-						<!--&lt;!&ndash;Home button&ndash;&gt;-->
-						<!--<div v-if="is_in_lobby">-->
-							<!--<div class="button" id="home_button_with_js" v-on:click="talltales_leave">-->
-									<!--<a href="{{=URL('default', 'index.html')}}"><i class="fa fa-home">and leave</i></a>-->
-							<!--</div>-->
-						<!--</div>-->
-						<!--<div v-if="!is_in_lobby">-->
-							<!--<div class="button" id="home_button">-->
-									<!--<a href="{{=URL('default', 'index.html')}}"><i class="fa fa-home"></i></a>-->
-							<!--</div>-->
-						<!--</div>-->
-					<!--</div>-->
-				<!-- </div> -->
-
 
 			</div>
 
 			<div id="top_nav_right">
 
-				
-				<!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!---->
 				<!--Hacky sign up button-->
 				{{if auth.user is None:}}
 				<a href="{{=URL('default', 'user')}}" class="button" id="login_button">
@@ -78,11 +47,7 @@
 					<i class="fa fa-sign-out"></i>
 				</a>
 
-				
-
 				{{pass}}
-				<!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!---->
-				
 
 			</div>
 		</div>

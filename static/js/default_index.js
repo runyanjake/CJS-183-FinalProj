@@ -13,6 +13,16 @@ var app = function() {
     	}
     });
 
+    $(window).load(function(){
+        $('#vue-content').hide();
+        $('#vue-loadingicon').show();
+        self.is_user_in_user_accounts();
+        setTimeout(function () {
+            $('#vue-loadingicon').hide();
+            $('#vue-content').show(); 
+        }, 500);  
+    });
+
     //load background so it stays for each page
     change_background = function () {
         if (sessionStorage.getItem('bg_color')) {
@@ -62,90 +72,6 @@ var app = function() {
         }
     };
 
-    //Used by Jake for API testing.
-    self.api_tester = function(){
-        var choice = 3;
-        if(choice == 1){
-            console.log("Testing API test 1 (talltales_init)");
-            $.post(talltales_init,
-                {
-                    is_public: false,
-                    max_players: 15,
-                    turn_time_limit: 30,
-                    story_title: "New story!"
-                },
-                function(data) {
-                    if(data.successful == true)
-                        console.log("JS: Returned successfully from API call.");
-                    else
-                        console.log("JS: Returned unsuccessfully from API call.");
-                });
-        }else if(choice == 2){
-            console.log("Testing API test 2 (talltales_addplayer)");
-            $.post(talltales_addplayer,
-                {
-                    room_code: 215950
-                },
-                function(data) {
-                    if(data.successful)
-                        console.log("JS: Returned successfully from API call.");
-                    else
-                        console.log("JS: Returned unsuccessfully from API call.");
-                });
-        }else if(choice == 3){
-            console.log("Testing API test 3 (talltales_getgamestate)");
-            $.post(talltales_getgamestate,
-                {
-                    room_code: 898954
-                },
-                function(data) {
-                    if(data.successful){
-                        console.log("JS: Returned successfully from API call.");
-                    }else{
-                        console.log("JS: Returned unsuccessfully from API call.");
-                    }
-                });
-        }else if(choice == 4){
-            console.log("Testing API test 4 (talltales_updategamestate)");
-            $.post(talltales_updategamestate,
-                {
-                    room_code: 893346,
-                    story_text: "THis is part of a story!"
-                },
-                function(data) {
-                    if(data.successful)
-                        console.log("JS: Returned successfully from API call.");
-                    else
-                        console.log("JS: Returned unsuccessfully from API call.");
-
-                });
-        }else if(choice == 5){
-            console.log("Testing API test 5 (talltales_getgames)");
-            $.post(talltales_getgames,
-                {
-
-                },
-                function(data) {
-                    if(data.successful)
-                        console.log("JS: Returned successfully from API call.");
-                    else
-                        console.log("JS: Returned unsuccessfully from API call.");
-                });
-        }else if(choice == 6){
-            console.log("Testing API test 6 (talltales_removeplayer)");
-            $.post(talltales_removeplayer,
-                {
-                    room_code: 215950
-                },
-                function(data) {
-                    if(data.successful)
-                        console.log("JS: Returned successfully from API call.");
-                    else
-                        console.log("JS: Returned unsuccessfully from API call.");
-                });
-        }
-    };
-
     /* initialize():
     ----------------------------------------------------------------------------
     Creates a public or private instance of a game (based on gametype) in the database.
@@ -178,6 +104,34 @@ var app = function() {
                 }
             });
         
+    };
+
+    self.is_user_in_user_accounts = function () {
+        $.getJSON(check_user_accounts_url,
+            function (data) {
+                console.log("Look at this: " + data.is_in_table);
+                if (data.is_in_table) {
+                    console.log("IT'S TRUE: " + data.is_in_table);
+                    self.vue.chosen_nickname = true;
+                }
+                return data.is_in_table;
+            });
+    };
+
+    /* add_current_user():
+    ----------------------------------------------------------------------------
+    Sets logged-in user's nickname (after adding them to 
+    the user_accounts table if necessary).
+    ----------------------------------------------------------------------------*/
+    self.add_current_user = function () {
+        console.log("JS: Adding current user.");
+        $.post(add_current_user_url,
+            {
+                nickname: self.vue.nickname
+            },
+            function (data) {
+                self.vue.chosen_nickname = true;
+            });
     };
 
     /* join_by_stored_code():
@@ -324,18 +278,18 @@ var app = function() {
     games so hardcoded to 0.
     ----------------------------------------------------------------------------*/
     self.get_games = function (gametype) {
-        console.log("get_games clicked");
+        console.log("JS: Getting games of type " + gametype);
         
-        $.post(talltales_getgames, 
+        $.post(get_games_url,
             {
-                public: 0
+                gametype: gametype
             },
             function (data) {
-            	console.log("get_games reached fucntion");
+                console.log("Got to here!!! " + data.public_games);
                 self.vue.public_games = data.public_games;
                 console.log("public games = " + data.public_games);
             });
-       
+
     };
 
      /* show_games():
@@ -345,12 +299,13 @@ var app = function() {
     ----------------------------------------------------------------------------*/
 
     self.show_games = function (gametype) {
-
-    	self.get_games(gametype);
+        if (!self.vue.displaying_public_games) {
+            self.get_games(gametype);
+        }
     	self.vue.displaying_public_games = !self.vue.displaying_public_games;
 
     };
-   
+
     /* TABOO FUNCTIONS */
 
     // Complete as needed.
@@ -359,6 +314,8 @@ var app = function() {
         delimiters: ['${', '}'],
         unsafeDelimiters: ['!{', '}'],
         data: {
+            chosen_nickname: false,
+            nickname: "Guest",
 
             //Vue variables common to ALL GAMES
             join_room_code: "",
@@ -376,6 +333,8 @@ var app = function() {
             //Taboo things
         },
         methods: {
+            is_user_in_user_accounts: self.is_user_in_user_accounts,
+            add_current_user: self.add_current_user,
             switch_theme: self.switch_theme,
             api_tester: self.api_tester,
             initialize: self.initialize,

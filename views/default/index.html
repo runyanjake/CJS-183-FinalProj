@@ -2,17 +2,10 @@
 
 {{block head}}
 <script src="{{=URL('static', 'js/vue.js')}}"></script>
+<script src="{{=URL('static', 'js/default_index.js')}}"></script>
 <script>
-    var my_url = "{{=URL('api', 'my_method')}}";
-    var talltales_init = "{{=URL('api', 'init_talltales')}}";
-    var talltales_addplayer = "{{=URL('api', 'add_player_talltales')}}";
-    var talltales_removeplayer = "{{=URL('api', 'remove_player_talltales')}}";
-    var talltales_getgamestate = "{{=URL('api', 'retrieve_gamestate_talltales')}}";
-    var talltales_updategamestate = "{{=URL('api', 'update_gamestate_talltales')}}";
-    var talltales_taketurn = "{{=URL('api', 'take_turn_talltales')}}";
-    var talltales_getgames = "{{=URL('api', 'get_games_talltales')}}";
-    var talltales_lobby = "{{=URL('talltales', 'game')}}";
-    var talltales_taketurn = "{{=URL('api', 'take_turn_talltales')}}";
+    var add_current_user_url = "{{=URL('api', 'add_current_user')}}";
+    var check_user_accounts_url = "{{=URL('api', 'check_user_accounts')}}";
 </script>
 {{end}}
 
@@ -23,29 +16,43 @@
             {{if auth.user is None:}}
 
             <div id="not_logged_in" class="center">
-                <h1>sup, <a href="{{=URL('default', 'user')}}">login</a> to play</h1>
+                <h1>sup, <a href="{{=URL('default', 'user')}}" v-on:click="is_user_in_user_accounts">login</a> to play</h1>
             </div>
 
             {{else:}}
-            <div id="logged_in" class="container center">
-                <!--<a class="btn rounded" v-on:click="api_tester()">Test API Button</a>-->
-                
-                <div id="tall_tales" class="third">
-                    <a href="{{=URL('play', 'talltales')}}" class="btn oval" id="button_orange">
-                        <h3>tall tales</h3>
-                    </a>
+
+            <div id="vue-loadingicon">
+                <i class="fa fa-spinner fa-spin"></i>
+            </div>
+
+            <div id="vue-content" style="display:none">
+
+                <div v-if="!chosen_nickname">
+                    <h1>choose a nickname:</h1>
+                    <input id="nickname_input" v-model="nickname" v-on:keyup.enter="add_current_user()" type="text" placeholder="Guest">
+                    <button v-on:click="add_current_user()">Submit</button>
                 </div>
 
-                <div id="taboo" class="third">
-                    <a href="{{=URL('play', 'taboo')}}" class="btn oval" id="button_yellow">
-                        <h3>taboo</h3>
-                    </a>
-                </div>
+                <div v-if="chosen_nickname" id="logged_in" class="container center">
+                    
+                    <div id="tall_tales" class="third">
+                        <a href="{{=URL('play', 'talltales')}}" class="btn oval" id="button_orange">
+                            <h3>tall tales</h3>
+                        </a>
+                    </div>
 
-                <div id="typeracer" class="third">
-                    <a href="{{=URL('play', 'typeracer')}}" class="btn oval" id="button_green">
-                        <h3>typeracer</h3>
-                    </a>
+                    <div id="taboo" class="third">
+                        <a href="{{=URL('play', 'taboo')}}" class="btn oval" id="button_yellow">
+                            <h3>taboo</h3>
+                        </a>
+                    </div>
+
+                    <div id="typeracer" class="third">
+                        <a href="{{=URL('play', 'typeracer')}}" class="btn oval" id="button_green">
+                            <h3>typeracer</h3>
+                        </a>
+                    </div>
+
                 </div>
 
             </div>
@@ -55,5 +62,3 @@
     </div>
 
 </div>
-
-<script src="{{=URL('static', 'js/default_index.js')}}"></script>

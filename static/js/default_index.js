@@ -9,6 +9,7 @@ var app = function() {
     $(window).unload(function(){
     	if (self.vue.is_in_game) {
     		self.leave_game(self.vue.current_gamestate.gametype);
+    		self.timer_stop();
             toggle();
     	}
     });
@@ -439,6 +440,9 @@ var app = function() {
 	   		get_games: self.get_games,
             show_games: self.show_games,
             vue_loop: self.vue_loop,
+            timer_start: self.timer_start,
+            timer_reset: self.timer_reset,
+            timer_stop: self.timer_stop,
         }
 
     });

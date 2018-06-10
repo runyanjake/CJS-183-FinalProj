@@ -72,7 +72,7 @@ git status (status)
 > Special thanks to beta testers Bryan and Julian.
 ![alt text][logo]
 
-[logo]: https://github.com/runyanjake/CJS-183-FinalProj/blob/master/betaii.jpg "Logo Title Text 2"
+[logo]: https://github.com/runyanjake/CJS-183-FinalProj/blob/master/betaii.JPG "Logo Title Text 2"
 
 ----------------------------------------------------------------------------
 

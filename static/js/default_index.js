@@ -218,6 +218,9 @@ var app = function() {
                     }
                     console.log("displaying public games = " + self.vue.displaying_public_games);
 
+                    //Start the timer on load from private
+                    self.timer_start();
+
                     //Update in lobby state, which updates HTML
                     self.vue.is_in_game = true;
                     self.vue_loop(gametype);
@@ -281,7 +284,8 @@ var app = function() {
                     console.log("JS: Returned successfully from API call (update_vue).");
                     if(self.vue.current_gamestate.current_turn != oldturn){
                         console.log("It just became Someone Else's turn!");
-                        self.timer_start();
+//                        self.timer_start();
+                        self.timer_reset();
                     }
                 }
                 else {
@@ -397,6 +401,7 @@ var app = function() {
                     if(data.successful){
                         console.log("JS: Skipped a user's turn due to timeout.");
                         self.vue.current_gamestate = data.match;
+                        timer_time = self.vue.current_gamestate.turn_time_limit;
                     }else{
 
                     }

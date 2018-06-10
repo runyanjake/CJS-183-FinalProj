@@ -104,7 +104,7 @@
                                     ${game.story_text[0]} <button v-on:click="join_by_code(0, game.room_code); toggle();">Join Game</button>
                                 </div>
                             </div>
-                            <a class="close" href="#">x</a>
+                            <a class="close" href="#" v-on:click="show_games">x</a>
                             <div class="right">
                                 <a class="close btn" href="#" v-on:click="show_games">close</a>
                             </div>

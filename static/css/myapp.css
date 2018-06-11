@@ -25,6 +25,9 @@ a {
   color: darkgray;
 }
 
+a:.btn {
+  color: red;
+}
 
 a:hover:not(#tooltip) {
   color: #fff000 !important;

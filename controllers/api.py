@@ -512,12 +512,17 @@ def get_games():
 #   successful = success value
 def get_nickname():
     print("Fetching the nickname for the currently logged in user")
+    current_user = None
+    nickname_logged_in = False
+    successful = False
     if auth.user is not None:
         print("auth.user is not none")
-        current_user = db(int(auth.user.id) == db.user_accounts.user_id).select().first().user_name
-        print(current_user)
-        nickname_logged_in = True
-        successful = True
+        current_user_row = db(int(auth.user.id) == db.user_accounts.user_id).select().first()
+        if current_user_row is not None:
+            current_user = current_user_row.user_name
+            print("Current user: " + str(current_user))
+            nickname_logged_in = True
+            successful = True
     else:
         #Theoretically this is never called
         print("auth.user is none")
@@ -531,8 +536,25 @@ def get_nickname():
         successful=successful
     ))
 
+def get_theme():
+    print("API: Getting theme.")
+    current_user_theme = 5
+    successful = False
+    if auth.user is not None:
+        current_user_row = db(int(auth.user.id) == db.user_accounts.user_id).select().first()
+        if current_user_row is not None:
+            current_user_theme = current_user_row.theme
+            print("Current user's theme: " + str(current_user_theme))
+            successful = True
+
+    return response.json(dict(
+        theme=current_user_theme,
+        successful=successful
+    ))
+
 @auth.requires_login()
 def set_theme():
     print("API: Setting theme for the currently logged in user")
     theme = int(request.vars.theme)
-    db(auth.user.id == db.user_accounts.user_id).update(theme=theme)
+    test = db(auth.user.id == db.user_accounts.user_id).update(theme=theme)
+    print("API: Set theme nonzero: " + str(test))

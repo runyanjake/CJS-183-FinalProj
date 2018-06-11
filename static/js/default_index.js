@@ -236,7 +236,9 @@ var app = function() {
                     self.vue.current_gamestate = data.gamestate;
                     self.update_story();
                     console.log("JS: Returned successfully from API call (update_vue).");
+                    //Updating not done asynchronously b/c need gamestate update.
                     if(self.vue.current_gamestate.current_turn != oldturn){
+                        console.log("JSJJJSJSJSJJ: ANOTHER PLAYER HAS SKIPPED THEIR TURN.");
                         self.timer_reset();
                     }
                 }
@@ -272,16 +274,17 @@ var app = function() {
                     self.update_story();
                     self.vue.talltales_new_sentence = "";
                     console.log("JS: Returned successfully from API call.");
-                    if(self.vue.turn_countdown_timer == null){
-                        self.timer_start();
-                    }else{
-                        self.timer_reset();
-                    }
                 }
                 else {
                     console.log("JS: Returned unsuccessfully from API call.");
                 }
             });
+            //Call timer updates asynchronously.
+            if(self.vue.turn_countdown_timer == null){
+                self.timer_start();
+            }else{
+                self.timer_reset();
+            }
         }
         else {
             console.log("Not ur turn to submit stuff.");
@@ -336,6 +339,7 @@ var app = function() {
     Starts the timer.
     ----------------------------------------------------------------------------*/
     self.timer_start = function () {
+        console.log("JS: Starting Timer.");
         if(self.vue.turn_countdown_timer != null){
                 clearInterval(self.vue.turn_countdown_timer);
         }
@@ -353,7 +357,8 @@ var app = function() {
                     if(data.successful){
                         console.log("JS: Skipped a user's turn due to timeout.");
                         self.vue.current_gamestate = data.match;
-                        timer_time = self.vue.current_gamestate.turn_time_limit;
+                        //Dont update timer asynchronously, wait till after sending data.
+                        self.vue.timer_time = self.vue.current_gamestate.turn_time_limit;
                     }else{
 
                     }
@@ -367,6 +372,7 @@ var app = function() {
     Resets the timer.
     ----------------------------------------------------------------------------*/
     self.timer_reset = function () {
+        console.log("JS: Resetting Timer.");
         self.vue.timer_time = self.vue.current_gamestate.turn_time_limit;
     };
 
@@ -375,6 +381,7 @@ var app = function() {
     Stops the timer.
     ----------------------------------------------------------------------------*/
     self.timer_stop = function () {
+        console.log("JS: Stopping Timer.");
         if(self.vue.turn_countdown_timer != null){
                 clearInterval(self.vue.turn_countdown_timer);
                 self.vue.turn_countdown_timer = null;

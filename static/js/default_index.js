@@ -29,11 +29,13 @@ var app = function() {
     self.show_nickname_editor = function () {
         console.log("Called show_nickname_editor.");
         self.vue.chosen_nickname = false;
+        self.vue.chosen_theme = true;
     };
 
     self.show_theme_editor = function () {
         console.log("Called show_theme_editor.");
         self.vue.chosen_theme = false;
+        self.vue.chosen_nickname = true;
     };
 
     self.get_nickname = function () {
@@ -89,7 +91,6 @@ var app = function() {
         // Pink is 3
         // Orange is 4
         // Purple is 5
-        self.vue.chosen_nickname = true;
         self.vue.theme = theme_code;
         console.log("Switched theme to: " + self.vue.theme)
         self.set_theme(self.vue.theme);
@@ -189,7 +190,6 @@ var app = function() {
     ----------------------------------------------------------------------------*/
     self.update_current_user = function () {
         console.log("JS: Adding current user.");
-        self.vue.chosen_theme = true;
         $.post(update_current_user_url,
             {
                 nickname: self.vue.nickname

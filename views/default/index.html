@@ -76,20 +76,28 @@
                     
                     <div id="game_choices_container" class="container center">
                         <div id="tall_tales" class="third">
-                            <a v-on:click="chosen_theme = true" href="{{=URL('play', 'talltales')}}" class="btn oval" id="button_talltales"
-                            v-bind:class="talltales_button_color">
+                            <a v-on:click="chosen_theme = true" 
+                                href="{{=URL('play', 'talltales')}}" 
+                                class="btn oval" id="button_talltales"
+                                v-bind:class="talltales_button_color">
                                 <h3>tall tales</h3>
                             </a>
                         </div>
 
                         <div id="taboo" class="third">
-                            <a v-on:click="chosen_theme = true" href="{{=URL('play', 'taboo')}}" class="btn oval" id="button_taboo">
+                            <a v-on:click="chosen_theme = true" 
+                                href="{{=URL('play', 'taboo')}}" 
+                                class="btn oval" id="button_taboo"
+                                v-bind:class="talltales_button_color">
                                 <h3>taboo</h3>
                             </a>
                         </div>
 
                         <div id="typeracer" class="third">
-                            <a v-on:click="chosen_theme = true" href="{{=URL('play', 'typeracer')}}" class="btn oval" id="button_typeracer">
+                            <a v-on:click="chosen_theme = true" 
+                                href="{{=URL('play', 'typeracer')}}" 
+                                class="btn oval" id="button_typeracer"
+                                v-bind:class="talltales_button_color">
                                 <h3>typeracer</h3>
                             </a>
                         </div>

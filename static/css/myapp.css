@@ -179,21 +179,52 @@ a:not(.btn):not(.noeffect):after {
   text-align: center;
 }
 
+/*green*/
 .color_1 {
   background-color: #ff0000;
 }
+
+.gamebar_1 {
+  background-color: #a6e755;
+}
+
+/*turqoise */
 .color_2 {
   background-color: #fff000;
 }
+
+.gamebar_2 {
+  background-color: #60e4d0;
+}
+
+/*pink */
 .color_3 {
   background-color: #ffff00;
 }
+
+.gamebar_3 {
+  background-color: #fdaed7;
+}
+
+/*orange */
 .color_4 {
   background-color: #ff00ff;
 }
+
+.gamebar_4 {
+  background-color: #ffcc5d;
+}
+
+/*purple */
 .color_5 {
   background-color: #ff0fff;
 }
+
+.gamebar_5 {
+  background-color: #cca6fd;
+}
+
+
 
 
 #button_talltales {

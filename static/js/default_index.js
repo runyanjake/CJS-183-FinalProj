@@ -420,7 +420,17 @@ var app = function() {
                 return {
                     
                 }
+            },
+            gamebar_color: function () {
+                return {
+                    gamebar_1: this.theme == 1,
+                    gamebar_2: this.theme == 2,
+                    gamebar_3: this.theme == 3,
+                    gamebar_4: this.theme == 4,
+                    gamebar_5: this.theme == 5
+                }
             }
+
         },
         methods: {
             is_user_in_user_accounts: self.is_user_in_user_accounts,

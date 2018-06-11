@@ -460,7 +460,7 @@ def get_games():
 
     if gametype is 0:
         q = db.talltales_instances
-        rows = db(q).select()
+        rows = db(q).select(orderby=~db.talltales_instances.created_on)
         for game in rows:
             t = dict(
                 room_code = game.room_code,

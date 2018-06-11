@@ -48,11 +48,14 @@ var app = function() {
 
     //load background so it stays for each page
     change_background = function () {
-        if (sessionStorage.getItem('bg_color')) {
-            
+        if (sessionStorage.getItem('theme')) {
+            console.log("remembered theme");
+            self.vue.theme = sessionStorage.getItem('theme');
+        }
+        if (sessionStorage.getItem('bg_color')) {    
             document.body.style.backgroundColor = sessionStorage.getItem('bg_color');
-
-        }else{
+        }
+        else {
             console.log("entered else");
             document.body.style.backgroundColor =  "#b67fff";
             sessionStorage.setItem('bg_color', "#b67fff");
@@ -65,27 +68,33 @@ var app = function() {
         if (theme_code == 1) {
             document.body.style.background = "#74d300";
             sessionStorage.setItem('bg_color', "#74d300");
+            self.vue.theme = 1;
         }
         //turquoise theme
         else if (theme_code == 2) {
             document.body.style.background = "#2dd8bf";
             sessionStorage.setItem('bg_color', "#2dd8bf");
+            self.vue.theme = 2;
         }
         //pink theme
         else if (theme_code == 3) {
             document.body.style.background = "#ff91ca";
             sessionStorage.setItem('bg_color', "#ff91ca");
+            self.vue.theme = 3;
         }
         //orange theme
         else if (theme_code == 4) {
             document.body.style.background = "#ffb30f";
             sessionStorage.setItem('bg_color', "#ffb30f");
+            self.vue.theme = 4;
         }
         //purple theme
         else if (theme_code == 5) {
             document.body.style.background = "#b67fff";
             sessionStorage.setItem('bg_color', "#b67fff");
+            self.vue.theme = 5;
         }
+        sessionStorage.setItem('theme', self.vue.theme);
         self.vue.chosen_theme = true;
     };
 
@@ -372,7 +381,8 @@ var app = function() {
             chosen_nickname: false,
             nickname: "Guest",
             chosen_theme: true,
-
+            theme: 5,
+    
             //Vue variables common to ALL GAMES
             join_room_code: "",
             displaying_public_games: false,
@@ -389,6 +399,27 @@ var app = function() {
 
             //Taboo things
         },
+        computed: {
+            talltales_button_color: function () {
+                return {
+                    color_1: this.theme == 1,
+                    color_2: this.theme == 2,
+                    color_3: this.theme == 3,
+                    color_4: this.theme == 4,
+                    color_5: this.theme == 5
+                }
+            },
+            taboo_button_color: function () {
+                return {
+                    
+                }
+            },
+            typeracer_button_color: function () {
+                return {
+                    
+                }
+            }
+        },
         methods: {
             is_user_in_user_accounts: self.is_user_in_user_accounts,
             update_current_user: self.update_current_user,
@@ -403,7 +434,7 @@ var app = function() {
             show_games: self.show_games,
             vue_loop: self.vue_loop,
             get_nickname: self.get_nickname,
-            set_nickname: self.set_nickname
+            set_nickname: self.set_nickname,
         }
 
     });

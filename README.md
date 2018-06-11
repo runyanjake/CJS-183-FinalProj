@@ -2,6 +2,10 @@
 #### Cassia Artanegara, Jake Runyan, and Shane Kennerly's Final Project </br> Professor Luca de Alfaro's CMPS 183 Web Applications </br> University of California, Santa Cruz.
 ##### [(PLAY THE FINAL VERSION)](https://jmrunyan.pythonanywhere.com/texttime "Final Version") [(PLAY THE BETA)](https://jmrunyan.pythonanywhere.com/texttime_beta "Beta") [(PLAY THE ALPHA)](https://jmrunyan.pythonanywhere.com/texttime_alpha "Alpha") [(PLAY THE PROTOTYPE)](https://jmrunyan.pythonanywhere.com/texttime_prototype "Prototype")
 
+![alt text][logo]
+
+[logo]: https://github.com/runyanjake/CJS-183-FinalProj/blob/master/welcomescreen.png "Logo Title Text 2"
+
 ----------------------------------------------------------------------------
 
 ##### What is this project about?

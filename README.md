@@ -1,6 +1,6 @@
 # Text Time 
 #### Cassia Artanegara, Jake Runyan, and Shane Kennerly's Final Project </br> Professor Luca de Alfaro's CMPS 183 Web Applications </br> University of California, Santa Cruz.
-##### [(PLAY THE FINAL VERSION)](jmrunyan.pythonanywhere.com/texttime) [(PLAY THE ALPHA)](jmrunyan.pythonanywhere.com/texttime_alpha) [(PLAY THE PROTOTYPE)](jmrunyan.pythonanywhere.com/texttime_prototype)
+##### [(PLAY THE FINAL VERSION)](https://jmrunyan.pythonanywhere.com/texttime "Final Version") [(PLAY THE BETA)](https://jmrunyan.pythonanywhere.com/texttime_beta "Beta") [(PLAY THE ALPHA)](https://jmrunyan.pythonanywhere.com/texttime_alpha "Alpha") [(PLAY THE PROTOTYPE)](https://jmrunyan.pythonanywhere.com/texttime_prototype "Prototype)
 
 ----------------------------------------------------------------------------
 

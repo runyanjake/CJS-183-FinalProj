@@ -151,13 +151,11 @@ def take_turn_talltales():
         ))
     else:
         if current_user != match.current_turn:
-            print("Not ur turn")
             return response.json(dict(
                 successful=False
             ))
         else:
             if current_user not in match.player_list:
-                print("Not in player list")
                 return response.json(dict(
                     successful=False
                 ))
@@ -178,15 +176,15 @@ def take_turn_talltales():
                     if player == old_turn:
                         is_next = True
                 db(request.vars.room_code == db.talltales_instances.room_code).update(current_turn=new_turn)
-                db(request.vars.room_code == db.talltales_instances.room_code).update(timer_time=match.turn_time_limit)
 
                 #Once turn submits, reset timer
                 current_user_id = db(auth.user.id == db.user_accounts.user_id).select().first().user_id
                 if auth.user.id == current_user_id:
-                    db(q).update(timer_time=match.turn_time_limit)
+                    db(request.vars.room_code == db.talltales_instances.room_code).update(timer_time=match.turn_time_limit)
 
                 #re-query
                 updated_match = db(request.vars.room_code == db.talltales_instances.room_code).select().first()
+
                 return response.json(dict(
                     match=updated_match,
                     successful=True
@@ -253,20 +251,57 @@ def get_gamestate():
     oldmatch = db(q).select().first()
     if auth.user.id == current_user_id and oldmatch.timer_time > 0:
         db(q).update(timer_time=oldmatch.timer_time-1)
-    else:
-        print("Time To Pass turn.");
 
-    match = db(q).select().first() #requery after update
-    current_user = db(auth.user.id == db.user_accounts.user_id).select().first().user_name
-    if match is None or current_user not in match.player_list:
-        return response.json(dict(
-            successful=False
-        ))
+        match = db(q).select().first()  # requery after update
+        current_user = db(auth.user.id == db.user_accounts.user_id).select().first().user_name
+        if match is None or current_user not in match.player_list:
+            print("RETURN VIA 1")
+            return response.json(dict(
+                successful=False
+            ))
+        else:
+            print("RETURN VIA 2")
+            return response.json(dict(
+                gamestate=match,
+                successful=True
+            ))
     else:
-        return response.json(dict(
-            gamestate=match,
-            successful=True
-        ))
+        print("Time To Pass turn.")
+        ########
+        match = db(request.vars.room_code == db.talltales_instances.room_code).select().first()
+        curturn = match.current_turn
+        current_user = db(auth.user.id == db.user_accounts.user_id).select().first().user_name
+        print("Current turn is " + str(curturn) + " and user is " + str(current_user))
+        if curturn == current_user:
+            print("ITS MY TURN AND IM GONNA SKIP")
+            # Always update turn, allows us to skip turns on timeout.
+            old_turn = match.current_turn
+            new_turn = match.player_list[0]
+            is_next = False
+            for player in match.player_list:
+                if is_next == True:
+                    new_turn = player
+                    is_next = False
+                if player == old_turn:
+                    is_next = True
+            print("Old Turn: " + str(old_turn) + "    New turn: " + str(new_turn))
+            db(request.vars.room_code == db.talltales_instances.room_code).update(current_turn=new_turn)
+            db(request.vars.room_code == db.talltales_instances.room_code).update(timer_time=match.turn_time_limit)
+
+            # re-query
+            updated_match = db(request.vars.room_code == db.talltales_instances.room_code).select().first()
+            print("NEW MATCH STATE: " + str(updated_match))
+            print("RETURN VIA 3")
+            return response.json(dict(
+                gamestate=updated_match,
+                successful=True
+            ))
+        else:
+            print("RETURN VIA 4")
+            return response.json(dict(
+                gamestate=match,
+                successful=False
+            ))
 
 #### Add this user to an existing instance of the game.
 # incoming packet contents:
@@ -358,6 +393,9 @@ def remove_player():
                 if current_user == room.hoster:
                     print("API: Hoster is leaving, promoting player " + str(new_player_list[0]) + " to hoster.")
                     db(q).update(hoster=new_player_list[0])
+
+                    match = db(request.vars.room_code == db.talltales_instances.room_code).select().first()
+                    db(request.vars.room_code == db.talltales_instances.room_code).update(timer_time=match.turn_time_limit)
 
                 if current_user == room.current_turn:
                     #update the turn if it's the person who's leaving's turn.

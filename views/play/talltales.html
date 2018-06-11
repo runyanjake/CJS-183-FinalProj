@@ -15,6 +15,7 @@
     var check_user_accounts_url = "{{=URL('api', 'check_user_accounts')}}";
     var talltales_turntimeout = "{{=URL('api', 'timeout_turn_talltales')}}";
     var get_nickname_url = "{{=URL('api', 'get_nickname')}}";
+    var update_current_user_url = "{{=URL('api', 'update_current_user')}}";
 </script>
 {{end}}
 
@@ -22,101 +23,153 @@
 
 
     <div id="vue-div" class="display:none">
-        <div v-if="!is_in_game">
-            <!-- Your code goes here.  Remember to call $("#vue-div").show() once you get the data for the first time. -->
-            <div class="center">
-                <h1>tall tales</h1>
-            </div>
 
-            <!--Selection of Creating, Joining, or Viewing all tall tales games.-->
-            <div class="container center holder">
-                <!--Create a new game-->
-                <div class="third padded holder">
-                    <div class="create_new_game_btn">
-                        <a href="#create_new_game"><i class="fa fa-plus"></i></a>
-                        <div class="btn_text">
-                            create a new game
-                        </div>
-                    </div>
-                    <!--This is the code for the modal to create a new game-->
-                    <div class="modal" id="create_new_game">
-                        <div class="twothirds white padded">
-
-                            <div class="container">
-                                <h2>create a new game</h2>
-                                <input type="text" v-model="story_title" class="fill" placeholder="Enter the title of your story.">
-                                <div class="public_or_not_tooltip">
-                                    <a id="tooltip"><span data-tooltip="If you want to just play with your friends, you will be given a room code to share with them so they can join. Otherwise, strangers will be allowed to join your game.">
-                                        public game?
-                                    </span></a>
-                                    <input type="checkbox" v-model="is_public">
-                                </div>
-                                <button v-on:click="initialize(0); toggle();">create new game</button>
-                            </div>
-                            <!--Buttons to close the modal-->
-                            <a class="close" href="#">x</a>
-                            <div class="right">
-                                <a class="close btn" href="#">close</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!--Enter a room code to play-->
-                <div class="third padded holder">
-                    <!--Clicking the button will open a stupid.css modal-->
-                    <div class="play_w_friends_btn">
-                        <a href="#enter_room_code"><i class="fa fa-users"></i></a>
-                        <div class="btn_text">
-                            join a private game by room code
-                        </div>
-                    </div>
-                    <!--This is the code for the modal to enter the room code-->
-                    <div class="modal" id="enter_room_code">
-                        <div class="twothirds white padded">
-                            <div class="container">
-                                <h2>join an existing game</h2>
-                                <p>enter a room code your friend shared with you to join their game.</p>
-                                <input type="text" v-model="join_room_code" class="fill" placeholder="e.g. 123456">
-                                <button v-on:click="join_by_stored_code(0); toggle();">join game</button>
-                            </div>
-                            <!--Buttons to close the modal-->
-                            <a class="close" href="#">x</a>
-                            <div class="right">
-                                <a class="close btn" href="#">close</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!--Play a public game-->
-                <div class="third padded holder">
-                    <!--Clicking button opens stupid.css modal, will display list of games you can join-->
-                    <!--Show a list of possible games to play-->
-                    <div class="play_w_world_btn" v-on:click="show_games(0)">
-                        <a href="#join_public_game"><i class="fa fa-globe"></i></a>
-                        <div class="btn_text">
-                            join a public game
-                        </div>
-                    </div>
-                    <!--The modal that will be opened when clicking the button above-->
-                    <div class="modal" id="join_public_game">
-                        <div class="twothirds white padded">
-                            <h2>here are some public games you can join</h2>
-                            <div class="game_container" v-if="displaying_public_games">
-                                <div v-for="game in public_games" class="game_items container" v-on:click="join_by_code(0, game.room_code); toggle();">
-                                    ${game.story_text[0]}
-                                </div>
-                            </div>
-                            <a class="close" href="#" v-on:click="show_games">x</a>
-                            <div class="right">
-                                <a class="close btn" href="#" v-on:click="show_games()">close</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+        <div class="vue-loadingicon">
+            <i class="fa fa-spinner fa-spin"></i>
         </div>
+
+        <div class="vue-content" v-if="!is_in_game">
+            <!-- Your code goes here.  Remember to call $("#vue-div").show() once you get the data for the first time. -->
+            
+            <div v-if="!chosen_nickname" id="choose_nickname">
+                <h1>choose a nickname:</h1>
+                <input id="nickname_input" v-model="nickname" v-on:keyup.enter="update_current_user()" type="text" placeholder="Guest">
+                <button id="nickname_submit" v-on:click="update_current_user()">Submit</button>
+            </div>
+
+            <div v-if="!chosen_theme" id="themes_square_holder">
+
+                <h1>pick a theme:</h1>
+
+                <div id="pink_theme" v-on:click="switch_theme(3)">
+                    <div class="square" id="pink_theme_square"></div>
+                    <div class="square_text">pink</div>
+                </div>
+
+                <div id="orange_theme" v-on:click="switch_theme(4)">
+                    <div class="square" id="orange_theme_square"></div>
+                    <div class="square_text">orange</div>
+                </div>
+                    
+                <div id="green_theme" v-on:click="switch_theme(1)">
+                    <div class="square" id="green_theme_square"></div>
+                    <div class="square_text">green</div>
+
+                </div>
+
+                <div id="teal_theme" v-on:click="switch_theme(2)">
+                    <div class="square" id="teal_theme_square"></div>
+                    <div class="square_text">turquoise</div>
+                </div>
+
+                <div id="purple_theme" v-on:click="switch_theme(5)">
+                    <div class="square" id="purple_theme_square"></div>
+                    <div class="square_text">purple</div>
+                </div>
+
+            </div>
+
+            <div v-if="chosen_nickname && chosen_theme">
+            
+                <div class="center">
+                    <h1>tall tales</h1>
+                </div>
+
+                <!--Selection of Creating, Joining, or Viewing all tall tales games.-->
+                <div class="container center holder">
+                    <!--Create a new game-->
+                    <div class="third padded holder">
+                        <div class="create_new_game_btn">
+                            <a href="#create_new_game"><i class="fa fa-plus"></i></a>
+                            <div class="btn_text">
+                                create a new game
+                            </div>
+                        </div>
+                        <!--This is the code for the modal to create a new game-->
+                        <div class="modal" id="create_new_game">
+                            <div class="twothirds white padded">
+
+                                <div class="container">
+                                    <h2>create a new game</h2>
+                                    <input type="text" v-model="story_title" class="fill" placeholder="Enter the title of your story.">
+                                    <div class="public_or_not_tooltip">
+                                        <a id="tooltip"><span data-tooltip="If you want to just play with your friends, you will be given a room code to share with them so they can join. Otherwise, strangers will be allowed to join your game.">
+                                            public game?
+                                        </span></a>
+                                        <input type="checkbox" v-model="is_public">
+                                    </div>
+                                    <button v-on:click="initialize(0); toggle();">create new game</button>
+                                </div>
+                                <!--Buttons to close the modal-->
+                                <a class="close" href="#">x</a>
+                                <div class="right">
+                                    <a class="close btn" href="#">close</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!--Enter a room code to play-->
+                    <div class="third padded holder">
+                        <!--Clicking the button will open a stupid.css modal-->
+                        <div class="play_w_friends_btn">
+                            <a href="#enter_room_code"><i class="fa fa-users"></i></a>
+                            <div class="btn_text">
+                                join a private game by room code
+                            </div>
+                        </div>
+                        <!--This is the code for the modal to enter the room code-->
+                        <div class="modal" id="enter_room_code">
+                            <div class="twothirds white padded">
+                                <div class="container">
+                                    <h2>join an existing game</h2>
+                                    <p>enter a room code your friend shared with you to join their game.</p>
+                                    <input type="text" v-model="join_room_code" class="fill" placeholder="e.g. 123456">
+                                    <button v-on:click="join_by_stored_code(0); toggle();">join game</button>
+                                </div>
+                                <!--Buttons to close the modal-->
+                                <a class="close" href="#">x</a>
+                                <div class="right">
+                                    <a class="close btn" href="#">close</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!--Play a public game-->
+                    <div class="third padded holder">
+                        <!--Clicking button opens stupid.css modal, will display list of games you can join-->
+                        <!--Show a list of possible games to play-->
+                        <div class="play_w_world_btn" v-on:click="show_games(0)">
+                            <a href="#join_public_game"><i class="fa fa-globe"></i></a>
+                            <div class="btn_text">
+                                join a public game
+                            </div>
+                        </div>
+                        <!--The modal that will be opened when clicking the button above-->
+                        <div class="modal" id="join_public_game">
+                            <div class="twothirds white padded">
+                                <h2>here are some public games you can join</h2>
+                                <div class="game_container" v-if="displaying_public_games">
+                                    <div v-for="game in public_games" class="game_items container" v-on:click="join_by_code(0, game.room_code); toggle();">
+                                        ${game.story_text[0]}
+                                    </div>
+                                </div>
+                                <a class="close" href="#" v-on:click="show_games">x</a>
+                                <div class="right">
+                                    <a class="close btn" href="#" v-on:click="show_games()">close</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+
+            
+        </div>
+
         <div v-else id="talltale_game_page">
             <div id="exit_button_container">
                 <button id="close_game_button" v-on:click="leave_game(0); toggle();">

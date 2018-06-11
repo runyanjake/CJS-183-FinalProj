@@ -14,15 +14,25 @@ var app = function() {
     });
 
     $(window).load(function(){
-        $('#vue-content').hide();
-        $('#vue-loadingicon').show();
+        $('.vue-content').hide();
+        $('.vue-loadingicon').show();
         self.is_user_in_user_accounts();
         self.get_nickname();
         setTimeout(function () {
-            $('#vue-loadingicon').hide();
-            $('#vue-content').show(); 
+            $('.vue-loadingicon').hide();
+            $('.vue-content').show(); 
         }, 500);  
     });
+
+    self.show_nickname_editor = function () {
+        console.log("Called show_nickname_editor.");
+        self.vue.chosen_nickname = false;
+    };
+
+    self.show_theme_editor = function () {
+        console.log("Called show_theme_editor.");
+        self.vue.chosen_theme = false;
+    };
 
     self.get_nickname = function () {
         $.getJSON(get_nickname_url,
@@ -76,6 +86,7 @@ var app = function() {
             document.body.style.background = "#b67fff";
             sessionStorage.setItem('bg_color', "#b67fff");
         }
+        self.vue.chosen_theme = true;
     };
 
     // Extends an array
@@ -91,7 +102,6 @@ var app = function() {
     Currently, max_players and turn_time_limit are defaulted but in the future we 
     probably want users to be able to select those values themselves.
     ---------------------------------------------------------------------------- */
-
     self.initialize = function (gametype) {
         console.log("JS: Creating game instance.");
 
@@ -122,6 +132,10 @@ var app = function() {
         
     };
 
+    /* is_user_in_user_accounts():
+    ----------------------------------------------------------------------------
+    Checks if logged-in user is in user_accounts table in database.
+    ----------------------------------------------------------------------------*/
     self.is_user_in_user_accounts = function () {
         $.getJSON(check_user_accounts_url,
             function (data) {
@@ -134,14 +148,29 @@ var app = function() {
             });
     };
 
-    /* add_current_user():
+    /* set_nickname():
+    ----------------------------------------------------------------------------
+    Sets logged-in user's nickname in database (accessed from profile tab).
+    ----------------------------------------------------------------------------*/
+    self.set_nickname = function () {
+        console.log("JS: Setting nickname.");
+        $.post(set_nickname_url,
+            {
+                nickname: self.vue.nickname
+            },
+            function (data) {
+                self.vue.nickname = data.nickname
+            });
+    };
+
+    /* update_current_user():
     ----------------------------------------------------------------------------
     Sets logged-in user's nickname (after adding them to 
     the user_accounts table if necessary).
     ----------------------------------------------------------------------------*/
-    self.add_current_user = function () {
+    self.update_current_user = function () {
         console.log("JS: Adding current user.");
-        $.post(add_current_user_url,
+        $.post(update_current_user_url,
             {
                 nickname: self.vue.nickname
             },
@@ -344,6 +373,7 @@ var app = function() {
         data: {
             chosen_nickname: false,
             nickname: "Guest",
+            chosen_theme: true,
 
             //Vue variables common to ALL GAMES
             join_room_code: "",
@@ -363,7 +393,7 @@ var app = function() {
         },
         methods: {
             is_user_in_user_accounts: self.is_user_in_user_accounts,
-            add_current_user: self.add_current_user,
+            update_current_user: self.update_current_user,
             switch_theme: self.switch_theme,
             api_tester: self.api_tester,
             initialize: self.initialize,
@@ -374,7 +404,8 @@ var app = function() {
 	   		get_games: self.get_games,
             show_games: self.show_games,
             vue_loop: self.vue_loop,
-            get_nickname: self.get_nickname
+            get_nickname: self.get_nickname,
+            set_nickname: self.set_nickname
         }
 
     });

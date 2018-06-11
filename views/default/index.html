@@ -4,7 +4,7 @@
 <script src="{{=URL('static', 'js/vue.js')}}"></script>
 <script src="{{=URL('static', 'js/default_index.js')}}"></script>
 <script>
-    var add_current_user_url = "{{=URL('api', 'add_current_user')}}";
+    var update_current_user_url = "{{=URL('api', 'update_current_user')}}";
     var check_user_accounts_url = "{{=URL('api', 'check_user_accounts')}}";
     var get_nickname_url = "{{=URL('api', 'get_nickname')}}";
 </script>
@@ -22,19 +22,51 @@
 
             {{else:}}
 
-            <div id="vue-loadingicon">
+            <div class="vue-loadingicon">
                 <i class="fa fa-spinner fa-spin"></i>
             </div>
 
-            <div id="vue-content" style="display:none">
+            <div class="vue-content" style="display:none">
 
                 <div v-if="!chosen_nickname" id="choose_nickname">
                     <h1>choose a nickname:</h1>
-                    <input id="nickname_input" v-model="nickname" v-on:keyup.enter="add_current_user()" type="text" placeholder="Guest">
-                    <button id="nickname_submit" v-on:click="add_current_user()">Submit</button>
+                    <input id="nickname_input" v-model="nickname" v-on:keyup.enter="update_current_user()" type="text" placeholder="Guest">
+                    <button id="nickname_submit" v-on:click="update_current_user()">Submit</button>
                 </div>
 
-                <div v-if="chosen_nickname" id="logged_in" class="container center">
+                <div v-if="!chosen_theme" id="themes_square_holder">
+
+                    <h1>pick a theme:</h1>
+
+                    <div id="pink_theme" v-on:click="switch_theme(3)">
+                        <div class="square" id="pink_theme_square"></div>
+                        <div class="square_text">pink</div>
+                    </div>
+
+                    <div id="orange_theme" v-on:click="switch_theme(4)">
+                        <div class="square" id="orange_theme_square"></div>
+                        <div class="square_text">orange</div>
+                    </div>
+                    
+                    <div id="green_theme" v-on:click="switch_theme(1)">
+                        <div class="square" id="green_theme_square"></div>
+                        <div class="square_text">green</div>
+
+                    </div>
+
+                    <div id="teal_theme" v-on:click="switch_theme(2)">
+                        <div class="square" id="teal_theme_square"></div>
+                        <div class="square_text">turquoise</div>
+                    </div>
+
+                    <div id="purple_theme" v-on:click="switch_theme(5)">
+                        <div class="square" id="purple_theme_square"></div>
+                        <div class="square_text">purple</div>
+                    </div>
+
+                </div>
+
+                <div v-if="chosen_nickname && chosen_theme" id="logged_in" class="container center">
                     <div id="greeting" class="center">
                         <h1>Hello, ${nickname}!</h1>
                     </div>

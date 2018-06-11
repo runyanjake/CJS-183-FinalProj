@@ -18,8 +18,6 @@
         <div class="container" id="main_page_container">
             {{if auth.user is None:}}
 
-            ${theme = 5}
-
             <div id="not_logged_in" class="center">
                 <h1>sup, <a href="{{=URL('default', 'user')}}" v-on:click="is_user_in_user_accounts">login</a> to play</h1>
             </div>

@@ -179,8 +179,10 @@
             </div>
             
             <div id="game_stuff">
-                <div id="game_info_bar" v-bind:class="">
-                    
+                <div id="game_info_bar" v-bind:class="gamebar_color">
+                    <div>
+                        ${theme}
+                    </div>
 
                     <div class="game_info_items">
                         <p>Title of Story:</p><h5>${current_gamestate.story_text[0]}</h5>

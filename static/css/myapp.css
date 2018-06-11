@@ -195,6 +195,26 @@ a:not(.btn):not(.noeffect):after {
   background-color: #ff0fff;
 }
 
+.gamebar_1 {
+  background-color: #a6e755
+}
+
+.gamebar_2 {
+  background-color: #60e4d0
+}
+
+.gamebar_3 {
+  background-color: #fdaed7
+}
+
+.gamebar_4 {
+  background-color: #ffcc5d
+}
+
+.gamebar_5 {
+  background-color: #cca6fd
+}
+
 
 #button_talltales {
   width: 75%;
@@ -291,7 +311,6 @@ a:not(.btn):not(.noeffect):after {
   height: 85vh;
   float: left;
   padding: 20px;
-  background-color: #cca6fd;
   overflow: scroll;
 }
 

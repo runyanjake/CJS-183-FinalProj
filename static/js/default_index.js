@@ -53,11 +53,13 @@ var app = function() {
     self.show_nickname_editor = function () {
         console.log("Called show_nickname_editor.");
         self.vue.chosen_nickname = false;
+        self.vue.chosen_theme = true;
     };
 
     self.show_theme_editor = function () {
         console.log("Called show_theme_editor.");
         self.vue.chosen_theme = false;
+        self.vue.chosen_nickname = true;
     };
 
     self.get_nickname = function () {
@@ -113,7 +115,6 @@ var app = function() {
         // Pink is 3
         // Orange is 4
         // Purple is 5
-        self.vue.chosen_nickname = true;
         self.vue.theme = theme_code;
         console.log("Switched theme to: " + self.vue.theme)
         self.set_theme(self.vue.theme);
@@ -213,7 +214,6 @@ var app = function() {
     ----------------------------------------------------------------------------*/
     self.update_current_user = function () {
         console.log("JS: Adding current user.");
-        self.vue.chosen_theme = true;
         $.post(update_current_user_url,
             {
                 nickname: self.vue.nickname
@@ -468,6 +468,15 @@ var app = function() {
             typeracer_button_color: function () {
                 return {
                     
+                }
+            },
+            gamebar_color: function () {
+                return {
+                    gamebar_1: this.theme == 1,
+                    gamebar_2: this.theme == 2,
+                    gamebar_3: this.theme == 3,
+                    gamebar_4: this.theme == 4,
+                    gamebar_5: this.theme == 5
                 }
             }
         },

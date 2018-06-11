@@ -38,6 +38,16 @@
 
                     <h1>pick a theme:</h1>
 
+                    <div id="green_theme" v-on:click="switch_theme(1)">
+                        <div class="square" id="green_theme_square"></div>
+                        <div class="square_text">green</div>
+                    </div>
+
+                    <div id="teal_theme" v-on:click="switch_theme(2)">
+                        <div class="square" id="teal_theme_square"></div>
+                        <div class="square_text">turquoise</div>
+                    </div>
+
                     <div id="pink_theme" v-on:click="switch_theme(3)">
                         <div class="square" id="pink_theme_square"></div>
                         <div class="square_text">pink</div>
@@ -48,17 +58,6 @@
                         <div class="square_text">orange</div>
                     </div>
                     
-                    <div id="green_theme" v-on:click="switch_theme(1)">
-                        <div class="square" id="green_theme_square"></div>
-                        <div class="square_text">green</div>
-
-                    </div>
-
-                    <div id="teal_theme" v-on:click="switch_theme(2)">
-                        <div class="square" id="teal_theme_square"></div>
-                        <div class="square_text">turquoise</div>
-                    </div>
-
                     <div id="purple_theme" v-on:click="switch_theme(5)">
                         <div class="square" id="purple_theme_square"></div>
                         <div class="square_text">purple</div>

@@ -6,6 +6,7 @@
 <script>
     var add_current_user_url = "{{=URL('api', 'add_current_user')}}";
     var check_user_accounts_url = "{{=URL('api', 'check_user_accounts')}}";
+    var get_nickname_url = "{{=URL('api', 'get_nickname')}}";
 </script>
 {{end}}
 
@@ -34,6 +35,9 @@
                 </div>
 
                 <div v-if="chosen_nickname" id="logged_in" class="container center">
+                    <div id="greeting" class="center">
+                        <h1>Hello, ${nickname}!</h1>
+                    </div>
                     
                     <div id="tall_tales" class="third">
                         <a href="{{=URL('play', 'talltales')}}" class="btn oval" id="button_orange">

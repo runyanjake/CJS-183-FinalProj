@@ -491,3 +491,31 @@ def get_games():
         public_games=games,
         successful=True
     ))
+
+#### Fetches nickname for a logged in user
+# incoming packet contents: 
+#   none
+# returns:
+#   current_user = nickname of current user
+#   nickname_logged_in = boolean of logged in or not, used to tell js whether or not to display greeting message
+#   successful = success value
+def get_nickname():
+    print("Fetching the nickname for the currently logged in user")
+
+    if auth.user is not None:
+        print("auth.user is not none")
+        current_user = db(int(auth.user.id) == db.user_accounts.user_id).select().first().user_name
+        print("after db query")
+        nickname_logged_in = True
+        print("after logged_in")
+    else:
+        print("auth.user is none")
+        current_user = None
+        nickname_logged_in = False
+
+    
+    return response.json(dict(
+        current_user=current_user,
+        nickname_logged_in=nickname_logged_in,
+        successful= True
+    ))

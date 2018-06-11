@@ -17,11 +17,24 @@ var app = function() {
         $('#vue-content').hide();
         $('#vue-loadingicon').show();
         self.is_user_in_user_accounts();
+        self.get_nickname();
         setTimeout(function () {
             $('#vue-loadingicon').hide();
             $('#vue-content').show(); 
         }, 500);  
     });
+
+    self.get_nickname = function () {
+        $.getJSON(get_nickname_url,
+            function (data) {
+                if (data.successful) {
+                    console.log("Returned successfully from the API");
+                    self.vue.nickname = data.current_user;
+                } else {
+                    console.log("Returned unsuccessfully from the API");
+                }
+            });
+    }
 
     //load background so it stays for each page
     change_background = function () {
@@ -359,6 +372,7 @@ var app = function() {
 	   		get_games: self.get_games,
             show_games: self.show_games,
             vue_loop: self.vue_loop,
+            get_nickname: self.get_nickname
         }
 
     });

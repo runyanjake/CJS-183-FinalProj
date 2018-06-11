@@ -344,24 +344,18 @@ p {
   display: table;
 }
 
-.left_side {
+.left_side_roomcode {
   float: left;
   width: 70px;
 }
 
-.right_side {
+.right_side_roomcode {
   margin-left: 85px;
 }
 
 #hide_roomcode_button, #show_roomcode_button {
   width: 49px;
 }
-
-/* .roomcode_button_holder {
-  margin-left: 3px;
-  position: relative;
-  top: -3px;
-} */
 
 .players {
   line-height: 1.1em;
@@ -384,8 +378,8 @@ p.players {
   /* background-color: #ffc6fb; */
 }
 
-h5 #turn {
-  color: yellow;
+#your_turn {
+  color: #ff2848;
 }
 
 /*lower bar holds your input sentence and submit button */

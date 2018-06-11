@@ -103,21 +103,25 @@ def initialize():
 # This function is called on loading index.html. If the user got there through a sign-up
 # it adds them to the user_accounts table (as opposed to if they got there through a login).
 # It returns the logged-in user's user_accounts table entry.
-
-@auth.requires_login()
 def check_user_accounts():
-    print("API: Checking for user " + str(auth.user.id) + " in user_accounts.")
-    q = auth.user.id == db.user_accounts.user_id
-    user = db(q).select().first()
-    if user is None:
-        print("API: User " + str(auth.user.id) + " is not in user_accounts.")
+
+    if auth.user is not None:
+        print("API: Checking for user " + str(auth.user.id) + " in user_accounts.")
+        q = auth.user.id == db.user_accounts.user_id
+        user = db(q).select().first()
+        if user is None:
+            print("API: User " + str(auth.user.id) + " is not in user_accounts.")
+            return response.json(dict(
+                is_in_table=False
+            ))
+        else:
+            print("API: User " + str(auth.user.id) + " is in user_accounts.")
+            return response.json(dict(
+                is_in_table=True
+            ))
+    else:
         return response.json(dict(
             is_in_table=False
-        ))
-    else:
-        print("API: User " + str(auth.user.id) + " is in user_accounts.")
-        return response.json(dict(
-            is_in_table=True
         ))
 
 @auth.requires_login()
@@ -505,17 +509,17 @@ def get_nickname():
     if auth.user is not None:
         print("auth.user is not none")
         current_user = db(int(auth.user.id) == db.user_accounts.user_id).select().first().user_name
-        print("after db query")
+        print(current_user)
         nickname_logged_in = True
-        print("after logged_in")
+        successful = True
     else:
         print("auth.user is none")
         current_user = None
         nickname_logged_in = False
-
+        successful = False
     
     return response.json(dict(
         current_user=current_user,
         nickname_logged_in=nickname_logged_in,
-        successful= True
+        successful=successful
     ))

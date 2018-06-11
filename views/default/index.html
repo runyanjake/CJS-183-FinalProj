@@ -28,10 +28,10 @@
 
             <div id="vue-content" style="display:none">
 
-                <div v-if="!chosen_nickname">
+                <div v-if="!chosen_nickname" id="choose_nickname">
                     <h1>choose a nickname:</h1>
                     <input id="nickname_input" v-model="nickname" v-on:keyup.enter="add_current_user()" type="text" placeholder="Guest">
-                    <button v-on:click="add_current_user()">Submit</button>
+                    <button id="nickname_submit" v-on:click="add_current_user()">Submit</button>
                 </div>
 
                 <div v-if="chosen_nickname" id="logged_in" class="container center">
@@ -39,24 +39,25 @@
                         <h1>Hello, ${nickname}!</h1>
                     </div>
                     
-                    <div id="tall_tales" class="third">
-                        <a href="{{=URL('play', 'talltales')}}" class="btn oval" id="button_orange">
-                            <h3>tall tales</h3>
-                        </a>
-                    </div>
+                    <div id="game_choices_container" class="container center">
+                        <div id="tall_tales" class="third">
+                            <a href="{{=URL('play', 'talltales')}}" class="btn oval" id="button_orange">
+                                <h3>tall tales</h3>
+                            </a>
+                        </div>
 
-                    <div id="taboo" class="third">
-                        <a href="{{=URL('play', 'taboo')}}" class="btn oval" id="button_yellow">
-                            <h3>taboo</h3>
-                        </a>
-                    </div>
+                        <div id="taboo" class="third">
+                            <a href="{{=URL('play', 'taboo')}}" class="btn oval" id="button_yellow">
+                                <h3>taboo</h3>
+                            </a>
+                        </div>
 
-                    <div id="typeracer" class="third">
-                        <a href="{{=URL('play', 'typeracer')}}" class="btn oval" id="button_green">
-                            <h3>typeracer</h3>
-                        </a>
+                        <div id="typeracer" class="third">
+                            <a href="{{=URL('play', 'typeracer')}}" class="btn oval" id="button_green">
+                                <h3>typeracer</h3>
+                            </a>
+                        </div>
                     </div>
-
                 </div>
 
             </div>

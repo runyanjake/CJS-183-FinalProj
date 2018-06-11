@@ -247,9 +247,9 @@ def get_gamestate():
         q = room_code == db.typeracer_instances.room_code
 
     #The logged in user's queries every second also update the turn time.
-    current_user_id = db(auth.user.id == db.user_accounts.user_id).select().first().user_id
+    current_user = db(auth.user.id == db.user_accounts.user_id).select().first().user_name
     oldmatch = db(q).select().first()
-    if auth.user.id == current_user_id and oldmatch.timer_time > 0:
+    if current_user == oldmatch.current_turn and oldmatch.timer_time > 0:
         db(q).update(timer_time=oldmatch.timer_time-1)
 
         match = db(q).select().first()  # requery after update
@@ -261,13 +261,12 @@ def get_gamestate():
             ))
         else:
             print("RETURN VIA 2")
+            #When it's your turn and the timer is counting down
             return response.json(dict(
                 gamestate=match,
                 successful=True
             ))
     else:
-        print("Time To Pass turn.")
-        ########
         match = db(request.vars.room_code == db.talltales_instances.room_code).select().first()
         curturn = match.current_turn
         current_user = db(auth.user.id == db.user_accounts.user_id).select().first().user_name
@@ -292,6 +291,7 @@ def get_gamestate():
             updated_match = db(request.vars.room_code == db.talltales_instances.room_code).select().first()
             print("NEW MATCH STATE: " + str(updated_match))
             print("RETURN VIA 3")
+            #when you're skipping your turn
             return response.json(dict(
                 gamestate=updated_match,
                 successful=True
@@ -300,7 +300,7 @@ def get_gamestate():
             print("RETURN VIA 4")
             return response.json(dict(
                 gamestate=match,
-                successful=False
+                successful=True
             ))
 
 #### Add this user to an existing instance of the game.

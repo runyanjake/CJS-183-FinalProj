@@ -44,7 +44,7 @@ a:not(.btn):not(.noeffect):after {
 }
 
 .btn:not(#button_talltales):not(#button_taboo):not(#button_typeracer) {
-  background-color: #d1aeff !important;
+  background-color: #fff000 !important;
   color: black;
 }
 
@@ -220,10 +220,10 @@ a:not(.btn):not(.noeffect):after {
   background-color: #cca6fd;
 }
 
+
 .gamebar_5 {
   background-color: #cca6fd;
 }
-
 
 
 
@@ -322,7 +322,6 @@ a:not(.btn):not(.noeffect):after {
   height: 85vh;
   float: left;
   padding: 20px;
-  background-color: #cca6fd;
   overflow: scroll;
 }
 

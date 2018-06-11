@@ -118,7 +118,7 @@
         </div>
         <div v-else id="talltale_game_page">
             <div id="exit_button_container">
-                <button id="close_game_button" v-on:click="leave_game(0); timer_stop(); toggle();">
+                <button id="close_game_button" v-on:click="leave_game(0); toggle();">
                     exit
                 </button>
             </div>
@@ -135,7 +135,7 @@
                     <h5>Hoster: ${current_gamestate.hoster}</h5>
                     <h5>Max Room Size: ${current_gamestate.max_players}</h5>
                     <h5>Turn Time Limit (s): ${current_gamestate.turn_time_limit}</h5>
-                    <h5>Time Remaining: ${timer_time}</h5>
+                    <h5>Time Remaining: ${current_gamestate.timer_time}</h5>
                     <div v-if="current_gamestate.current_turn == {{=auth.user.id}}" id="turn">
                         <h5>it's your turn!</h5>
                     </div>                    

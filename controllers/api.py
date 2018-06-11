@@ -77,7 +77,8 @@ def initialize():
                 hoster=hoster,
                 max_players=request.vars.max_players,
                 turn_time_limit=request.vars.turn_time_limit,
-                current_turn=current_user
+                current_turn=current_user,
+                timer_time=request.vars.turn_time_limit
             )
         if gametype is 0:
             db(room_code == r.room_code).update(story_text= story_text)
@@ -177,6 +178,12 @@ def take_turn_talltales():
                     if player == old_turn:
                         is_next = True
                 db(request.vars.room_code == db.talltales_instances.room_code).update(current_turn=new_turn)
+                db(request.vars.room_code == db.talltales_instances.room_code).update(timer_time=match.turn_time_limit)
+
+                #Once turn submits, reset timer
+                current_user_id = db(auth.user.id == db.user_accounts.user_id).select().first().user_id
+                if auth.user.id == current_user_id:
+                    db(q).update(timer_time=match.turn_time_limit)
 
                 #re-query
                 updated_match = db(request.vars.room_code == db.talltales_instances.room_code).select().first()
@@ -208,6 +215,7 @@ def timeout_turn_talltales():
             if player == old_turn:
                 is_next = True
         db(request.vars.room_code == db.talltales_instances.room_code).update(current_turn=new_turn)
+        db(request.vars.room_code == db.talltales_instances.room_code).update(timer_time=match.turn_time_limit)
 
         # re-query
         updated_match = db(request.vars.room_code == db.talltales_instances.room_code).select().first()
@@ -240,7 +248,15 @@ def get_gamestate():
     else:
         q = room_code == db.typeracer_instances.room_code
 
-    match = db(q).select().first()
+    #The logged in user's queries every second also update the turn time.
+    current_user_id = db(auth.user.id == db.user_accounts.user_id).select().first().user_id
+    oldmatch = db(q).select().first()
+    if auth.user.id == current_user_id and oldmatch.timer_time > 0:
+        db(q).update(timer_time=oldmatch.timer_time-1)
+    else:
+        print("Time To Pass turn.");
+
+    match = db(q).select().first() #requery after update
     current_user = db(auth.user.id == db.user_accounts.user_id).select().first().user_name
     if match is None or current_user not in match.player_list:
         return response.json(dict(
@@ -406,7 +422,8 @@ def get_games():
                 story_text = game.story_text,
                 current_turn = game.current_turn,
                 is_public = game.is_public,
-                created_on = game.created_on
+                created_on = game.created_on,
+                timer_time = game.timer_time
             )
         games.append(t)
 
@@ -424,7 +441,8 @@ def get_games():
                 is_public = game.is_public,
                 created_on = game.created_on,
                 taboo_word_row_id=game.taboo_word_row_id,
-                player_scores=player_scores
+                #player_scores=player_scores,
+                timer_time = game.timer_time
             )
         games.append(t)
 

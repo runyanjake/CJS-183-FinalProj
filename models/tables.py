@@ -39,6 +39,7 @@ db.define_table('talltales_instances', #Tall Tales
                 Field('max_players', 'integer', default=10),
                 Field('turn_time_limit', 'integer', default=30),
                 Field('created_on', 'datetime', default=datetime.datetime.utcnow()),
+                Field('timer_time', 'integer', default=0),
                 #game specific attributes
                 Field('story_text', 'list:string', default=[]),
                 Field('current_turn', 'string', 'references user_accounts')

@@ -9,7 +9,6 @@ var app = function() {
     $(window).unload(function(){
     	if (self.vue.is_in_game) {
     		self.leave_game(self.vue.current_gamestate.gametype);
-    		self.timer_stop();
             toggle();
     	}
     });
@@ -172,9 +171,6 @@ var app = function() {
                     }
                     console.log("displaying public games = " + self.vue.displaying_public_games);
 
-                    //Start the timer on load from private
-                    self.timer_start();
-
                     //Update in lobby state, which updates HTML
                     self.vue.is_in_game = true;
                     self.vue_loop(gametype);
@@ -218,7 +214,7 @@ var app = function() {
     ---------------------------------------------------------------------------- */
     self.vue_loop = function (gametype) {
         if(self.vue.is_in_game){
-            self.vue.db_repeatedquery_timer = setInterval(function() { self.update_vue(gametype); }, 2000);
+            self.vue.db_repeatedquery_timer = setInterval(function() { self.update_vue(gametype); }, 1000);
         }
     };
 
@@ -236,11 +232,6 @@ var app = function() {
                     self.vue.current_gamestate = data.gamestate;
                     self.update_story();
                     console.log("JS: Returned successfully from API call (update_vue).");
-                    //Updating not done asynchronously b/c need gamestate update.
-                    if(self.vue.current_gamestate.current_turn != oldturn){
-                        console.log("JSJJJSJSJSJJ: ANOTHER PLAYER HAS SKIPPED THEIR TURN.");
-                        self.timer_reset();
-                    }
                 }
                 else {
                     console.log("JS: Returned unsuccessfully from API call (update_vue).");
@@ -279,12 +270,6 @@ var app = function() {
                     console.log("JS: Returned unsuccessfully from API call.");
                 }
             });
-            //Call timer updates asynchronously.
-            if(self.vue.turn_countdown_timer == null){
-                self.timer_start();
-            }else{
-                self.timer_reset();
-            }
         }
         else {
             console.log("Not ur turn to submit stuff.");
@@ -334,61 +319,6 @@ var app = function() {
 
     };
 
-     /* timer_start():
-    ----------------------------------------------------------------------------
-    Starts the timer.
-    ----------------------------------------------------------------------------*/
-    self.timer_start = function () {
-        console.log("JS: Starting Timer.");
-        if(self.vue.turn_countdown_timer != null){
-                clearInterval(self.vue.turn_countdown_timer);
-        }
-        self.vue.timer_time = self.vue.current_gamestate.turn_time_limit;
-        self.vue.turn_countdown_timer = setInterval(function(){
-            if(self.vue.timer_time > 0){
-                console.log("Refreshing clock.")
-                self.vue.timer_time -= 1;
-            }else{
-                $.post(talltales_turntimeout,
-                {
-                    room_code: self.vue.current_gamestate.room_code
-                },
-                function (data) {
-                    if(data.successful){
-                        console.log("JS: Skipped a user's turn due to timeout.");
-                        self.vue.current_gamestate = data.match;
-                        //Dont update timer asynchronously, wait till after sending data.
-                        self.vue.timer_time = self.vue.current_gamestate.turn_time_limit;
-                    }else{
-
-                    }
-                });
-            }
-        }, 1000);
-    };
-
-     /* timer_reset():
-    ----------------------------------------------------------------------------
-    Resets the timer.
-    ----------------------------------------------------------------------------*/
-    self.timer_reset = function () {
-        console.log("JS: Resetting Timer.");
-        self.vue.timer_time = self.vue.current_gamestate.turn_time_limit;
-    };
-
-     /* timer_stop():
-    ----------------------------------------------------------------------------
-    Stops the timer.
-    ----------------------------------------------------------------------------*/
-    self.timer_stop = function () {
-        console.log("JS: Stopping Timer.");
-        if(self.vue.turn_countdown_timer != null){
-                clearInterval(self.vue.turn_countdown_timer);
-                self.vue.turn_countdown_timer = null;
-        }
-        self.vue.timer_time = 0;
-    };
-
     /* TABOO FUNCTIONS */
 
     // Complete as needed.
@@ -409,8 +339,6 @@ var app = function() {
             is_public: false, //this is toggled by the checkbox on creating a game
             public_games: [],
             current_story: '', //implemented so that the story is printed as a string instead of as an array
-            timer_time: 0,
-            turn_countdown_timer: null,
 
             //Talltales things
             talltales_new_sentence: "", //Text box on game page to enter new sentence
@@ -431,9 +359,6 @@ var app = function() {
 	   		get_games: self.get_games,
             show_games: self.show_games,
             vue_loop: self.vue_loop,
-            timer_start: self.timer_start,
-            timer_reset: self.timer_reset,
-            timer_stop: self.timer_stop,
         }
 
     });

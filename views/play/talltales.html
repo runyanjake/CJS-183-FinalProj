@@ -135,11 +135,43 @@
                     <h5>Hoster: ${current_gamestate.hoster}</h5>
                     <h5>Max Room Size: ${current_gamestate.max_players}</h5>
                     <h5>Turn Time Limit (s): ${current_gamestate.turn_time_limit}</h5>
-                    <h5>Time Remaining: ${current_gamestate.timer_time}</h5>
+
+
+
+                    <!--NOTE FROM JAKE: These 2 v-if's dont work cuz of changes to API current_turn-->
+
+
+
+                    <div v-if="current_gamestate.current_turn == {{=auth.user.id}}">
+                        <div v-if="current_gamestate.timer_time > 10">
+                            <h5>Time Remaining: ${current_gamestate.timer_time}</h5>
+                        </div>
+                        <div v-else>
+                            <div v-if="current_gamestate.timer_time > 5">
+                                <h4 style="color:yellow">Time Remaining: ${current_gamestate.timer_time}</h4>
+                            </div>
+                            <div v-else>
+                                <div v-if="current_gamestate.timer_time > 3">
+                                    <h3 style="color:orange">Time Remaining: ${current_gamestate.timer_time}</h3>
+                                </div>
+                                <div v-else>
+                                    <h2 style="color:red">Time Remaining: ${current_gamestate.timer_time}</h2>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div v-else>
+                        <h5>Time Remaining: ${current_gamestate.timer_time}</h5>
+                    </div>
                     <div v-if="current_gamestate.current_turn == {{=auth.user.id}}" id="turn">
                         <h5>it's your turn!</h5>
                     </div>                    
-                </div>    
+                </div>
+
+
+
+
+                
 
                 <div id="previous_sentence">
                     <h1>${current_story}</h1>

@@ -331,6 +331,7 @@ a:not(.btn):not(.noeffect):after {
 /*----------------------------------------------------------------------------*/
 
 #talltale_game_page {
+  margin-top: -30px;
   position: relative;
 }
 

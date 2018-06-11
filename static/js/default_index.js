@@ -64,6 +64,7 @@ var app = function() {
 
     //Toggle themes
     self.switch_theme = function (theme_code) {
+        self.vue.chosen_nickname = true;
         //green theme
         if (theme_code == 1) {
             document.body.style.background = "#74d300";
@@ -179,6 +180,7 @@ var app = function() {
     ----------------------------------------------------------------------------*/
     self.update_current_user = function () {
         console.log("JS: Adding current user.");
+        self.vue.chosen_theme = true;
         $.post(update_current_user_url,
             {
                 nickname: self.vue.nickname

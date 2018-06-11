@@ -173,7 +173,13 @@ def take_turn_talltales():
             else:
                 if request.vars.new_text is not None:
                     story = match.story_text
-                    story.append(request.vars.new_text + ".")
+                    #add period if needed
+                    nowhitespace = request.vars.new_text.rstrip(" ")
+                    if not(nowhitespace[-1:] == "."):
+                        story.append(nowhitespace + ".")
+                    else:
+                        story.append(request.vars.new_text)
+
                     db(request.vars.room_code == db.talltales_instances.room_code).update(story_text=story)
 
                 #Always update turn, allows us to skip turns on timeout.

@@ -467,7 +467,7 @@ def get_games():
                 created_on = game.created_on,
                 timer_time = game.timer_time
             )
-        games.append(t)
+            games.append(t)
 
     elif gametype is 1:
         q = db.taboo_instances
@@ -486,7 +486,7 @@ def get_games():
                 #player_scores=player_scores,
                 timer_time = game.timer_time
             )
-        games.append(t)
+            games.append(t)
 
     else:
         r = db.typeracer_instances
@@ -513,6 +513,7 @@ def get_nickname():
         nickname_logged_in = True
         successful = True
     else:
+        #Theoretically this is never called
         print("auth.user is none")
         current_user = None
         nickname_logged_in = False

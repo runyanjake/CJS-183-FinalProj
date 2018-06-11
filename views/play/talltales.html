@@ -128,16 +128,33 @@
                 <div id="game_info_bar">
                     
 
-                    <h5>Title of Story: ${current_gamestate.story_text[0]}</h5>
-                    <h5>Room Code: ${current_gamestate.room_code}</h5>
-                    <h5>Public Status: ${current_gamestate.is_public}</h5>
-                    <h5>Your Player ID: {{=auth.user.id}}</h5>
-                    <h5>Player List: ${current_gamestate.player_list}</h5>                    <h5>Current Turn: ${current_gamestate.current_turn}</h5>
-                    <h5>Hoster: ${current_gamestate.hoster}</h5>
-                    <h5>Max Room Size: ${current_gamestate.max_players}</h5>
-                    <h5>Turn Time Limit (s): ${current_gamestate.turn_time_limit}</h5>
+                    <div class="game_info_items">
+                        <p>Title of Story:</p><h5>${current_gamestate.story_text[0]}</h5>
+                    </div>
+                    <div class="game_info_items">
+                        <p>Room Code:</p><h5>${current_gamestate.room_code}</h5>
+                    </div>
+                    <div class="game_info_items">
+                        <p>Public Status:</p><h5>${current_gamestate.is_public}</h5>
+                    </div>
+                    <div class="game_info_items">
+                        <p>Your Player ID:</p><h5>{{=auth.user.id}}</h5>
+                    </div>
+                    <div class="game_info_items">
+                        <p>Player List:</p><h5>${current_gamestate.player_list}</h5> 
+                    </div>   
+                    <div class="game_info_items">                
+                        <p>Current Turn:</p><h5>${current_gamestate.current_turn}</h5>
+                    </div>
+                    <div class="game_info_items">                
+                        <p>Hoster:</p><h5>${current_gamestate.hoster}</h5>
+                    </div>
+                    <div class="game_info_items">                
+                        <p>Turn Time Limit (s):</p><h5>${current_gamestate.turn_time_limit}</h5>
+                    </div>
+                    
 
-
+                    <!-- <p>Max Room Size: </p><h5>${current_gamestate.max_players}</h5> -->
 
                     <!--NOTE FROM JAKE: These 2 v-if's dont work cuz of changes to API current_turn-->
 
@@ -145,7 +162,7 @@
 
                     <div v-if="current_gamestate.current_turn == {{=auth.user.id}}">
                         <div v-if="current_gamestate.timer_time > 10">
-                            <h5>Time Remaining: ${current_gamestate.timer_time}</h5>
+                            <p>Time Remaining:</p><h5>${current_gamestate.timer_time}</h5>
                         </div>
                         <div v-else>
                             <div v-if="current_gamestate.timer_time > 5">

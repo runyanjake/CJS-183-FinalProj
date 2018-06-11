@@ -181,7 +181,7 @@ a:not(.btn):not(.noeffect):after {
 
 /*green*/
 .color_1 {
-  background-color: #ff0000;
+  background-color: #a6e755;
 }
 
 .gamebar_1 {
@@ -190,16 +190,16 @@ a:not(.btn):not(.noeffect):after {
 
 /*turqoise */
 .color_2 {
-  background-color: #fff000;
+  background-color:#88efe0;
 }
 
 .gamebar_2 {
-  background-color: #60e4d0;
+  background-color: #88efe0;
 }
 
 /*pink */
 .color_3 {
-  background-color: #ffff00;
+  background-color: #fdaed7;
 }
 
 .gamebar_3 {
@@ -208,7 +208,7 @@ a:not(.btn):not(.noeffect):after {
 
 /*orange */
 .color_4 {
-  background-color: #ff00ff;
+  background-color: #ffcc5d;
 }
 
 .gamebar_4 {
@@ -217,7 +217,7 @@ a:not(.btn):not(.noeffect):after {
 
 /*purple */
 .color_5 {
-  background-color: #ff0fff;
+  background-color: #cca6fd;
 }
 
 .gamebar_5 {

@@ -61,7 +61,10 @@ def initialize():
         players.append(current_user)
         hoster = current_user
         story_text = []
-        story_text.append(request.vars.story_title)
+        if(request.vars.story_title == ""):
+            story_text.append("Unnamed Story " + str(room_code))
+        else:
+            story_text.append(request.vars.story_title)
         public = False
         if (request.vars.is_public == 'true' or request.vars.is_public == True):
             public = True
@@ -457,7 +460,7 @@ def get_games():
 
     if gametype is 0:
         q = db.talltales_instances
-        rows = db(q).select()
+        rows = db(q).select(orderby=~db.talltales_instances.created_on)
         for game in rows:
             t = dict(
                 room_code = game.room_code,
@@ -527,3 +530,9 @@ def get_nickname():
         nickname_logged_in=nickname_logged_in,
         successful=successful
     ))
+
+@auth.requires_login()
+def set_theme():
+    print("API: Setting theme for the currently logged in user")
+    theme = int(request.vars.theme)
+    db(auth.user.id == db.user_accounts.user_id).update(theme=theme)

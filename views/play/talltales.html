@@ -4,7 +4,6 @@
 <script src="{{=URL('static', 'js/vue.js')}}"></script>
 <script src="{{=URL('static', 'js/default_index.js')}}"></script>
 <script>
-    var my_url = "{{=URL('api', 'game1')}}";
     var add_player_url = "{{=URL('api', 'add_player')}}";
     var initialize_game_url = "{{=URL('api', 'initialize')}}";
     var get_games_url = "{{=URL('api', 'get_games')}}";
@@ -16,6 +15,8 @@
     var talltales_turntimeout = "{{=URL('api', 'timeout_turn_talltales')}}";
     var get_nickname_url = "{{=URL('api', 'get_nickname')}}";
     var update_current_user_url = "{{=URL('api', 'update_current_user')}}";
+    var set_theme_url = "{{=URL('api', 'set_theme')}}";
+    var get_theme_url = "{{=URL('api', 'get_theme')}}";
 </script>
 {{end}}
 
@@ -185,13 +186,30 @@
                         <p>Title of Story:</p><h5>${current_gamestate.story_text[0]}</h5>
                     </div>
                     <div class="game_info_items">
-                        <p>Room Code:</p><h5>${current_gamestate.room_code}</h5>
+                        <div class="container" v-if="show_room_code">
+                            <div class="left">
+                                <p>Room Code:</p>
+                            </div>
+                            <div class="right">
+                                <button id="hide_roomcode_button" v-on:click="toggle_view_room_code">hide</button>
+                            </div>
+                            <h5>${current_gamestate.room_code}</h5>
+                        </div>
+                        <div class="container" v-if="!show_room_code">
+                            <div class="left">
+                                <p>Room Code:</p>
+                            </div>
+                            <div class="right">
+                                <button id="show_roomcode_button" v-on:click="toggle_view_room_code">show</button>
+                            </div>
+                            <h5>hidden</h5>
+                        </div>
                     </div>
                     <div class="game_info_items">
                         <p>Public Status:</p><h5>${current_gamestate.is_public}</h5>
                     </div>
                     <div class="game_info_items">
-                        <p>Your Player Name:</p><h5>${nickname}</h5>
+                        <p>Your Nickname:</p><h5>${nickname}</h5>
                     </div>
                     <div class="game_info_items">
                         <p>Player List:</p>

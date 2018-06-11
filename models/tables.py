@@ -16,7 +16,8 @@ def get_user_email():
 
 db.define_table('user_accounts',
                 Field('user_id', 'integer', 'references auth_user', default=auth.user.id if auth.user is not None else None), 
-                Field('user_name', 'string', default="Guest")
+                Field('user_name', 'string', default="Guest"),
+                Field('theme', 'integer', default=5)
                 )
                 #This is barebones, can add more customization stuff
                 #auth.user is static so no email/password required

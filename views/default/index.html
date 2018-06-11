@@ -7,6 +7,8 @@
     var update_current_user_url = "{{=URL('api', 'update_current_user')}}";
     var check_user_accounts_url = "{{=URL('api', 'check_user_accounts')}}";
     var get_nickname_url = "{{=URL('api', 'get_nickname')}}";
+    var set_theme_url = "{{=URL('api', 'set_theme')}}";
+    var get_theme_url = "{{=URL('api', 'get_theme')}}";
 </script>
 {{end}}
 
@@ -15,6 +17,8 @@
     <div id="vue-div" class="display:none">
         <div class="container" id="main_page_container">
             {{if auth.user is None:}}
+
+            ${theme = 5}
 
             <div id="not_logged_in" class="center">
                 <h1>sup, <a href="{{=URL('default', 'user')}}" v-on:click="is_user_in_user_accounts">login</a> to play</h1>
@@ -38,6 +42,16 @@
 
                     <h1>pick a theme:</h1>
 
+                    <div id="green_theme" v-on:click="switch_theme(1)">
+                        <div class="square" id="green_theme_square"></div>
+                        <div class="square_text">green</div>
+                    </div>
+
+                    <div id="teal_theme" v-on:click="switch_theme(2)">
+                        <div class="square" id="teal_theme_square"></div>
+                        <div class="square_text">turquoise</div>
+                    </div>
+
                     <div id="pink_theme" v-on:click="switch_theme(3)">
                         <div class="square" id="pink_theme_square"></div>
                         <div class="square_text">pink</div>
@@ -48,17 +62,6 @@
                         <div class="square_text">orange</div>
                     </div>
                     
-                    <div id="green_theme" v-on:click="switch_theme(1)">
-                        <div class="square" id="green_theme_square"></div>
-                        <div class="square_text">green</div>
-
-                    </div>
-
-                    <div id="teal_theme" v-on:click="switch_theme(2)">
-                        <div class="square" id="teal_theme_square"></div>
-                        <div class="square_text">turquoise</div>
-                    </div>
-
                     <div id="purple_theme" v-on:click="switch_theme(5)">
                         <div class="square" id="purple_theme_square"></div>
                         <div class="square_text">purple</div>

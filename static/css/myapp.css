@@ -107,7 +107,7 @@ a:not(.btn):not(.noeffect):after {
   height: 80vh;
 }
 
-#vue-loadingicon {
+.vue-loadingicon {
   font-size: 100px;
   width: 100px;
   position: absolute;

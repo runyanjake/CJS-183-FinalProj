@@ -23,11 +23,6 @@ MAX_ROOM_COUNT = 999999
 #   successful = success value.
 
 @auth.requires_login()
-def set_nickname():
-    print("API: Setting nickname of user id= " + str(auth.user.id))
-
-
-@auth.requires_login()
 def initialize():
     print("auth.user.id is " + str(auth.user.id))
     print("API: Creating a new instance of game " + str(request.vars.gametype))
@@ -104,7 +99,6 @@ def initialize():
 # it adds them to the user_accounts table (as opposed to if they got there through a login).
 # It returns the logged-in user's user_accounts table entry.
 def check_user_accounts():
-
     if auth.user is not None:
         print("API: Checking for user " + str(auth.user.id) + " in user_accounts.")
         q = auth.user.id == db.user_accounts.user_id
@@ -125,14 +119,24 @@ def check_user_accounts():
         ))
 
 @auth.requires_login()
-def add_current_user():
-    print("API: Adding user " + str(auth.user.id) + " to user_accounts.")
-    test = db.user_accounts.insert(
-        user_id=int(auth.user.id),
-        user_name=request.vars.nickname
-    )
-    print("inserted " + str(request.vars.nickname) + " into user_accounts.")
-
+def update_current_user():
+    print("API: Updating user " + str(auth.user.id) + " in user_accounts.")
+    q = auth.user.id == db.user_accounts.user_id
+    match = db(q).select().first()
+    if match is None:
+        db.user_accounts.insert(
+            user_id=int(auth.user.id),
+            user_name=request.vars.nickname
+        )
+        print("API: Inserted " + str(request.vars.nickname) + " into user_accounts.")
+    else:
+        db(q).update(user_name=request.vars.nickname)
+        print("API: Updated name to " + str(request.vars.nickname) + " in user_accounts.")
+    
+    current_user = db(q).select().first().user_name
+    return response.json(dict(
+        nickname=current_user
+    ))
 
 #@TODO JAKE: update_gamestate_talltales should verify logged in user is in that game (and that it's their turn?)
 
@@ -505,7 +509,6 @@ def get_games():
 #   successful = success value
 def get_nickname():
     print("Fetching the nickname for the currently logged in user")
-
     if auth.user is not None:
         print("auth.user is not none")
         current_user = db(int(auth.user.id) == db.user_accounts.user_id).select().first().user_name

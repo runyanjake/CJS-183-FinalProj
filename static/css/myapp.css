@@ -44,7 +44,7 @@ a:not(.btn):not(.noeffect):after {
 }
 
 .btn:not(#button_talltales):not(#button_taboo):not(#button_typeracer) {
-  background-color: #d1aeff !important;
+  background-color: #fff000 !important;
   color: black;
 }
 
@@ -179,41 +179,52 @@ a:not(.btn):not(.noeffect):after {
   text-align: center;
 }
 
+/*green*/
 .color_1 {
-  background-color: #ff0000;
-}
-.color_2 {
-  background-color: #fff000;
-}
-.color_3 {
-  background-color: #ffff00;
-}
-.color_4 {
-  background-color: #ff00ff;
-}
-.color_5 {
-  background-color: #ff0fff;
+  background-color: #a6e755;
 }
 
 .gamebar_1 {
-  background-color: #a6e755
+  background-color: #a6e755;
+}
+
+/*turqoise */
+.color_2 {
+  background-color:#88efe0;
 }
 
 .gamebar_2 {
-  background-color: #60e4d0
+  background-color: #88efe0;
+}
+
+/*pink */
+.color_3 {
+  background-color: #fdaed7;
 }
 
 .gamebar_3 {
-  background-color: #fdaed7
+  background-color: #fdaed7;
+}
+
+/*orange */
+.color_4 {
+  background-color: #ffcc5d;
 }
 
 .gamebar_4 {
-  background-color: #ffcc5d
+  background-color: #ffcc5d;
 }
 
-.gamebar_5 {
-  background-color: #cca6fd
+/*purple */
+.color_5 {
+  background-color: #cca6fd;
 }
+
+
+.gamebar_5 {
+  background-color: #cca6fd;
+}
+
 
 
 #button_talltales {
@@ -326,6 +337,25 @@ p {
   padding: 5px;
 }
 
+.clearfix::after {
+  content: "";
+  clear: both;
+  display: table;
+}
+
+.left_side_roomcode {
+  float: left;
+  width: 70px;
+}
+
+.right_side_roomcode {
+  margin-left: 85px;
+}
+
+#hide_roomcode_button, #show_roomcode_button {
+  width: 49px;
+}
+
 .players {
   line-height: 1.1em;
 }
@@ -347,8 +377,8 @@ p.players {
   /* background-color: #ffc6fb; */
 }
 
-h5 #turn {
-  color: yellow;
+#your_turn {
+  color: #ff2848;
 }
 
 /*lower bar holds your input sentence and submit button */

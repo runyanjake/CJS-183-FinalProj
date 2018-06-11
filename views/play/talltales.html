@@ -180,33 +180,78 @@
             
             <div id="game_stuff">
                 <div id="game_info_bar" v-bind:class="gamebar_color">
-                    <div>
-                        ${theme}
-                    </div>
+                    <!--NOTE FROM JAKE: These 2 v-if's dont work cuz of changes to API current_turn-->
+                    <!--NOTE FROM CASSIA: This works now EXCEPT I don't think it's gonna work when two people have the same nickname-->
+
+
+                    <div v-if="current_gamestate.current_turn == nickname">
+                            <div v-if="current_gamestate.timer_time > 10">
+                                <h6 style="font-size:100px;padding-top:5px !important">${current_gamestate.timer_time}</h6>
+                            </div>
+                            <div v-else>
+                                <div v-if="current_gamestate.timer_time > 5">
+                                    <h6 style="color:yellow;font-size:100px;padding-top: 5px !important">
+                                        ${current_gamestate.timer_time}
+                                    </h6>
+                                </div>
+                                <div v-else>
+                                    <div v-if="current_gamestate.timer_time > 3">
+                                        <h6 style="color:orange;font-size:100px;padding-top: 5px !important">
+                                            ${current_gamestate.timer_time}
+                                        </h6>
+                                    </div>
+                                    <div v-else>
+                                        <h6 style="color:red;font-size:100px;padding-top: 5px !important">
+                                            ${current_gamestate.timer_time}
+                                        </h6>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div v-else>
+                            <h6 style="font-size:100px">${current_gamestate.timer_time}</h6>
+                        </div>
+                        <div class="game_info_items" v-if="current_gamestate.current_turn == nickname" id="your_turn">
+                            <h6>it's your turn!</h6>
+                        </div>
+                        <div class="game_info_items" v-if="current_gamestate.current_turn != nickname" id="other_turn">
+                            <h6>please wait...</h6>
+                        </div>  
+                    
+                
 
                     <div class="game_info_items">
                         <p>Title of Story:</p><h5>${current_gamestate.story_text[0]}</h5>
                     </div>
+                    
                     <div class="game_info_items">
+                        <p>Room Code:</p>
                         <div class="container" v-if="show_room_code">
-                            <div class="left">
-                                <p>Room Code:</p>
+                            
+                            <div class="clearfix">
+                                <div class="left_side_roomcode">
+                                    <h5>${current_gamestate.room_code}</h5>
+                                </div>
+                                <div class="right_side_roomcode">
+                                    <button id="hide_roomcode_button" v-on:click="toggle_view_room_code">hide</button>
+                                </div>
                             </div>
-                            <div class="right">
-                                <button id="hide_roomcode_button" v-on:click="toggle_view_room_code">hide</button>
-                            </div>
-                            <h5>${current_gamestate.room_code}</h5>
+                            
                         </div>
                         <div class="container" v-if="!show_room_code">
-                            <div class="left">
-                                <p>Room Code:</p>
+                            
+                            <div class="clearfix">
+                                <div class="left_side_roomcode">
+                                    <h5>hidden</h5>
+                                </div>
+                                <div class="right_side_roomcode">
+                                    <button id="show_roomcode_button" v-on:click="toggle_view_room_code">show</button>
+                                </div>
                             </div>
-                            <div class="right">
-                                <button id="show_roomcode_button" v-on:click="toggle_view_room_code">show</button>
-                            </div>
-                            <h5>hidden</h5>
+                            
                         </div>
                     </div>
+                    
                     <div class="game_info_items">
                         <p>Public Status:</p><h5>${current_gamestate.is_public}</h5>
                     </div>
@@ -218,7 +263,7 @@
                         <div id="player_list_container">
                             <div class="players" v-for="player in current_gamestate.player_list">
                                 <h6 v-if="player == current_gamestate.current_turn"
-                                    style="color:red">${player}
+                                    style="color:yellow">${player}
                                 </h6> 
                                 <h6 v-if="player != current_gamestate.current_turn">
                                     ${player}
@@ -234,40 +279,7 @@
 
                     <!-- <p>Max Room Size: </p><h5>${current_gamestate.max_players}</h5> -->
 
-                    <!--NOTE FROM JAKE: These 2 v-if's dont work cuz of changes to API current_turn-->
-                    <!--NOTE FROM CASSIA: This works now EXCEPT I don't think it's gonna work when two people have the same nickname-->
-
-
-                    <div v-if="current_gamestate.current_turn == nickname">
-                        <div v-if="current_gamestate.timer_time > 10">
-                            <h6 style="font-size:100px">${current_gamestate.timer_time}</h6>
-                        </div>
-                        <div v-else>
-                            <div v-if="current_gamestate.timer_time > 5">
-                                <h6 style="color:yellow;font-size:100px">
-                                    ${current_gamestate.timer_time}
-                                </h6>
-                            </div>
-                            <div v-else>
-                                <div v-if="current_gamestate.timer_time > 3">
-                                    <h6 style="color:orange;font-size:100px">
-                                        ${current_gamestate.timer_time}
-                                    </h6>
-                                </div>
-                                <div v-else>
-                                    <h6 style="color:red;font-size:100px">
-                                        ${current_gamestate.timer_time}
-                                    </h6>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div v-else>
-                        <h5 style="font-size:100px">${current_gamestate.timer_time}</h5>
-                    </div>
-                    <div v-if="current_gamestate.current_turn == nickname" id="turn">
-                        <h5>it's your turn!</h5>
-                    </div>                    
+                                    
                 </div>
 
 

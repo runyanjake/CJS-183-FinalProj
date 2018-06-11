@@ -479,6 +479,7 @@ var app = function() {
                     gamebar_5: this.theme == 5
                 }
             }
+
         },
         methods: {
             is_user_in_user_accounts: self.is_user_in_user_accounts,

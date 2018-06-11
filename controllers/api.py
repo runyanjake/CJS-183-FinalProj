@@ -61,7 +61,10 @@ def initialize():
         players.append(current_user)
         hoster = current_user
         story_text = []
-        story_text.append(request.vars.story_title)
+        if(request.vars.story_title == ""):
+            story_text.append("Unnamed Story " + str(room_code))
+        else:
+            story_text.append(request.vars.story_title)
         public = False
         if (request.vars.is_public == 'true' or request.vars.is_public == True):
             public = True

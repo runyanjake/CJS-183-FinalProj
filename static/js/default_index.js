@@ -13,6 +13,30 @@ var app = function() {
     	}
     });
 
+    $(window).blur(function() {
+        console.log("JS: Focus was lost, attempting to leave any ongoing game.");
+        //Called when user leaves the window and it loses focus
+        self.vue.window_has_focus = false; //causes active vue loop to be stopped
+        self.vue.left_game_code = self.vue.current_gamestate.room_code;
+        self.vue.left_game_type = self.vue.current_gamestate.gametype;
+        self.leave_game(self.vue.current_gamestate.gametype); //TALLTALES ONLY RN
+
+
+        //^This doesn't work, person isn't actually removed
+
+
+    });
+    $(window).focus(function() {
+        console.log("JS: Focus was regained, attempting to join a saved state if one exists.");
+        //Called when user comes back to the window and it regains focus
+        if(self.vue.left_game_code != null && self.vue.left_game_type != null){
+            self.vue.window_has_focus = true;
+            self.join_by_code(self.vue.left_game_type, self.vue.left_game_code);
+            self.vue.left_game_code = null;
+            self.vue.left_game_type = null;
+        }
+    });
+
     $(window).load(function(){
         $('.vue-content').hide();
         $('.vue-loadingicon').show();
@@ -29,11 +53,13 @@ var app = function() {
     self.show_nickname_editor = function () {
         console.log("Called show_nickname_editor.");
         self.vue.chosen_nickname = false;
+        self.vue.chosen_theme = true;
     };
 
     self.show_theme_editor = function () {
         console.log("Called show_theme_editor.");
         self.vue.chosen_theme = false;
+        self.vue.chosen_nickname = true;
     };
 
     self.get_nickname = function () {
@@ -89,7 +115,6 @@ var app = function() {
         // Pink is 3
         // Orange is 4
         // Purple is 5
-        self.vue.chosen_nickname = true;
         self.vue.theme = theme_code;
         console.log("Switched theme to: " + self.vue.theme)
         self.set_theme(self.vue.theme);
@@ -189,7 +214,6 @@ var app = function() {
     ----------------------------------------------------------------------------*/
     self.update_current_user = function () {
         console.log("JS: Adding current user.");
-        self.vue.chosen_theme = true;
         $.post(update_current_user_url,
             {
                 nickname: self.vue.nickname
@@ -404,6 +428,10 @@ var app = function() {
             nickname: "Guest",
             chosen_theme: true,
             theme: 5,
+
+            window_has_focus: true,
+            left_game_code: null,
+            left_game_type: null,
     
             //Vue variables common to ALL GAMES
             join_room_code: "",

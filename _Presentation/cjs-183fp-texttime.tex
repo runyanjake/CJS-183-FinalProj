@@ -30,7 +30,17 @@
         \begin{itemize}
           \item Simple game website for private and public games
           \item Base framework to add and recall games from
-          \item Target audience is for all you SLACKERS out there in lecture
+          \item But simply put...
+        \end{itemize}
+    \end{frame}
+
+    \begin{frame}
+        \frametitle{Why'd We Make It?}
+        \begin{itemize}
+          \item Simple game website for private and public games
+          \item Base framework to add and recall games from
+          \item But simply put...
+          \item Our target audience is all you SLACKERS out there in lecture
         \end{itemize}
         \begin{figure}
             \begin{center}
@@ -51,6 +61,12 @@
           \item players add sentences to a growing story 
           \item tell a story together or chat with friends
         \end{itemize}
+        \begin{figure}
+            \begin{center}
+                \fbox{\includegraphics[width=200px]{data/htmlflow.png}}
+            \end{center}
+            \caption{Text Time's HTML flowchart}
+        \end{figure}
     \end{frame}
 
     \begin{frame}
@@ -58,15 +74,21 @@
         \begin{itemize}
           \item In the Back-End...
           \begin{itemize}
-              \item database interaction done completely with AJAX requests to the API
+              \item database interaction achieved with AJAX requests to API
               \item database schema includes tables for gamestate, user customization options, and game-related text storage
           \end{itemize}
           \item And on the Front-End...
           \begin{itemize}
             \item vue.js maintains and updates gamestate, user, and page status information
-            \item gamestates are updated with repeated AJAX requests to the API
+            \item gamestates are updated with repeated AJAX requests to API
           \end{itemize}
         \end{itemize}
+        \begin{figure}
+            \begin{center}
+                \fbox{\includegraphics[width=200px]{data/apiflow.png}}
+            \end{center}
+            \caption{Text Time's API mockup}
+        \end{figure}
     \end{frame}
 
     \begin{frame}
@@ -90,7 +112,8 @@
             \end{itemize}
             \item Styling with user preferences
             \begin{itemize}
-                \item Cashew nuts need to be given time if they are to correctly style a web2py supported website
+                \item resolved unclear UX areas using iterative beta testing
+                \item finding reputable way to perform JS and HTML updates simultaneously
             \end{itemize}
             \item Generalizing our API for future games
             \begin{itemize}
@@ -99,6 +122,17 @@
                 \item resolving race conditions between HTML vue references and AJAX requests on page loading
             \end{itemize}
           \end{itemize}
+    \end{frame}
+
+    \begin{frame}
+        \frametitle{The Future of Text Time}
+        \begin{itemize}
+            \item We plan to fully generalize our code base and implement other games
+            \item Reduce network load of repeated querying when game window not focused
+            \item Continual CSS updates for user convenience
+            \item We plan to continue hosting via pythonanywhere
+            \item Implementing some support system to submit error tickets
+        \end{itemize}
     \end{frame}
 
     \begin{frame}

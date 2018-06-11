@@ -146,6 +146,7 @@ var app = function() {
                     console.log("self.vue.current_gamestate is " + data.gamestate);
                     //Update in lobby state, which updates HTML
                     self.vue.is_in_game = true;
+                    self.vue.show_room_code = false;
                     self.vue_loop(gametype);
                     //Boinkers
                     //clear the title text
@@ -241,6 +242,7 @@ var app = function() {
 
                     //Update in lobby state, which updates HTML
                     self.vue.is_in_game = true;
+                    self.vue.show_room_code = false;
                     self.vue_loop(gametype);
                 }
                 else {
@@ -313,12 +315,22 @@ var app = function() {
     };
     
 
+    /* toggle_view_room_code():
+    ----------------------------------------------------------------------------
+    Toggles whether or not the room code should be viewable.
+    ---------------------------------------------------------------------------- */
+    self.toggle_view_room_code = function () {
+        self.vue.show_room_code = !self.vue.show_room_code;
+    }
+
+
+
     /* talltales_submitturn():
     ----------------------------------------------------------------------------
     Submits one's turn and advances gamestate's record of whose turn it is.
     ---------------------------------------------------------------------------- */
     self.talltales_submitturn = function () {
-        
+
         if (self.vue.is_in_game) {
             console.log("Submitting turn for room " + self.vue.current_gamestate.room_code + ".");
             $.post(talltales_taketurn,
@@ -403,6 +415,7 @@ var app = function() {
     
             //Vue variables common to ALL GAMES
             join_room_code: "",
+            show_room_code: false,
             displaying_public_games: false,
             db_repeatedquery_timer: null,
             current_gamestate: null, //Object(?) holding the currently viewed game information.
@@ -453,6 +466,7 @@ var app = function() {
             vue_loop: self.vue_loop,
             get_nickname: self.get_nickname,
             set_nickname: self.set_nickname,
+            toggle_view_room_code: self.toggle_view_room_code,
         }
 
     });

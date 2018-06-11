@@ -43,7 +43,7 @@ a:not(.btn):not(.noeffect):after {
   transition:width 0.2s;
 }
 
-.btn:not(#button_orange):not(#button_yellow):not(#button_green) {
+.btn:not(#button_talltales):not(#button_taboo):not(#button_typeracer) {
   background-color: #d1aeff !important;
   color: black;
 }
@@ -179,29 +179,43 @@ a:not(.btn):not(.noeffect):after {
   text-align: center;
 }
 
-#button_orange {
+.color_1 {
+  background-color: #ff0000;
+}
+.color_2 {
+  background-color: #fff000;
+}
+.color_3 {
+  background-color: #ffff00;
+}
+.color_4 {
+  background-color: #ff00ff;
+}
+.color_5 {
+  background-color: #ff0fff;
+}
+
+
+#button_talltales {
   width: 75%;
   padding-top: 33.5%;
   padding-bottom: 33.5%;
-  background-color: #ffa500;
   position: relative;
 
 }
 
-#button_yellow {
+#button_taboo {
   width: 75%;
   padding-top: 33.5%;
   padding-bottom: 33.5%;
-  background-color: #ffdd00;
   position: relative;
 
 }
 
-#button_green {
+#button_typeracer {
   width: 75%;
   padding-top: 33.5%;
   padding-bottom: 33.5%;
-  background-color: #6ce547;
   position: relative;
 
 }

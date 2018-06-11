@@ -295,6 +295,30 @@ a:not(.btn):not(.noeffect):after {
   overflow: scroll;
 }
 
+h5 {
+  margin-top: 0 !important;
+}
+
+p {
+  margin-bottom: 0px !important;
+}
+
+.game_info_items {
+  padding: 5px;
+}
+
+.players {
+  line-height: 1.1em;
+}
+
+p.players {
+  text-emphasis: bold;
+}
+
+#player_list_container {
+  padding: 10px;
+}
+
 #previous_sentence {
   padding:15px;
   margin-left: 20%;

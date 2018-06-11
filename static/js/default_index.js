@@ -37,11 +37,11 @@ var app = function() {
     self.get_nickname = function () {
         $.getJSON(get_nickname_url,
             function (data) {
-                if (data.successful) {
+                if (data.successful && data.nickname_logged_in) {
                     console.log("Returned successfully from the API");
                     self.vue.nickname = data.current_user;
                 } else {
-                    console.log("Returned unsuccessfully from the API");
+                    console.log("Returned unsuccessfully from the API:get_nickname");
                 }
             });
     }
@@ -352,8 +352,10 @@ var app = function() {
                 gametype: gametype
             },
             function (data) {
-                self.vue.public_games = data.public_games;
-                console.log("public games = " + data.public_games);
+                if (data.successful) {
+                    self.vue.public_games = data.public_games;
+                    console.log("public games = " + data.public_games);
+                }
             });
 
     };

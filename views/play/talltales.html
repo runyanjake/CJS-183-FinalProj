@@ -181,43 +181,71 @@
                 <div id="game_info_bar">
                     
 
-                    <h5>Title of Story: ${current_gamestate.story_text[0]}</h5>
-                    <h5>Room Code: ${current_gamestate.room_code}</h5>
-                    <h5>Public Status: ${current_gamestate.is_public}</h5>
-                    <h5>Your Player ID: {{=auth.user.id}}</h5>
-                    <h5>Player List: ${current_gamestate.player_list}</h5>                    <h5>Current Turn: ${current_gamestate.current_turn}</h5>
-                    <h5>Hoster: ${current_gamestate.hoster}</h5>
-                    <h5>Max Room Size: ${current_gamestate.max_players}</h5>
-                    <h5>Turn Time Limit (s): ${current_gamestate.turn_time_limit}</h5>
+                    <div class="game_info_items">
+                        <p>Title of Story:</p><h5>${current_gamestate.story_text[0]}</h5>
+                    </div>
+                    <div class="game_info_items">
+                        <p>Room Code:</p><h5>${current_gamestate.room_code}</h5>
+                    </div>
+                    <div class="game_info_items">
+                        <p>Public Status:</p><h5>${current_gamestate.is_public}</h5>
+                    </div>
+                    <div class="game_info_items">
+                        <p>Your Player Name:</p><h5>${nickname}</h5>
+                    </div>
+                    <div class="game_info_items">
+                        <p>Player List:</p>
+                        <div id="player_list_container">
+                            <div class="players" v-for="player in current_gamestate.player_list">
+                                <h6 v-if="player == current_gamestate.current_turn"
+                                    style="color:red">${player}
+                                </h6> 
+                                <h6 v-if="player != current_gamestate.current_turn">
+                                    ${player}
+                                </h6> 
+                            </div>
+                        </div>
+                        
+                    </div> 
+                    <div class="game_info_items">                
+                        <p>Hoster:</p><h5>${current_gamestate.hoster}</h5>
+                    </div>
+                    
 
-
+                    <!-- <p>Max Room Size: </p><h5>${current_gamestate.max_players}</h5> -->
 
                     <!--NOTE FROM JAKE: These 2 v-if's dont work cuz of changes to API current_turn-->
+                    <!--NOTE FROM CASSIA: This works now EXCEPT I don't think it's gonna work when two people have the same nickname-->
 
 
-
-                    <div v-if="current_gamestate.current_turn == {{=auth.user.id}}">
+                    <div v-if="current_gamestate.current_turn == nickname">
                         <div v-if="current_gamestate.timer_time > 10">
-                            <h5>Time Remaining: ${current_gamestate.timer_time}</h5>
+                            <h6 style="font-size:100px">${current_gamestate.timer_time}</h6>
                         </div>
                         <div v-else>
                             <div v-if="current_gamestate.timer_time > 5">
-                                <h4 style="color:yellow">Time Remaining: ${current_gamestate.timer_time}</h4>
+                                <h6 style="color:yellow;font-size:100px">
+                                    ${current_gamestate.timer_time}
+                                </h6>
                             </div>
                             <div v-else>
                                 <div v-if="current_gamestate.timer_time > 3">
-                                    <h3 style="color:orange">Time Remaining: ${current_gamestate.timer_time}</h3>
+                                    <h6 style="color:orange;font-size:100px">
+                                        ${current_gamestate.timer_time}
+                                    </h6>
                                 </div>
                                 <div v-else>
-                                    <h2 style="color:red">Time Remaining: ${current_gamestate.timer_time}</h2>
+                                    <h6 style="color:red;font-size:100px">
+                                        ${current_gamestate.timer_time}
+                                    </h6>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div v-else>
-                        <h5>Time Remaining: ${current_gamestate.timer_time}</h5>
+                        <h5 style="font-size:100px">${current_gamestate.timer_time}</h5>
                     </div>
-                    <div v-if="current_gamestate.current_turn == {{=auth.user.id}}" id="turn">
+                    <div v-if="current_gamestate.current_turn == nickname" id="turn">
                         <h5>it's your turn!</h5>
                     </div>                    
                 </div>

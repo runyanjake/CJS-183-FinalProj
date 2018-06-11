@@ -527,3 +527,9 @@ def get_nickname():
         nickname_logged_in=nickname_logged_in,
         successful=successful
     ))
+
+@auth.requires_login()
+def set_theme():
+    print("API: Setting theme for the currently logged in user")
+    theme = int(request.vars.theme)
+    db(auth.user.id == db.user_accounts.user_id).update(theme=theme)

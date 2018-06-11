@@ -7,6 +7,8 @@
     var update_current_user_url = "{{=URL('api', 'update_current_user')}}";
     var check_user_accounts_url = "{{=URL('api', 'check_user_accounts')}}";
     var get_nickname_url = "{{=URL('api', 'get_nickname')}}";
+    var set_theme_url = "{{=URL('api', 'set_theme')}}";
+    var get_theme_url = "{{=URL('api', 'get_theme')}}";
 </script>
 {{end}}
 
@@ -15,6 +17,8 @@
     <div id="vue-div" class="display:none">
         <div class="container" id="main_page_container">
             {{if auth.user is None:}}
+
+            ${theme = 5}
 
             <div id="not_logged_in" class="center">
                 <h1>sup, <a href="{{=URL('default', 'user')}}" v-on:click="is_user_in_user_accounts">login</a> to play</h1>

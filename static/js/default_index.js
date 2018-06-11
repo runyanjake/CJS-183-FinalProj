@@ -49,14 +49,12 @@ var app = function() {
     //load background so it stays for each page
     change_background = function () {
         if (sessionStorage.getItem('theme')) {
-            console.log("remembered theme");
             self.vue.theme = sessionStorage.getItem('theme');
         }
         if (sessionStorage.getItem('bg_color')) {    
             document.body.style.backgroundColor = sessionStorage.getItem('bg_color');
         }
         else {
-            console.log("entered else");
             document.body.style.backgroundColor =  "#b67fff";
             sessionStorage.setItem('bg_color', "#b67fff");
         }
@@ -95,8 +93,26 @@ var app = function() {
             sessionStorage.setItem('bg_color', "#b67fff");
             self.vue.theme = 5;
         }
+        self.set_theme(self.vue.theme);
         sessionStorage.setItem('theme', self.vue.theme);
         self.vue.chosen_theme = true;
+    };
+
+    self.get_theme = function () {
+        $.getJSON(get_theme_url,
+            function (data) {
+                self.vue.theme = data.theme;
+            });
+    };
+
+    self.set_theme = function (theme) {
+        $.post(set_theme_url,
+            {
+                theme: self.vue.theme
+            },
+            function (data) {
+                console.log("JS: Saved theme in database.")
+            });
     };
 
     // Extends an array
@@ -222,7 +238,6 @@ var app = function() {
                     if (self.vue.displaying_public_games) {
 						self.vue.displaying_public_games = false; //Turn off if redirecting via "join game" button
                     }
-                    console.log("displaying public games = " + self.vue.displaying_public_games);
 
                     //Update in lobby state, which updates HTML
                     self.vue.is_in_game = true;
@@ -273,7 +288,6 @@ var app = function() {
 
     self.update_vue = function (gametype) {
         if (self.vue.is_in_game) {
-            console.log("Updating gamestate for room " + self.vue.current_gamestate.room_code + ".");
             var oldturn = self.vue.current_gamestate.current_turn
             $.post(get_gamestate_url,
             {
@@ -354,7 +368,7 @@ var app = function() {
             function (data) {
                 if (data.successful) {
                     self.vue.public_games = data.public_games;
-                    console.log("public games = " + data.public_games);
+                    console.log("Public games = " + data.public_games);
                 }
             });
 

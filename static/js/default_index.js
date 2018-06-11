@@ -18,7 +18,9 @@ var app = function() {
         $('.vue-loadingicon').show();
         self.is_user_in_user_accounts();
         self.get_nickname();
+        self.get_theme();
         setTimeout(function () {
+            change_background();
             $('.vue-loadingicon').hide();
             $('.vue-content').show(); 
         }, 500);  
@@ -38,74 +40,66 @@ var app = function() {
         $.getJSON(get_nickname_url,
             function (data) {
                 if (data.successful && data.nickname_logged_in) {
-                    console.log("Returned successfully from the API");
+                    console.log("Got nickname: " + data.current_user);
                     self.vue.nickname = data.current_user;
-                } else {
+                } 
+                else {
                     console.log("Returned unsuccessfully from the API:get_nickname");
                 }
             });
     }
 
+    self.get_theme = function () {
+        console.log("Getting theme");
+        $.getJSON(get_theme_url,
+            function (data) {
+                console.log("GOT THEME :" + data.theme);
+                self.vue.theme = data.theme;
+                console.log("self.vue.theme :" + self.vue.theme);
+            });
+    };
+
     //load background so it stays for each page
     change_background = function () {
-        if (sessionStorage.getItem('theme')) {
-            self.vue.theme = sessionStorage.getItem('theme');
+        console.log("Change background called, self.vue.theme: " + self.vue.theme);
+        if (self.vue.theme == 1) {
+            document.body.style.background = "#74d300";
         }
-        if (sessionStorage.getItem('bg_color')) {    
-            document.body.style.backgroundColor = sessionStorage.getItem('bg_color');
+        else if (self.vue.theme == 2) {
+            document.body.style.background = "#2dd8bf";
+        }
+        else if (self.vue.theme == 3) {
+            document.body.style.background = "#ff91ca";
+        }
+        else if (self.vue.theme == 4) {
+            document.body.style.background = "#ffb30f";
+        }
+        else if (self.vue.theme == 5) {
+            document.body.style.background = "#b67fff";
         }
         else {
             document.body.style.backgroundColor =  "#b67fff";
-            sessionStorage.setItem('bg_color', "#b67fff");
         }
     };
 
     //Toggle themes
     self.switch_theme = function (theme_code) {
+        // Green is 1
+        // Turquise is 2
+        // Pink is 3
+        // Orange is 4
+        // Purple is 5
         self.vue.chosen_nickname = true;
-        //green theme
-        if (theme_code == 1) {
-            document.body.style.background = "#74d300";
-            sessionStorage.setItem('bg_color', "#74d300");
-            self.vue.theme = 1;
-        }
-        //turquoise theme
-        else if (theme_code == 2) {
-            document.body.style.background = "#2dd8bf";
-            sessionStorage.setItem('bg_color', "#2dd8bf");
-            self.vue.theme = 2;
-        }
-        //pink theme
-        else if (theme_code == 3) {
-            document.body.style.background = "#ff91ca";
-            sessionStorage.setItem('bg_color', "#ff91ca");
-            self.vue.theme = 3;
-        }
-        //orange theme
-        else if (theme_code == 4) {
-            document.body.style.background = "#ffb30f";
-            sessionStorage.setItem('bg_color', "#ffb30f");
-            self.vue.theme = 4;
-        }
-        //purple theme
-        else if (theme_code == 5) {
-            document.body.style.background = "#b67fff";
-            sessionStorage.setItem('bg_color', "#b67fff");
-            self.vue.theme = 5;
-        }
+        self.vue.theme = theme_code;
+        console.log("Switched theme to: " + self.vue.theme)
         self.set_theme(self.vue.theme);
-        sessionStorage.setItem('theme', self.vue.theme);
+        // sessionStorage.setItem('theme', self.vue.theme);
+        change_background();
         self.vue.chosen_theme = true;
     };
 
-    self.get_theme = function () {
-        $.getJSON(get_theme_url,
-            function (data) {
-                self.vue.theme = data.theme;
-            });
-    };
-
     self.set_theme = function (theme) {
+        console.log("Setting theme.");
         $.post(set_theme_url,
             {
                 theme: self.vue.theme
@@ -166,9 +160,7 @@ var app = function() {
     self.is_user_in_user_accounts = function () {
         $.getJSON(check_user_accounts_url,
             function (data) {
-                console.log("Look at this: " + data.is_in_table);
                 if (data.is_in_table) {
-                    console.log("IT'S TRUE: " + data.is_in_table);
                     self.vue.chosen_nickname = true;
                 }
                 return data.is_in_table;
@@ -467,10 +459,12 @@ var app = function() {
             get_nickname: self.get_nickname,
             set_nickname: self.set_nickname,
             toggle_view_room_code: self.toggle_view_room_code,
+            get_theme: self.get_theme
         }
 
     });
 
+    self.get_theme();
     change_background();
     $("#vue-div").show();
     return self;

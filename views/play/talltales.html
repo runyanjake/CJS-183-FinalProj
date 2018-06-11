@@ -185,26 +185,35 @@
                     <div class="game_info_items">
                         <p>Title of Story:</p><h5>${current_gamestate.story_text[0]}</h5>
                     </div>
+                    
                     <div class="game_info_items">
+                        <p>Room Code:</p>
                         <div class="container" v-if="show_room_code">
-                            <div class="left">
-                                <p>Room Code:</p>
+                            
+                            <div class="clearfix">
+                                <div class="left_side">
+                                    <h5>${current_gamestate.room_code}</h5>
+                                </div>
+                                <div class="right_side">
+                                    <button id="hide_roomcode_button" v-on:click="toggle_view_room_code">hide</button>
+                                </div>
                             </div>
-                            <div class="right">
-                                <button id="hide_roomcode_button" v-on:click="toggle_view_room_code">hide</button>
-                            </div>
-                            <h5>${current_gamestate.room_code}</h5>
+                            
                         </div>
                         <div class="container" v-if="!show_room_code">
-                            <div class="left">
-                                <p>Room Code:</p>
+                            
+                            <div class="clearfix">
+                                <div class="left_side">
+                                    <h5>hidden</h5>
+                                </div>
+                                <div class="right_side">
+                                    <button id="show_roomcode_button" v-on:click="toggle_view_room_code">show</button>
+                                </div>
                             </div>
-                            <div class="right">
-                                <button id="show_roomcode_button" v-on:click="toggle_view_room_code">show</button>
-                            </div>
-                            <h5>hidden</h5>
+                            
                         </div>
                     </div>
+                    
                     <div class="game_info_items">
                         <p>Public Status:</p><h5>${current_gamestate.is_public}</h5>
                     </div>

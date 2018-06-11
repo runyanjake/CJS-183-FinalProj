@@ -338,6 +338,31 @@ p {
   padding: 5px;
 }
 
+.clearfix::after {
+  content: "";
+  clear: both;
+  display: table;
+}
+
+.left_side {
+  float: left;
+  width: 70px;
+}
+
+.right_side {
+  margin-left: 85px;
+}
+
+#hide_roomcode_button, #show_roomcode_button {
+  width: 49px;
+}
+
+/* .roomcode_button_holder {
+  margin-left: 3px;
+  position: relative;
+  top: -3px;
+} */
+
 .players {
   line-height: 1.1em;
 }

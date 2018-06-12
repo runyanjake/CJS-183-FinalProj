@@ -1,6 +1,14 @@
 # Text Time 
-#### Cassia Artanegara, Jake Runyan, and Shane Kennerly's Final Project </br> Professor Luca de Alfaro's CMPS 183 Web Applications </br> University of California, Santa Cruz.
+#### Cassia Artanegara, Jake Runyan, and Shane Kennerly's Final Project & Computer Science Capstone </br> Professor Luca de Alfaro's CMPS 183 Web Applications </br> University of California, Santa Cruz.
 ##### [(PLAY THE FINAL VERSION)](https://jmrunyan.pythonanywhere.com/texttime "Final Version") [(PLAY THE BETA)](https://jmrunyan.pythonanywhere.com/texttime_beta "Beta") [(PLAY THE ALPHA)](https://jmrunyan.pythonanywhere.com/texttime_alpha "Alpha") [(PLAY THE PROTOTYPE)](https://jmrunyan.pythonanywhere.com/texttime_prototype "Prototype")
+
+### Quick Links: </br>
+[What is this project about?](#what-is-this-project-about) </br>
+[How do I use this project?](#how-do-i-use-this-project) </br>
+[Contributor Etiquette](#contributor-etiquette) </br>
+[Contributions and Responsibilities](#contributions-and-responsibilities) </br>
+[Future Features to be Implemented](#future-features-to-be-implemented) </br>
+[Contact the Authors](#contact-the-authors) </br>
 
 ![alt text][asdf]
 
@@ -11,12 +19,11 @@
 ##### What is this project about?
 
 > `This project generates a website that hosts small group sessions of turn-based textual games.`
-> * Upon entering normally, users see a list of global games in play that are not currently filled with players, and have the option to join the game and wait in a queue for their turn. </br>
-> * Players that idle on their turns are timed out from the game or skipped. Players that leave are removed from the play queue. Games with no users time out after a given period and are removed. </br>
+> * Upon loading the page, users are prompted to login and create a simple profile that distingueshes them from other users while in-game. In the future, users will be allowed to bypass this step and play as a guest. 
+> * Once users have logged on, they see a list of global games in play, and have the option to join the game. </br>
+> * Players that idle on their turns are timed out from the game or skipped. </br>
 > * Creating an account allows users to save game states and create and personalize a profile. Aesthetic changes such as website look and feel preferences are saved to a user's account. </br>
-> * User customization options will be available. This is limited to defining primary, secondary, and auxiliary color themes that style the website accordingly. </br>
-> * Analytics for the site will be collected and tabulated for viewing on the (public and?) admin console(s?).
-> * An option for users to watch an ad to support the developers and server costs will be available when the user is waiting for their turn.
+> * User customization options will be available, e.g. defining primary, secondary, and auxiliary color themes that style the website accordingly. </br>
 > * There are a number of games that users can choose to play: </br>
 >   * Tall Tales </br>
 >     * A user is given an initial sentence to begin the story. Then, the next user is given the previous user's sentence
@@ -64,20 +71,33 @@ git branch -d <branchname> (deletion)
 git merge <otherbranch> (writes changes in otherbranch on top of current branch)
 ^ if working from a local branch, merge master on top of it, and then switch to master
   and merge the local branch on top of master. Now, master is up to date with all changes
-  made on the local branch.
+  made on the local branch, and can be merged with the remote.
 git status (status)
 ```
 
 ##### Contributions and Responsibilities
-> Cassia did x. </br>
-> Jake did y. </br>
-> Shane did abs(exp(z^x%p)). </br>
+> Cassia was responsible for the CSS styling of the entire website and default user customization options. She designed the look and feel of every webpage, and iteratively updated the website styling with responses from a few beta testing sessions. She wrote API functions for gathering gamestates to display. </br></br>
+> Jake created the preliminary schema of the database. He built and tested the initial version of the API, finalized gamestate join and leave functionality, and reorganized the file structure so that website links were intuitive. He created and edge tested the Tall Tales game loop. </br></br>
+> Shane extended and generalized the API for use with other games in the future. He overcame significant issues with coordinating the rendering HTML relying on the return of AJAX requests that were often slow. He was responsible for refactoring much of the website's usage of purely Web2py auth tables to using an extended version that allowed for user customization. </br></br>
+> All group members collaborated and provided advice for eachother, and delegated to make design decisions for the project. Members coordinated well with each to ensure that there was little time wasted by front-end components waiting for back-end support and vice versa. All members put significant time and effort into delivering a final deliverable and presentation.
 
 ##### Historical Evidence: Beta Testing Round II
-> Special thanks to beta testers Bryan, Julian, and Albert (not pictured).
+> Special thanks to beta testers Bryan, Julian, and Albert (not all pictured).
 ![alt text][logo]
 
 [logo]: https://github.com/runyanjake/CJS-183-FinalProj/blob/master/betaii.JPG "Logo Title Text 2"
+
+##### Future Features to be Implemented
+> * All listed extra game modes.
+> * 'Guest' users, who can create and join games.
+> * Lockable game rooms, for private gaming.
+> * Admin analytics for statistics on popular games & overall website traffic, and user statistic tracking. 
+> * Cron jobs or repetitive API execution to clean database of stale information/gamestates.
+> * Players idling or skipping many turns are timed out from the game.
+> * Additional user customization options. 
+> * Extension of the primary-secondary coloring system.
+> * An option for users to watch an ad to support the developers and server costs will be available when the user is waiting for their turn.
+> * Free-to-play aesthetic crate system. (or paid money-grabbing cashout equivalent)
 
 ----------------------------------------------------------------------------
 
